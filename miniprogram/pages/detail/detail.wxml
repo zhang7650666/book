@@ -2,7 +2,7 @@
 <view class="detail-page">
     <!--头部详情信息-->
     <view class="search-book">
-        <view class="book-img">
+        <view class="book-cover" bindtap="handleRead">
             <image src="{{books.img}}" mode="widthFix"></image>
         </view>
         <view class="introduce-wrap">
@@ -33,9 +33,9 @@
         <text class="chapter">更新至第99章xxxxxxxxx</text>
     </view>
     <view class="bar"></view>
-    <view class="hot-con">
+    <view class="main-title">
         <text class="red"></text>
-        <text class="text">同类小说还有</text>
+        <text class="title-text">同类小说还有</text>
     </view>
     <view class="books-wrap">
         <view class="books-main" wx:for="{{bookList}}" wx:key="item.name" wx:if="{{index < 3}}">

@@ -18,51 +18,61 @@ Page({
     circular:true,
     books:[
       {
+        id: 56866,
         img:"../../images/u27.jpeg",
         name:"青春年华1",
         author:"琼瑶"
       },
       {
+        id: 56866,
         img:"../../images/u27.jpeg",
-        name:"青春年华2",
+        name:"青春年华2青春年华2青春年华2青春年华2青春年华2",
         author:"琼瑶"
       },
       {
+        id: 56866,
         img:"../../images/u27.jpeg",
         name:"青春年华3",
         author:"琼瑶"
       },
       {
+        id: 56866,
         img:"../../images/u27.jpeg",
         name:"青春年华4",
         author:"琼瑶"
       },
       {
+        id: 56866,
         img:"../../images/u27.jpeg",
         name:"青春年华2",
         author:"琼瑶"
       },
       {
+        id: 56866,
         img:"../../images/u27.jpeg",
         name:"青春年华3",
         author:"琼瑶"
       },
       {
+        id: 56866,
         img:"../../images/u27.jpeg",
         name:"青春年华4",
         author:"琼瑶"
       },
       {
+        id: 56866,
         img:"../../images/u27.jpeg",
         name:"青春年华2",
         author:"琼瑶"
       },
       {
+        id: 56866,
         img:"../../images/u27.jpeg",
         name:"青春年华3",
         author:"琼瑶"
       },
       {
+        id: 56866,
         img:"../../images/u27.jpeg",
         name:"青春年华4",
         author:"琼瑶"

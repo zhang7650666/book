@@ -1,9 +1,9 @@
 <!--miniprogram/pages/reading/reading.wxml-->
 <import src="../../wxParse/wxParse.wxml"/>
-<view class="read-page" bindtap="handleSet" style="background:{{bgColor}}">
+<view class="read-page"  style="background:{{bgColor}}">
     <view class="novel-wrap">
         <text class="novel-title">{{readData.title}}</text>
-        <view class="novel-article" style="font-size:{{fontSize}}rpx; height:{{isPay ? 'auto':204}}rpx;overflow:hidden;">
+        <view class="novel-article" bindtap="handleSet" style="font-size:{{fontSize}}rpx; height:{{isPay ? 'auto':204}}rpx;overflow:hidden;">
             <template is="wxParse" data="{{wxParseData:article.nodes}}" />
         </view>
         <!--积分部分 -->
@@ -56,10 +56,10 @@
               <text class="reduc" catchtap="handleAdd">Aa+</text>
             </view>
             <view class="color-wrap">
-              <text class="gray" data-color="1" catchtap="handleColor"></text>
-              <text class="pink" data-color="2" catchtap="handleColor"></text>
-              <text class="blue" data-color="3" catchtap="handleColor"></text>
-              <text class="black" data-color="4" catchtap="handleColor"></text>
+              <text class="gray" data-colorvalue="1" catchtap="handleColor"></text>
+              <text class="pink" data-colorvalue="2" catchtap="handleColor"></text>
+              <text class="blue" data-colorvalue="3" catchtap="handleColor"></text>
+              <text class="black" data-colorvalue="4" catchtap="handleColor"></text>
             </view>
           </view>
           <view class="btn-group-mask" wx:if="{{isPay}}">

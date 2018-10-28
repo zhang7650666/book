@@ -4,14 +4,14 @@
 }
 .directory{
   display:flex;
-  border-bottom:2rpx solid #e4e4e4;
+  border-bottom:2rpx solid #f7f7f7;
 }
 .directory text{
   flex:1;
   color:#333333;
-  font-size:28rpx;
+  font-size:36rpx;
   line-height:100rpx;
-  padding-left:48rpx;
+  padding-left:30rpx;
 }
 .directory image{
   flex:0 0 44rpx;
@@ -26,25 +26,24 @@
 .dir-list .list{
   display:flex;
   border-bottom:2rpx solid #e4e4e4;
+  padding:0 30rpx;
+  line-height:100rpx;
+  font-size:32rpx;
+  color:#222;
 }
 .dir-list .list .sort{
-  flex:0 0 74rpx;
-  color:#666666;
-  font-size:28rpx;
-  line-height:100rpx;
-  padding-left:48rpx;
+  flex:0 0 120rpx;
 }
 .dir-list .list .title{
   flex:1;
-  color:#666666;
-  font-size:28rpx;
-  line-height:100rpx;
-  padding-left:48rpx;
+  min-width: 200rpx;
+  padding-right: 20rpx;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
 }
 .dir-list .list .is-pay{
-  flex: 0 0 56rpx;
-  font-size:28rpx;
-  line-height:100rpx;
-  padding-right:44rpx;
+  flex: 0 0 60rpx;
+  font-size: 30rpx;
   color:#e94241;
 }

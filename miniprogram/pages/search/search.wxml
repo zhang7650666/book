@@ -2,7 +2,7 @@
 <view class='search-page'>
     <view class="search-wrap">
       <view class="search-main">
-        <icon class="icon-search" type="search" size="12"></icon>
+        <icon class="icon-search" type="search" size="16"></icon>
         <input class="ipt-search" placeholder="请输入关键字" value="{{iptVal}}" bindchange="bindChange"/>  
       </view>
       <view class="search">
@@ -11,8 +11,8 @@
     </view>
     <!-- 搜索列表 -->
     <view wx:if="{{isShowSearch}}" class="search-list" wx:for="{{sercherStorage}}" wx:key="item.name" data-name="{{item.name}}" bindtap="handleSearch">
-      <icon class="icon-search" type="search" size="12"></icon>
-      <text>{{item.name}}</text>
+      <icon class="icon-search" type="search" size="16"></icon>
+      <text class="display: inline-block;padding-left: 10rpx;">{{item.name}}</text>
     </view>
     <!-- 搜索到的书籍展示 -->
     <view class="search-show" wx:if="{{!isShowSearch}}">

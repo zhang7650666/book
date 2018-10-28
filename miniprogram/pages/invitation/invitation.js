@@ -5,9 +5,9 @@ Page({
    * 页面的初始数据
    */
   data: {
-    integral:10, // 邀请好友送积分
+    integral: 10, // 邀请好友送积分
     count: 3, // 每天只有3次邀请机会
-    addCount:0, // 转发次数
+    addCount: 0, // 转发次数
   },
 
   /**
@@ -70,7 +70,7 @@ Page({
     // }
    let _this = this;
     return {
-      title: '奔跑的小姑娘',
+      title: '奔跑的小女孩',
       path: '/pages/index/index',
       desc:'主人公在讲述一个小姑娘，对生活的悲伤，与失望。',
       imageUrl: '/images/u27.jpeg',

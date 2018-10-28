@@ -39,10 +39,13 @@ Component({
     //     books:books
     //   })
     // }
-    handleDetail(){
-      wx.navigateTo({
-        url: "/pages/detail/detail",
-      })
+    handleDetail(ev){
+      const bookId = ev.currentTarget.dataset.index;
+      if (bookId) {
+        wx.navigateTo({
+          url: "/pages/detail/detail?id=" + bookId,
+        })
+      }
     },
     // 空函数
     handlenull(){

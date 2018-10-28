@@ -1,12 +1,13 @@
 {
   "cloud": true,
   "pages": [
-    "pages/my/my",
     "pages/index/index",
+    "pages/reading/reading",
+    "pages/home/home",
+    "pages/my/my",
     "pages/store/store",
     "pages/detail/detail",
     "pages/directory/directory",
-    "pages/reading/reading",
     "pages/search/search",
     "pages/userConsole/userConsole",
     "pages/storageConsole/storageConsole",
@@ -16,7 +17,6 @@
     "pages/chooseLib/chooseLib",
     "components/homebook/homebook",
     "components/blank/blank",
-    "pages/home/home",
     "pages/list/list",
     "pages/wxPay/wxPay",
     "pages/record/record", 

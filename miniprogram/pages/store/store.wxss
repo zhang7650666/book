@@ -11,18 +11,17 @@
   top:0rpx;
   left:0rpx;
   right:0rpx;
-  z-index:9999 !important;
+  z-index:100 !important;
   background:#fff;
 }
-.tab{
+.tab-book-item{
   flex:1;
   text-align: center;
-  font-size:24rpx;
-  height:88rpx;
+  font-size:32rpx;
   line-height:88rpx;
-  color:#666666;
+  color:#222;
 }
-.tabBorer{
+.tab-active{
   border-bottom: 1px solid #ff0000;
  color:#ff3333;
 }
@@ -52,21 +51,22 @@
 .operation-wrap .count{
   flex:1;
   height:80rpx;
-  font-size:24rpx;
+  font-size:28rpx;
   color:#868686;
   line-height:80rpx;
 }
-.operation-wrap .clear{
+.operation-wrap .clear-all-book{
   margin-right:40rpx;
 }
-.operation-wrap .clear,.operation-wrap .edit{
+.operation-wrap .clear-all-book,
+.operation-wrap .edit{
   flex: 0 0 180rpx;
-  width:180rpx;
-  border:0.5rpx solid #ff3333;
-  border-radius:20rpx;
-  height:46rpx;
-  line-height:46rpx;
+  width: 180rpx;
+  border:0.5rpx solid red;
+  border-radius:32rpx;
+  line-height:50rpx;
   text-align:center;
-  color:#ff3333;
-  font-size:24rpx;
+  color:red;
+  font-size: 28rpx;
+  background-color: #fff;
 }

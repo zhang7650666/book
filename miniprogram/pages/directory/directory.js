@@ -9,7 +9,7 @@ Page({
     dirList:[
       {
         sort:1,
-        title:'xxxxxxxxxxxx',
+        title:'校园毕业校园毕业校园毕业校园毕业校园毕业校园毕业校园毕业',
         isPay:true,
       },
       {

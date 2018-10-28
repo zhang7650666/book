@@ -5,28 +5,33 @@
     /* width:180rpx; */
     width:190rpx;
 }
-.home-book .img image{
+.book-cover {
+  position: relative;
+  margin-bottom: 6rpx;
+}
+.home-book .book-cover image{
     /* width:180rpx; */
     width:190rpx;
     /* height:240rpx; */
     /* width:100%; */
     display:block;
 }
-.home-book .name{
-    padding-top:6rpx;
-}
 .home-book .name text{
     display:block;
-    font-size:24rpx;
-    color:#333333;
-    line-height:36rpx;
+    min-width: 99%;
+    font-size:30rpx;
+    color:#222;
+    line-height:1.5;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow: ellipsis;
+    
 }
-
 .home-book .author text{
     display:block;
-    font-size:24rpx;
+    font-size:26rpx;
     color:#999;
-    line-height:36rpx;
+    line-height:1.3;
 }
 .remove,.add-read{
   position: absolute;
@@ -35,10 +40,27 @@
   bottom:0rpx;
   top:0rpx;
 }
-.remove image,.add-read image{
+.icon-add-book,
+.icon-remove-book {
   position: absolute;
-  width:32rpx;
-  height:32rpx;
-  right:20rpx;
-  bottom:115rpx;
+  bottom: 10rpx;
+  right: 10rpx;
+  width: 56rpx;
+  height: 56rpx;
+  border-radius: 60rpx;
+  border: 2rpx solid red;
+}
+.icon-add-book::before,
+.icon-add-book::after,
+.icon-remove-book:before{
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 10%;
+  width: 80%;
+  height: 3rpx;
+  background-color: red;
+}
+.icon-add-book::after {
+  transform: rotate(90deg)
 }

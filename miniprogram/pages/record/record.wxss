@@ -2,21 +2,21 @@
 .record-page{
   position: relative;
 }
-.record-page view{
+.record-page .list-item{
   display:flex;
-  padding:0rpx 18rpx 0rpx 46rpx;
-  border-bottom:2rpx solid #e4e4e4;
+  border-bottom:2rpx solid #f7f7f7;
+  padding: 0 30rpx;
 } 
 .record-page view text{
   line-height:100rpx;
   color:#666;
-  font-size:24rpx;
-  height:100rpx;
+  font-size:28rpx;
 }
 .record-page view .desc{
   flex:1;
 }
 .record-page view .time{
   flex:0 0 240rpx;
-  width:240rpx;
+  min-width:240rpx;
+  text-align: right;
 }

@@ -1,6 +1,6 @@
 <!--components/searchbook/searchbook.wxml-->
-<view class="search-book">
-  <view class="book-img">
+<view class="search-book" catchtap="handleDetail">
+  <view class="book-cover">
     <image src="{{books.img}}" mode="widthFix"></image>
   </view>
   <view class="introduce-wrap">

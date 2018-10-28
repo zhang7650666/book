@@ -3,12 +3,12 @@
   display:flex;
   margin-top:40rpx;
 }
-.book-img{
+.book-cover{
   flex:0 0 180rpx;
   width:180rpx;
   padding:0rpx 36rpx 0rpx 42rpx ;
 }
-.book-img image{
+.book-cover image{
   display:block;
   width:180rpx;
   height:228rpx;

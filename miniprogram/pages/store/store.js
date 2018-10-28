@@ -171,7 +171,7 @@ Page({
   handleRemove(ev){
     let _this = this;
     wx.showModal({
-      content: '把这本书移除书架吗？',
+      content: '确认删除本书吗？',
       confirmColor:'#ff3300',
       success(res) {
         if (res.confirm) {

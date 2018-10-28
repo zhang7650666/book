@@ -7,45 +7,52 @@
   margin-top:54rpx;
   height:100rpx;
   padding:40rpx;
+  color:#999999;
 }
 
 .top-up-page .money{
-  height:50rpx;
   line-height:50rpx;
-  color:#ff3333;
-  font-size:28rpx;
+  font-size:36rpx;
   font-weight:bold;
 }
-.top-up-page .discount .proportion,.top-up-page .discount .giving,.top-up-page .discount .integral{
+
+.color-red {
+  color:#ff3333;
+}
+.top-up-page .discount .proportion,
+.top-up-page .discount .giving,
+.top-up-page .discount .integral{
   height:50rpx;
   line-height:50rpx;
-  color:#999999;
-  font-size:24rpx;
+  color: inherit;
+  font-size:30rpx;
 }
 .top-up-page .add{
   position:absolute;
   right:0rpx;
   top:0rpx;
-  width:128rpx;
+  width:120rpx;
   height:40rpx;
   background:#ff3333;
   color:#fff;
   text-align:center;
-  font-size:24rpx;
+  font-size:26rpx;
 }
 .active{
   background:#ff3333;
+  color: #fff;
 }
 .active .money{
   color:#fff;
 }
 .active .discount .proportion,.active .discount .giving,.active .discount .integral{
-  color:#fff;
+  color:inherit;
 }
 .active .add{
   position:absolute; 
-  background:#ccc;
+  background:#fff;
+  color: #ff3333;
   right:-5rpx;
   top:-2rpx;
-  z-index:9999 !important;
+  z-index:99 !important;
 }

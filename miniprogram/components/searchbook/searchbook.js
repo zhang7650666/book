@@ -20,6 +20,11 @@ Component({
    * 组件的方法列表
    */
   methods: {
-
+    // 跳转详情页
+    handleDetail(){
+      wx.navigateTo({
+        url: "/pages/detail/detail?id=123",
+      })
+    },
   }
 })

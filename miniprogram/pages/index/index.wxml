@@ -17,12 +17,11 @@
     </block>
   </swiper>
   <!-- 热门推荐 -->
-  <view class="hot-main">
-      <view class="hot-con">
+  <view class="home-main-book">
+      <view class="main-title">
         <text class="red"></text>
-        <text class="text">热门推荐</text>
-        <text class="more" bindtap="handleMore">更多</text>
-        <image class="img-more" src="/images/more.png" />
+        <text class="title-text">热门推荐</text>
+        <text class="book-more" bindtap="handleMore">更多</text>
       </view>
       <view class="books-wrap">
         <view class="books-main" wx:for="{{books}}" wx:key="item.name" wx:if="{{index < 6}}">
@@ -30,14 +29,13 @@
         </view>
       </view>
   </view>
-  <view class="bar"></view>
+  <!-- <view class="bar"></view> -->
   <!-- 男生最爱 -->
-  <view class="hot-main">
-      <view class="hot-con">
+  <view class="home-main-book">
+      <view class="main-title">
         <text class="red"></text>
-        <text class="text">男生最爱</text>
-        <text class="more" bindtap="handleMore">更多</text>
-        <image class="img-more" src="/images/more.png" mode="widthFix"/>
+        <text class="title-text">男生最爱</text>
+        <text class="book-more" bindtap="handleMore">更多</text>
       </view>
       <view class="books-wrap">
         <view class="books-main" wx:for="{{books}}" wx:key="item.name" wx:if="{{index < 6}}">
@@ -45,14 +43,13 @@
         </view>
       </view>
   </view>
-  <view class="bar"></view>
+  <!-- <view class="bar"></view> -->
   <!-- 女生最爱 -->
-  <view class="hot-main">
-      <view class="hot-con">
+  <view class="home-main-book">
+      <view class="main-title">
         <text class="red"></text>
-        <text class="text">女生最爱</text>
-        <text class="more" bindtap="handleMore">更多</text>
-        <image class="img-more" src="/images/more.png" mode="widthFix"/>
+        <text class="title-text">女生最爱</text>
+        <text class="book-more" bindtap="handleMore">更多</text>
       </view>
       <view class="books-wrap">
         <view class="books-main" wx:for="{{books}}" wx:key="item.name" wx:if="{{index < 6}}">
@@ -60,5 +57,5 @@
         </view>
       </view>
   </view>
-  <view class="bar"></view>
+  <!-- <view class="bar"></view> -->
 </view>

@@ -34,11 +34,11 @@ Page({
   },
   // 字号加大
   handleAdd(){
-    if (this.data.fontSize > 58){
+    if (this.data.fontSize > 54){
       wx.showToast({
-        title: "字体大小不能操作30px",
+        title: "字体大小不能操作27px",
         icon: 'none',
-        duration: 2000,
+        duration: 1000,
       })
       return;
     }
@@ -49,7 +49,7 @@ Page({
   },
   // 字号减小
   handleReduc() {
-    if (this.data.fontSize < 26) {
+    if (this.data.fontSize < 24) {
       wx.showToast({
         title: "字体大小不能操作12px",
         icon: 'none',
@@ -64,20 +64,19 @@ Page({
   },
   // 改变背景色
   handleColor(ev){
-    let str = ev.currentTarget.dataset.color;
-    let color = "";
-    if(str == "1"){
-      color = "#d0d0ce"
-    } else if (str == "2") {
-      color = "#e9dabd"
-    } else if (str == "3") {
-      color = "#5a8258"
-    } else if (str == "4") {
-      color = "#0c0b0a"
+    let colorvalue = ev.currentTarget.dataset.colorvalue;
+    let bgColor = "";
+    if(colorvalue == "1"){
+      bgColor = "#d0d0ce"
+    } else if (colorvalue == "2") {
+      bgColor = "#e9dabd"
+    } else if (colorvalue == "3") {
+      bgColor = "#5a8258"
+    } else if (colorvalue == "4") {
+      bgColor = "#0c0b0a"
     }
-    console.log(color)
     this.setData({
-      bgColor: color,
+      bgColor,
     });
   },
   // 加入书城

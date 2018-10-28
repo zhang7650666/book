@@ -7,9 +7,6 @@ page {
   flex-direction: column;
   justify-content: flex-start;
 }
-/* icon {
-  vertical-align: middle;
-} */
 /* 搜索样式 */
 .search-wrap{
   position:relative;
@@ -52,17 +49,28 @@ page {
 }
 /* 图书*/
 
-.hot-con .more{
-  flex:0 0 60rpx;
+.main-title .book-more{
+  flex:0 0 68rpx;
   font-size:30rpx;
-  color:#999999;
+  color:#999;
+  position: relative;
+  padding-right: 60rpx;
 }
-.img-more{
-  flex:0 0 40rpx;
-  width:40rpx;
-  height:40rpx;
-  padding-right:20rpx;
-  /* position:relative;
-  top:10rpx; */
+.main-title .book-more::before,
+.main-title .book-more::after {
+  content: "";
+  position: absolute;
+  top: 10rpx;
+  right: 40rpx;
+  width: 16rpx;
+  height: 16rpx;
+  border: 2rpx solid #999;
+  border-color: #999 #999 transparent transparent;
+  transform: rotate(45deg)
 }
-
+.main-title .book-more::before {
+  right: 52rpx;
+}
+.home-main-book {
+  border-bottom: 12rpx solid #f2f2f2;
+}

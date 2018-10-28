@@ -11,18 +11,18 @@ page{
   background:#fff;
 } 
 /* 热门公用样式 */
-.hot-con{
+.main-title{
   display:flex;
   padding:36rpx 0rpx;
 }
-.hot-con .red{
+.main-title .red{
   flex:0 0 8rpx;
   width:8rpx;
   height:30rpx;
   background:red;
   margin-top:6rpx;
 }
-.hot-con .text{
+.main-title .title-text{
   flex:1;
   padding-left:40rpx;
   font-size:32rpx;

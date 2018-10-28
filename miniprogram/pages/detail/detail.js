@@ -5,6 +5,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    id: null,
     books:{
       img: "../../images/u27.jpeg",
       name: "青春年华1",
@@ -16,36 +17,25 @@ Page({
     },
     bookList:[
       {
+        id: 5678,
         img:"../../images/u27.jpeg",
         name:"青春年华1",
         author:"琼瑶"
       },
       {
+        id: 5678,
         img:"../../images/u27.jpeg",
         name:"青春年华2",
         author:"琼瑶"
       },
       {
+        id: 5678,
         img:"../../images/u27.jpeg",
         name:"青春年华3",
         author:"琼瑶"
       },
       {
-        img:"../../images/u27.jpeg",
-        name:"青春年华4",
-        author:"琼瑶"
-      },
-      {
-        img:"../../images/u27.jpeg",
-        name:"青春年华2",
-        author:"琼瑶"
-      },
-      {
-        img:"../../images/u27.jpeg",
-        name:"青春年华3",
-        author:"琼瑶"
-      },
-      {
+        id: 5678,
         img:"../../images/u27.jpeg",
         name:"青春年华4",
         author:"琼瑶"
@@ -72,7 +62,14 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    const { id } = options;
+    if (!id) {
+      //如果没有书本id 向前返回一页;
+    }
+    this.setData({
+      id,
+    })
+    this.getBookIntro();
   },
   // 继续阅读
   handleKeep(){
@@ -128,5 +125,17 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+  handleRead() {
+    wx.navigateTo({
+      url: "/pages/reading/reading"
+    })
+  },
+  /**
+   * 请求小说简介
+   */
+  getBookIntro() {
+    const {id} = this.data;
+    //请求接口
   }
 })

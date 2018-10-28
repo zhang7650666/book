@@ -5,40 +5,55 @@ Page({
    * 页面的初始数据
    */
   data: {
+    recordMap: {
+      '-1': '收费章节阅读',
+      '0': '成功签到',
+      '1': '邀请好友',
+      '2': '添加到桌面',
+      '3': '积分充值',
+    },
+    list: [],
     recordList:[
       {
         id:0,
-        desc:'成功签到，获得10积分',
+        type: '1',   //积分: 扣除, 签到、邀请好友、添加到桌面、积分充值
+        integral: 89,
         time:'2018-10-19 19:17',
       },
       {
         id: 1,
-        desc: '收费章节阅读，扣除2积分',
+        type: '-1',
+        integral: 89,
         time: '2018-10-19 19:17',
       },
       {
         id: 2,
-        desc: '邀请好友，获得10积分',
+        type: '2',
+        integral: 89,
         time: '2018-10-19 19:17',
       },
       {
         id: 3,
-        desc: '添加到桌面，获得10积分',
+        type: '3',
+        integral: 89,
         time: '2018-10-19 19:17',
       },
       {
         id: 4,
-        desc: '积分充值，获得100积分',
+        type: '0',
+        integral: 89,
         time: '2018-10-19 19:17',
       },
       {
         id: 5,
-        desc: '成功签到，获得10积分',
+        type: '1',
+        integral: 89,
         time: '2018-10-19 19:17',
       },
       {
         id: 6,
-        desc: '成功签到，获得10积分',
+        type: '1',
+        integral: 89,
         time: '2018-10-19 19:17',
       },
     ]
@@ -48,7 +63,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    this.getIntegralList();
   },
 
   /**
@@ -58,45 +73,14 @@ Page({
 
   },
 
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
+  getIntegralList() {
+    let list = this.data.recordList.map(v => {
+      v.labelText = `${this.data.recordMap[v.type]}${(v.type == '-1' ? ', 扣除' : ', 获得')}${v.integral}积分`;
+      return v
+    })
+   this.setData({
+     list: list
+   })
   }
+
 })
