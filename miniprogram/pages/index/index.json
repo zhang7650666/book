@@ -1,0 +1,5 @@
+{
+    "usingComponents":{
+      "home-book":"/components/homebook/homebook"
+    }
+}

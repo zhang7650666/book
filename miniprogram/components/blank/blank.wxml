@@ -1,0 +1,7 @@
+<!--components/blank/blank.wxml-->
+<view class="blank-page">
+    <view class="img-wrap">
+      <image src="/images/u1530.png" mode="widthFix"></image>
+    </view>
+    <text class="blank-btn" catchtap="handleStore">去书城看看</text>
+</view>

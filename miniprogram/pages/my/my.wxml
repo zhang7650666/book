@@ -1,0 +1,24 @@
+<!--miniprogram/pages/my/my.wxml-->
+<!-- 用户信息 -->
+<view class="b-user-info-block">
+  <view class="icon">
+      <image style="width: 90px; height: 90px; background-color: #eeeeee;" mode="widthFix" src="../../images/u1018.png"></image>
+  </view>
+  <view class="b-user-info">
+    <text class="we-chart-name">微信昵称叫什么</text>
+    <view class="we-chart-id">ID: <text>{{useId}}</text></view>
+    <view class="user-integral"> <image style="width: 46rpx;" mode="widthFix" src="../../images/u1018.png"></image>我的积分：{{integral}}</view>
+  </view>
+  <button plain="true" size="mini" type="warn" bindtap="userSignIn">签到</button>
+</view>
+<!-- 列表 -->
+<view class="b-user-list-block">
+   <view class="list-item" wx:for="{{userList}}" wx:key="item.label" catchtap="handleJump" data-item="{{item}}">
+      <image class="list-icon" mode="widthFix" style="width: 40rpx; " src="../../images/u1018.png"></image>
+      <text class="list-item-name">{{item.label}}</text>
+     <view class="list-right-box"> 
+        <text class="list-desc" wx:if="item.desc">{{item.desc}}</text>
+     </view>
+   </view>
+</view>
+<wk-model dialogData="{{dialogData}}" showModal="{{signInShowModel}}" bind:onCancel="hideSignInDialog" bind:onConfirmonConfirm="confirmSignInDialog" ></wk-model>

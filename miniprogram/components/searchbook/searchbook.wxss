@@ -1,0 +1,63 @@
+/* components/searchbook/searchbook.wxss */
+.search-book{
+  display:flex;
+  margin-top:40rpx;
+}
+.book-img{
+  flex:0 0 180rpx;
+  width:180rpx;
+  padding:0rpx 36rpx 0rpx 42rpx ;
+}
+.book-img image{
+  display:block;
+  width:180rpx;
+  height:228rpx;
+}
+.introduce-wrap{
+  flex:0 0 426rpx;
+  width:426rpx;
+}
+text{
+  display:block;
+}
+.book-name{
+  margin-bottom:20rpx;
+}
+.book-name text{
+  color:#333333;
+  font-size:30rpx;
+  line-height:40rpx;
+}
+.introduce{
+  margin-bottom:26rpx;
+}
+.introduce text{
+  width:426rpx;
+  color:#999999;
+  font-size:26rpx;
+  line-height:34rpx;
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+.author-type{
+  margin-bottom:20rpx;
+  display:flex;
+}
+.author-type .author{
+  flex:1;
+  color:#999999;
+  font-size:26rpx;
+  line-height:40rpx;
+}
+.author-type .btn{
+  flex:0 0 136rpx;
+  width:136rpx;
+  border:0.5rpx solid #ff3333;
+  border-radius:10rpx;
+  color:#ff3333;
+  font-size:26rpx;
+  line-height:36rpx;
+  text-align:center;
+}

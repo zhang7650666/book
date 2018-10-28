@@ -1,0 +1,6 @@
+{
+    "navigationBarTitleText": "小说详情",
+    "usingComponents": {
+      "home-book": "/components/homebook/homebook"
+    }
+  }

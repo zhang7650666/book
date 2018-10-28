@@ -1,0 +1,35 @@
+/* miniprogram/pages/service/service.wxss */
+.service-page{
+  position: relative;
+}
+.service-page .code-wrap{
+  padding-top:130rpx;
+  display:flex;
+  justify-content: center;
+}
+.service-page .code-wrap image{
+  width:342rpx;
+  height:342rpx;
+}
+.service-page .code-title{
+  display:block;
+  text-align:center;
+  padding-bottom:58rpx;
+  
+}
+.service-page .code-title text{
+  display:block;
+  height:100rpx;
+  line-height:100rpx;
+  font-size:32rpx;
+  color:#666666;
+}
+.service-page .title-info{
+  padding:0rpx 46rpx;
+}
+.service-page .title-info text{
+  display:block;
+  color:#666;
+  font-size:24rpx;
+  line-height:40rpx;
+}

@@ -1,0 +1,9 @@
+<!--miniprogram/pages/list/list.wxml-->
+<view>
+  <view class="search-show">
+    <view  wx:for="{{searchBooks}}" wx:key="item.name">
+      <search-book books="{{item}}"></search-book>
+    </view>
+  </view>
+</view>
+

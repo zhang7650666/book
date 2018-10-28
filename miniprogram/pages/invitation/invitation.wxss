@@ -1,0 +1,38 @@
+/* miniprogram/pages/invitation/invitation.wxss */
+.invitation-page{
+  position: relative;
+  text-align: center;
+  padding:136rpx 40rpx 0rpx;
+}
+.invitation-page text{
+  display: block;
+}
+.invitation-page .invitation{
+  height:132rpx;
+  line-height:132rpx;
+  font-size:68rpx;
+  color:#010101;
+}
+.invitation-page .inv-success{
+  height:106rpx;
+  line-height:106rpx;
+  font-size:44rpx;
+  color:#010101;
+}
+.invitation-page .inv-btn{
+  width:670rpx;
+  height:90rpx;
+  line-height:90rpx;
+  font-size:40rpx;
+  color:#f9f5f8;
+  background:#ee5047;
+  border-radius:20rpx;
+  margin-top:44rpx;
+  margin-bottom:20rpx;
+}
+.invitation-page .share,.invitation-page .chance{
+  height:52rpx;
+  line-height:52rpx;
+  font-size:32rpx;
+  color:#7f7f7f;
+}

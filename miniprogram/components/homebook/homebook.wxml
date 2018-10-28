@@ -1,0 +1,18 @@
+<!--miniprogram/components/homebook/homebook.wxml-->
+<view class="home-book" bindtap="handleDetail">
+    <view class="img">
+        <image src="{{books.img}}" mode="widthFix"></image>
+    </view>
+    <view class="name">
+        <text>{{books.name}}</text>
+    </view>
+    <view class="author">
+        <text>{{books.author}}</text>
+    </view>
+    <view class="remove" wx:if="{{!isEdit && isCur == 0}}" catchtap="handlenull">
+      <image src="/images/u852.png" catchtap="handleRemove" data-index="{{books.id}}"></image>
+    </view>
+    <view class="add-read" wx:if="{{!isStore && isCur == 1}}" catchtap="handlenull">
+      <image src="/images/u1488.png" catchtap="handleRead" data-index="{{books.id}}"></image>
+    </view>
+</view>

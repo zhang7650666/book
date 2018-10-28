@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "书架",
+  "usingComponents": {
+    "home-book": "/components/homebook/homebook",
+    "blank-page": "/components/blank/blank"
+  }
+}

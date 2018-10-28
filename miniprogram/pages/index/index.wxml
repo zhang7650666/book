@@ -1,0 +1,64 @@
+<!--index.wxml-->
+<view class="container">
+  <!-- 搜素 -->
+  <view class="search-wrap">
+    <view class="hide-con" bindtap='handleShow'>
+       <icon class="icon-search" type="search" size="12"></icon>
+       <text class="insert">搜索书名或作者</text>
+    </view>
+  </view>
+  <!-- 轮播图 -->
+  <swiper indicator-dots="{{indicatorDots}}"
+    autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" circular="{{circular}}">
+    <block wx:for="{{imgUrls}}" wx:key="imgUrls">
+      <swiper-item>
+        <image src="{{item}}" class="slide-image" width="355" height="150" style='width:100%; overflow:show;' mode="widthFix"/>
+      </swiper-item>
+    </block>
+  </swiper>
+  <!-- 热门推荐 -->
+  <view class="hot-main">
+      <view class="hot-con">
+        <text class="red"></text>
+        <text class="text">热门推荐</text>
+        <text class="more" bindtap="handleMore">更多</text>
+        <image class="img-more" src="/images/more.png" />
+      </view>
+      <view class="books-wrap">
+        <view class="books-main" wx:for="{{books}}" wx:key="item.name" wx:if="{{index < 6}}">
+          <home-book books="{{item}}"></home-book>
+        </view>
+      </view>
+  </view>
+  <view class="bar"></view>
+  <!-- 男生最爱 -->
+  <view class="hot-main">
+      <view class="hot-con">
+        <text class="red"></text>
+        <text class="text">男生最爱</text>
+        <text class="more" bindtap="handleMore">更多</text>
+        <image class="img-more" src="/images/more.png" mode="widthFix"/>
+      </view>
+      <view class="books-wrap">
+        <view class="books-main" wx:for="{{books}}" wx:key="item.name" wx:if="{{index < 6}}">
+          <home-book books="{{item}}"></home-book>
+        </view>
+      </view>
+  </view>
+  <view class="bar"></view>
+  <!-- 女生最爱 -->
+  <view class="hot-main">
+      <view class="hot-con">
+        <text class="red"></text>
+        <text class="text">女生最爱</text>
+        <text class="more" bindtap="handleMore">更多</text>
+        <image class="img-more" src="/images/more.png" mode="widthFix"/>
+      </view>
+      <view class="books-wrap">
+        <view class="books-main" wx:for="{{books}}" wx:key="item.name" wx:if="{{index < 6}}">
+          <home-book books="{{item}}"></home-book>
+        </view>
+      </view>
+  </view>
+  <view class="bar"></view>
+</view>

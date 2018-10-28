@@ -1,0 +1,38 @@
+<!--miniprogram/pages/store/store.wxml-->
+<view class="store-page">
+  <view class='topTabSwiper'>
+    <view class='tab  {{currentData == 0 ? "tabBorer" : ""}}'  data-current = "0" bindtap='checkCurrent'>我的书架</view>
+    <view class='tab  {{currentData == 1 ? "tabBorer" : ""}}'  data-current = "1" bindtap='checkCurrent'>最近阅读</view>
+  </view>
+  <blank-page wx:if="{{(books.length == 0 && currentData == 0) ||(readArr.length == 0 && currentData == 1)}}"></blank-page>
+  <view class="operation-wrap" wx:if="{{books.length > 0 && currentData == 0 }}">
+    <text class="count">共{{countBook}}本</text>
+    <text class="clear" wx:if="{{!isEdit}}" catchtap="handleClaer">清空所有</text>
+    <text class="edit" catchtap="handleEdit">{{isEdit ? '编辑' : '返回'}}</text>
+  </view>
+  <view class="operation-wrap" wx:if="{{currentData == 1 && readArr.length > 0}}">
+    <text class="count">喜欢的书要添加到书屋喔！</text>
+    <text class="edit" catchtap="handleHistory">清空记录</text>
+  </view>
+  <swiper current="{{currentData}}" class='swiper' duration="300" bindchange="bindchange" style="height:{{swiperHeight}}rpx" wx:if="{{books.length > 0 || readArr.length > 0}}">
+    <swiper-item>
+      <view class='swiper_con'>
+        <view class="books-wrap">
+          <view class="books-main" wx:for="{{books}}" wx:key="item.name" >
+            <home-book books="{{item}}" isEdit="{{isEdit}}" isCur="{{currentData}}" bind:removeData="handleRemove"></home-book>
+          </view>
+        </view>
+      </view>
+    </swiper-item> 
+    <swiper-item>
+      <view class='swiper_con'>
+        <view class="books-wrap">
+          <view class="books-main" wx:for="{{readArr}}" wx:key="item.name" >
+            <home-book books="{{item}}" isStore="{{item.isStore}}" isCur="{{currentData}}" bind:removeData="handleRemove"></home-book>
+          </view>
+        </view>
+      </view>
+    </swiper-item>
+  </swiper>
+</view>
+

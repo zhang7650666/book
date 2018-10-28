@@ -1,0 +1,126 @@
+/* miniprogram/pages/detail/detail.wxss */
+/* 头部样式 */
+.search-book{
+  display:flex;
+  padding:40rpx 0rpx;
+  background:#f6f6f6;
+}
+.book-img{
+  flex:0 0 180rpx;
+  width:180rpx;
+  padding:0rpx 52rpx 0rpx 60rpx ;
+}
+.book-img image{
+  display:block;
+  width:180rpx;
+  height:240rpx;
+}
+.introduce-wrap{
+  flex:0 0 426rpx;
+  width:426rpx;
+}
+text{
+  display:block;
+  color:#333333;
+  line-height:36rpx;
+  font-size:26rpx;
+}
+.book-name{
+  margin-bottom:14rpx;
+}
+.book-name text{
+  color:#333333;
+  font-size:30rpx;
+  line-height:60rpx;
+}
+/* 简介样式 */
+.introduce-text{
+  padding:26rpx 40rpx;
+}
+.introduce-text text{
+  color:#666666;
+  font-size:28rpx;
+  line-height:40rpx;
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 5;
+}
+/* 目录*/
+.directory-wrap{
+    display:flex;
+    padding:0rpx 40rpx;
+    border-top:1rpx solid #f2f2f2;
+}
+.directory-wrap .directory{
+    flex:0 0 60rpx;
+    width:60rpx;
+    color:#333333;
+    line-height:80rpx;
+    font-size:28rpx;
+}
+.directory-wrap .chapter{
+    flex:1;
+    color:#666666;
+    line-height:80rpx;
+    text-align:right;
+    font-size:26rpx;
+
+}
+/* 图书列表 */
+
+.books-wrap{
+  display:flex;
+  flex-wrap:wrap;
+  padding:0rpx 24rpx 14rpx;
+
+}
+.books-main{
+  flex:1;
+  width:33.33333%;
+  min-width:33.3333%;
+  max-width:33.3333%;
+  display:flex;
+  justify-content: center;
+}
+/*按钮组*/
+.btn-wrap{
+    display:flex;
+    flex-wrap:wrap;
+    padding:8rpx 40rpx;
+    justify-content: space-between;
+    border-top:1rpx solid #f2f2f2;
+}
+.btn-wrap text{
+    flex:0 0 296rpx;
+    text-align:center;
+    width:296rpx;
+    height:76rpx;
+    line-height:76rpx;
+    border:1rpx solid #e94241;
+    border-radius:32rpx;
+}
+.btn-wrap .add{
+    color:#e94241;
+}
+.btn-wrap .keep{
+    color:#fff;
+    background:#e94241;
+}
+.btn-remove{
+    display:flex;
+    flex-wrap:wrap;
+    padding:8rpx 40rpx;
+    justify-content: space-between;
+    border-top:1rpx solid #f2f2f2;
+}
+.btn-remove text{
+    flex:0 0 296rpx;
+    text-align:center;
+    width:296rpx;
+    height:76rpx;
+    line-height:76rpx;
+    border:1rpx solid #666666;
+    border-radius:32rpx;
+    color:#666666;
+}

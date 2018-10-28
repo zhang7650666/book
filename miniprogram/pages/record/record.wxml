@@ -1,0 +1,7 @@
+<!--miniprogram/pages/record/record.wxml-->
+<view class="record-page">
+  <view wx:for="{{recordList}}" wx:key="item.id">
+    <text class="desc">{{item.desc}}</text>
+    <text class="time">{{item.time}}</text>
+  </view>
+</view>

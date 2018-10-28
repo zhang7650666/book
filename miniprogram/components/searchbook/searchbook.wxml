@@ -1,0 +1,18 @@
+<!--components/searchbook/searchbook.wxml-->
+<view class="search-book">
+  <view class="book-img">
+    <image src="{{books.img}}" mode="widthFix"></image>
+  </view>
+  <view class="introduce-wrap">
+    <view class="book-name">
+      <text>{{books.name}}</text>
+    </view>
+     <view class="introduce">
+      <text>{{books.introduce}}</text>
+    </view>
+    <view class="author-type">
+      <text class="author">{{books.author}}</text>
+      <text class="btn">{{books.type}}</text>
+    </view>
+  </view>
+</view>

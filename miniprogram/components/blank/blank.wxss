@@ -1,0 +1,25 @@
+/* components/blank/blank.wxss */
+.blank-page{
+  text-align:center;
+}
+.blank-page .img-wrap{
+  height:680rpx;
+  margin-top:150rpx;
+}
+.blank-page .img-wrap image{
+  width:500rpx;
+  height:554rpx;
+}
+.blank-page .blank-btn{
+  display:block;
+  width:304rpx;
+  height:80rpx;
+  line-height:80rpx;
+  text-align:center;
+  font-size:24rpx;
+  color:#fff;
+  border-radius:16rpx;
+  background:#ff3333;
+  margin:0 auto;
+
+}

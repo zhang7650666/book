@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "男生频道",
+  "usingComponents": {
+    "search-book": "/components/searchbook/searchbook"
+  }
+}

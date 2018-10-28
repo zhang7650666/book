@@ -1,0 +1,78 @@
+/* miniprogram/pages/my/my.wxss */
+/* 用户信息 */
+.b-user-info-block {
+  overflow: hidden;
+  border-bottom: 1rpx solid #f1f1f1;
+  padding: 40rpx;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fafafa;
+  color: #222;
+}
+.b-user-info {
+  padding: 0 36rpx;
+  line-height: 1.5;
+  align-self: flex-start;
+}
+.we-chart-name {
+  font-size: 36rpx;
+  margin-bottom: 10rpx;
+  display: block;
+}
+.user-integral,
+.we-chart-id {
+  font-size: 30rpx;
+  margin-bottom: 6rpx;
+}
+.user-integral {
+  padding-bottom: 0;
+  display: flex;
+  align-items: center;
+}
+/* 列表 */
+.b-user-list-block {
+  overflow: hidden;
+}
+.list-item {
+  overflow: hidden;
+  border-bottom: 2rpx solid #fafafa;
+  display: flex;
+  align-items: center;
+  font-size: 30rpx;
+  padding: 0 40rpx;
+  position: relative;
+}
+.list-item::after {
+  content: "";
+  position: absolute;
+  right: 40rpx;
+  top: 50%;
+  width: 14rpx;
+  height: 14rpx;
+  border: 3rpx solid #999;
+  border-color: #999 #999 transparent transparent;
+  transform: rotate(45deg) translateY(-50%);
+}
+.list-item.color-red {
+  color:red;
+}
+.list-item .list-item-name {
+  line-height: 2.6;
+  flex: 1;
+}
+.list-right-box {
+  overflow: hidden;
+  width: 27%;
+}
+.list-icon {
+  display: inline-block;
+  width: 40rpx;
+  padding-right: 20rpx;
+}
+.list-desc {
+  font-size: 24rpx;
+  color: #999;
+}

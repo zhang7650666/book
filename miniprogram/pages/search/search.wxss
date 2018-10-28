@@ -1,0 +1,76 @@
+/* miniprogram/pages/search/search.wxss */ 
+ /* 搜索样式 */
+.search-wrap{
+  position:relative;
+  width:100%;
+  padding:20rpx 0rpx;
+  display:flex;
+  border-bottom:1rpx solid #f2f2f2;
+}
+.search-main{
+  flex: 0 0 600rpx;
+  width:600rpx;
+  height:56rpx;
+  background:#efeff4;
+  border-radius:12rpx;
+  position:relative;
+  margin-left:20rpx;
+ 
+}
+.search-main .icon-search{
+  position: absolute;
+  top:17rpx;
+  left:20rpx;
+}
+
+.ipt-search{
+  display:block;
+  width:546rpx;
+  height:56rpx;
+  background:#efeff4;
+  border-radius:12rpx;
+  font-size:28rpx;
+  color:#999;
+  line-height:56rpx;
+  padding-left:54rpx;
+}  
+.search{
+  flex:1;
+  text-align: center;
+}
+.search text{
+  color:#ea4241;
+  font-size:32rpx;
+  font-weight:bold;
+  position:relative;
+  top:6rpx;
+}
+/* 搜索列表 */
+.search-list{
+  border-bottom:1rpx solid #f2f2f2;
+  display:flex;
+  align-items: center;
+}
+.search-list .icon-search{
+  flex:0 0 34rpx;
+  padding-left:40rpx;
+}
+.search-list text{
+  font-size:26rpx;
+  color:#666666;
+  line-height:76rpx;
+}
+/* 没有搜索到内容 */
+.no-search .no-content{
+  width:100%;
+  text-align:center;
+  padding:82rpx 0rpx;
+}
+.no-search .no-content image{
+  width:230rpx;
+  height:169rpx;
+}
+.no-search .no-content text{
+  font-size:24rpx;
+  color:#999999;
+}

@@ -1,0 +1,29 @@
+/* miniprogram/pages/recharge/recharge.wxss */
+.recharge-page{
+  position: relative;
+  padding:0 46rpx;
+}
+.recharge-page .top-up{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.recharge-page .top-up .top-up-box{
+  flex:0 0 50%;
+  width:50%;
+}
+.recharge-page .top-up-btn{
+  margin-top:62rpx;
+  margin-bottom:40rpx;
+}
+.recharge-page .title-info{
+  display: flex;
+  flex-direction: column;
+}
+.recharge-page .title-info text{
+  flex:1;
+  font-size:24rpx;
+  height:36rpx;
+  line-height:36rpx;
+
+}

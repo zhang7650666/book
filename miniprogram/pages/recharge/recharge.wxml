@@ -1,0 +1,15 @@
+<!--miniprogram/pages/recharge/recharge.wxml-->
+<view class="recharge-page">
+  <view class="top-up">
+    <view class="top-up-box" wx:for="{{topUp}}" wx:key="item.id">
+      <top-up topUp="{{item}}" isActive="{{isActive}}" bind:changeActive="handleActive"></top-up>
+    </view>
+  </view>
+  <button type="warn" class="top-up-btn" catchtap="handlePay">充值</button>
+  <view class="title-info">
+      <text>充值说明</text>
+      <text>1、人民币与积分的汇率为，1元=50积分</text>
+      <text>2、积分属于虚拟货品，已经购买概不退换</text>
+      <text>3、若充值遇到任何问题，可以联系我们的客服</text>
+  </view>
+</view>

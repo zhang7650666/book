@@ -1,0 +1,37 @@
+<!--miniprogram/pages/search/search.wxml-->
+<view class='search-page'>
+    <view class="search-wrap">
+      <view class="search-main">
+        <icon class="icon-search" type="search" size="12"></icon>
+        <input class="ipt-search" placeholder="请输入关键字" value="{{iptVal}}" bindchange="bindChange"/>  
+      </view>
+      <view class="search">
+        <text>搜索</text>
+      </view>
+    </view>
+    <!-- 搜索列表 -->
+    <view wx:if="{{isShowSearch}}" class="search-list" wx:for="{{sercherStorage}}" wx:key="item.name" data-name="{{item.name}}" bindtap="handleSearch">
+      <icon class="icon-search" type="search" size="12"></icon>
+      <text>{{item.name}}</text>
+    </view>
+    <!-- 搜索到的书籍展示 -->
+    <view class="search-show" wx:if="{{!isShowSearch}}">
+      <view wx:if="{{searchBooks}}" wx:for="{{searchBooks}}" wx:key="item.name">
+        <search-book books="{{item}}"></search-book>
+      </view>
+    </view>
+    <!-- 没有找到要查看的内容 -->
+    <view class="no-search" wx:if="{{searchBooks.legth == 0}}">
+      <view class="no-content">
+        <image src="../../images/u337.png" mode="widthFix"></image>
+        <text>没有找到您想要的内容</text>
+      </view>
+      <view class="hot-con no-padding">
+        <text class="red"></text>
+        <text class="text">大家都在看</text>
+      </view>
+      <view wx:if="{{searchBooks}}" wx:for="{{searchBooks}}" wx:key="item.name">
+        <search-book books="{{item}}"></search-book>
+      </view>
+    </view>
+</view>  

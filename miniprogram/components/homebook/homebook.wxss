@@ -1,0 +1,44 @@
+/* miniprogram/components/homebook/homebook.wxss */
+.home-book{
+  position:relative;
+    padding-bottom:26rpx;
+    /* width:180rpx; */
+    width:190rpx;
+}
+.home-book .img image{
+    /* width:180rpx; */
+    width:190rpx;
+    /* height:240rpx; */
+    /* width:100%; */
+    display:block;
+}
+.home-book .name{
+    padding-top:6rpx;
+}
+.home-book .name text{
+    display:block;
+    font-size:24rpx;
+    color:#333333;
+    line-height:36rpx;
+}
+
+.home-book .author text{
+    display:block;
+    font-size:24rpx;
+    color:#999;
+    line-height:36rpx;
+}
+.remove,.add-read{
+  position: absolute;
+  left:0rpx;
+  right:0rpx;
+  bottom:0rpx;
+  top:0rpx;
+}
+.remove image,.add-read image{
+  position: absolute;
+  width:32rpx;
+  height:32rpx;
+  right:20rpx;
+  bottom:115rpx;
+}

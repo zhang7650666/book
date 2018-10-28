@@ -1,0 +1,79 @@
+<!--miniprogram/pages/reading/reading.wxml-->
+<import src="../../wxParse/wxParse.wxml"/>
+<view class="read-page" bindtap="handleSet" style="background:{{bgColor}}">
+    <view class="novel-wrap">
+        <text class="novel-title">{{readData.title}}</text>
+        <view class="novel-article" style="font-size:{{fontSize}}rpx; height:{{isPay ? 'auto':204}}rpx;overflow:hidden;">
+            <template is="wxParse" data="{{wxParseData:article.nodes}}" />
+        </view>
+        <!--积分部分 -->
+        <view class="title-info" wx:if="{{!deduction[0].checked && integral && !isPay > consume}}">
+            <view class="consume">
+                <text>阅读本章节需要消耗{{consume}}积分</text>
+            </view>
+            <view class="integral">
+                <text>我的积分 : {{integral}}积分</text> 
+            </view>
+            <view class="deduction" catchtap="checkboxChange">
+                <checkbox-group bindchange="checkboxChange" wx:if="{{!deduction[0].checked}}">
+                    <label class="checkbox" wx:for="{{deduction}}" wx:key="item.name">
+                        <checkbox value="{{item.name}}" checked="{{item.checked}}"/>{{item.value}}
+                    </label>
+                </checkbox-group>
+                <view class="go-btn">
+                    <text class="keep-btn">{{integral > consume ? '继续阅读':'积分充值'}}</text>
+                    <text class="share-btn">分享好友获取积分免费看</text>
+                </view>
+            </view>
+        </view>
+    </view>
+    
+    <view class="btn-group" wx:if="{{isPay}}">
+        <view class="prev">
+            <text class="{{curPage === 1 ? 'disabled':''}}">上一章</text>
+        </view>
+        <view class="directory" catchtap="handleDir">
+            <image src="../../images/u645.png" mode="widthFix"></image>
+            <text>目录</text>
+        </view>
+        <view class="next">
+            <text>{{endPage?'已是最后一章':'下一章'}}</text>
+        </view>
+    </view>
+    <!-- 设置弹框 -->
+    <view class="mask-wrap" wx:if="{{isMask}}">
+      <view class="go-book-store arrow-pub">
+        <text>去书城</text>
+      </view>
+       <view class="add-book-store arrow-pub">
+        <text catchtap="handleJoin">加入书架</text>
+      </view>
+       <view class="mask-main">
+          <view class="size-color">
+            <view class="font-size">
+              <text class="reduc" catchtap="handleReduc">Aa-</text>
+              <text class="num"> {{showSize}} </text>
+              <text class="reduc" catchtap="handleAdd">Aa+</text>
+            </view>
+            <view class="color-wrap">
+              <text class="gray" data-color="1" catchtap="handleColor"></text>
+              <text class="pink" data-color="2" catchtap="handleColor"></text>
+              <text class="blue" data-color="3" catchtap="handleColor"></text>
+              <text class="black" data-color="4" catchtap="handleColor"></text>
+            </view>
+          </view>
+          <view class="btn-group-mask" wx:if="{{isPay}}">
+              <view class="prev">
+                  <text class="{{curPage === 1 ? 'disabled':''}}">上一章</text>
+              </view>
+              <view class="directory" catchtap="handleDir">
+                  <image src="../../images/u645.png" mode="widthFix"></image>
+                  <text>目录</text>
+              </view>
+              <view class="next">
+                  <text>{{endPage?'已是最后一章':'下一章'}}</text>
+              </view>
+          </view>
+      </view>
+    </view>
+</view>

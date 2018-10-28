@@ -1,0 +1,9 @@
+<!--miniprogram/pages/invitation/invitation.wxml-->
+<view class="invitation-page">
+    <text class="invitation">邀请好友送积分</text>
+    <text class="inv-success">成功邀请可获得 {{integral}} 积分</text>
+    <button class='inv-btn' open-type="share" type="warn">立即邀请</button>
+    <text class="share">分享好友或者微信群，可以获取{{integral}}积分</text>
+    <text class="chance">每天只有三次机会哦</text>
+    <image src="/images/u3000.jpg" mode="widthFix"></image>
+</view>

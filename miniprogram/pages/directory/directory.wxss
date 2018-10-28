@@ -1,0 +1,50 @@
+/* miniprogram/pages/directory/directory.wxss */
+.directory-page{
+  position: relative;
+}
+.directory{
+  display:flex;
+  border-bottom:2rpx solid #e4e4e4;
+}
+.directory text{
+  flex:1;
+  color:#333333;
+  font-size:28rpx;
+  line-height:100rpx;
+  padding-left:48rpx;
+}
+.directory image{
+  flex:0 0 44rpx;
+  width:44rpx;
+  height:44rpx;
+  margin-top:28rpx;
+  margin-right:36rpx;
+}
+.dir-list{
+  position:relative;
+}
+.dir-list .list{
+  display:flex;
+  border-bottom:2rpx solid #e4e4e4;
+}
+.dir-list .list .sort{
+  flex:0 0 74rpx;
+  color:#666666;
+  font-size:28rpx;
+  line-height:100rpx;
+  padding-left:48rpx;
+}
+.dir-list .list .title{
+  flex:1;
+  color:#666666;
+  font-size:28rpx;
+  line-height:100rpx;
+  padding-left:48rpx;
+}
+.dir-list .list .is-pay{
+  flex: 0 0 56rpx;
+  font-size:28rpx;
+  line-height:100rpx;
+  padding-right:44rpx;
+  color:#e94241;
+}

@@ -1,0 +1,88 @@
+.show-btn {
+  margin-top: 100rpx;
+  color: #22cc22;
+}
+
+.modal-mask {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: #000;
+  opacity: 0.5;
+  overflow: hidden;
+  z-index: 9000;
+  color: #fff;
+}
+
+.modal-dialog {
+  width: 540rpx;
+  overflow: hidden;
+  position: fixed;
+  top: 50%;
+  left: 0;
+  z-index: 9999;
+  background: #f9f9f9;
+  margin: -180rpx 105rpx;
+  border-radius: 24rpx;
+}
+
+.modal-title {
+  padding-top: 50rpx;
+  font-size: 36rpx;
+  color: #030303;
+  text-align: center;
+}
+
+.modal-content {
+  padding: 30rpx 26rpx;
+  text-align: center;
+}
+.modal-desc {
+  padding-top: 20rpx;
+  font-size: 28rpx;
+}
+.sgin-icon-success {
+  display: inline-block;
+  width: 70rpx;
+  height: 70rpx;
+  border: 1px solid red;
+  border-radius: 100rpx;
+  position: relative;
+}
+.sgin-icon-success::after {
+  content: "";
+   position: absolute;
+   top: 15rpx;
+   left: 25rpx;
+   width: 20rpx;
+   height: 30rpx;
+   border: 3rpx solid red;
+   border-color:transparent  red red transparent ;
+   transform: rotate(45deg);
+}
+.modal-footer {
+  display: flex;
+  flex-direction: row;
+  height: 86rpx;
+  border-top: 1px solid #dedede;
+  font-size: 34rpx;
+  line-height: 86rpx;
+  justify-content: center;
+}
+
+.btn-cancel {
+  /* width: 50%; */
+  color: #666;
+  text-align: center;
+  border-right: 1px solid #dedede;
+  flex: 1,
+}
+
+.btn-confirm {
+  /* width: 50%; */
+  color: #ec5300;
+  text-align: center;
+  flex: 1;
+}

@@ -1,0 +1,10 @@
+<!--components/top-up/topUp.wxml-->
+<view class="top-up-page {{isActive == topUp.id ? 'active':''}}" data-item="{{topUp}}" catchtap="handleActive">
+   <text class="money">{{topUp.money}} 元</text>
+   <view class="discount">
+      <text class="proportion">{{topUp.proportion}}</text>
+      <text class="giving" wx:if="{{topUp.giving > 0}}"> + {{topUp.giving}}</text>
+      <text class="integral"> 积分</text>
+   </view>
+   <text class="add" wx:if="{{topUp.add > 0}}">{{topUp.add}}</text>
+</view>

@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "积分充值",
+  "usingComponents": {
+    "top-up": "/components/topUp/topUp"
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "cloud": true,
+  "pages": [
+    "pages/my/my",
+    "pages/index/index",
+    "pages/store/store",
+    "pages/detail/detail",
+    "pages/directory/directory",
+    "pages/reading/reading",
+    "pages/search/search",
+    "pages/userConsole/userConsole",
+    "pages/storageConsole/storageConsole",
+    "pages/databaseGuide/databaseGuide",
+    "pages/addFunction/addFunction",
+    "pages/deployFunctions/deployFunctions",
+    "pages/chooseLib/chooseLib",
+    "components/homebook/homebook",
+    "components/blank/blank",
+    "pages/home/home",
+    "pages/list/list",
+    "pages/wxPay/wxPay",
+    "pages/record/record", 
+    "pages/service/service",
+    "pages/recharge/recharge",
+    "pages/invitation/invitation"
+  ],
+  "window": {
+    "backgroundColor": "#F6F6F6",
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#e94241",
+    "navigationBarTitleText": "满满小说",
+    "navigationBarTextStyle": "white"
+  },
+  "tabBar": {
+    "selectedColor": "#EA5149",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "书架",
+        "iconPath": "/images/u219.png",
+        "selectedIconPath": "/images/u747.png"
+      },
+      {
+        "pagePath": "pages/store/store",
+        "text": "书城",
+        "iconPath": "/images/u752.png",
+        "selectedIconPath": "/images/u224.png"
+      },
+      {
+        "pagePath": "pages/my/my",
+        "text": "我的",
+        "iconPath": "/images/u229.png",
+        "selectedIconPath": "/images/u1064.png"
+      }
+    ]
+  },
+  "enablePullDownRefresh": true,
+  "onReachBottomDistance": 50
+}

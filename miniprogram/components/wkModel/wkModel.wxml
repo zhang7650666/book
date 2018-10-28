@@ -1,0 +1,17 @@
+<!--弹窗-->
+<view class="modal-mask" catchtap="hideModal" catchtouchmove="preventTouchMove" wx:if="{{showModal}}"></view>
+<view class="modal-dialog" wx:if="{{showModal}}">
+    <view wx:if="{{dialogData.title}}" 
+    class="modal-title">{{dialogData.title || "提示"}} </view>
+    <view class="modal-content">
+     <!-- <image wx:if="{{dialogData.icon}}" src="{{dialogData.icon}}"></image> -->
+       <!-- <icon type="success" size="40" color="red"/> -->
+       <view class="sgin-icon-success"></view>
+       <view class="modal-desc">{{dialogData.desc}} </view>
+    </view>
+      <view class="modal-footer">
+        <!-- <view wx:if="{{!dialogData.isComfrim}}" class="btn-cancel" bindtap="onCancel" data-status="cancel">取消</view> -->
+        <view class="btn-confirm" bindtap="onConfirm" 
+        data-status="confirm">我知道了</view>
+    </view>
+</view>
