@@ -19,7 +19,8 @@
 
 App({
   onLaunch: function (resa) {
-    let openId = (wx.getStorageSync('openId'))
+    // let openId = (wx.getStorageSync('openId'));
+    let openId = false;
     if (openId) {
       wx.getUserInfo({
         success(res) {
@@ -41,6 +42,8 @@ App({
             wx.getUserInfo({
               withCredentials: true,
               success(res_user) {
+                console.log(res_user)
+                this.globalData.userInfo = res_user.userInfo;
                 // wx.request({
                 //   //后台接口地址
                 //   success: function (res) {
@@ -56,6 +59,7 @@ App({
                     if (res.confirm) {
                       wx.openSetting({
                         success: (res) => {
+                          console.log(res)
                           if (res.authSetting["scope.userInfo"]) {////如果用户重新同意了授权登录
                             wx.login({
                               success: function (res_login) {
@@ -76,6 +80,7 @@ App({
                           }
                         }, 
                         fail(res) {
+                          console.log('失败了')
                         }
                       })
                     }

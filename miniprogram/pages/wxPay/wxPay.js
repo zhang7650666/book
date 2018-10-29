@@ -1,4 +1,5 @@
 // miniprogram/pages/wxPay/wxPay.js
+import {http} from "../../util/http.js";
 Page({
 
   /**

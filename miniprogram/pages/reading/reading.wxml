@@ -29,14 +29,14 @@
     </view>
     
     <view class="btn-group" wx:if="{{isPay}}">
-        <view class="prev">
+        <view class="prev" catchtap="handlePrev">
             <text class="{{curPage === 1 ? 'disabled':''}}">上一章</text>
         </view>
         <view class="directory" catchtap="handleDir">
             <image src="../../images/u645.png" mode="widthFix"></image>
             <text>目录</text>
         </view>
-        <view class="next">
+        <view class="next" catchtap="handleNext">
             <text>{{endPage?'已是最后一章':'下一章'}}</text>
         </view>
     </view>
@@ -63,14 +63,14 @@
             </view>
           </view>
           <view class="btn-group-mask" wx:if="{{isPay}}">
-              <view class="prev">
+              <view class="prev" catchtap="handlePrev">
                   <text class="{{curPage === 1 ? 'disabled':''}}">上一章</text>
               </view>
               <view class="directory" catchtap="handleDir">
                   <image src="../../images/u645.png" mode="widthFix"></image>
                   <text>目录</text>
               </view>
-              <view class="next">
+              <view class="next" catchtap="handleNext">
                   <text>{{endPage?'已是最后一章':'下一章'}}</text>
               </view>
           </view>

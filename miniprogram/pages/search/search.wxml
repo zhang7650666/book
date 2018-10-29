@@ -3,9 +3,9 @@
     <view class="search-wrap">
       <view class="search-main">
         <icon class="icon-search" type="search" size="16"></icon>
-        <input class="ipt-search" placeholder="请输入关键字" value="{{iptVal}}" bindchange="bindChange"/>  
+        <input class="ipt-search" placeholder="请输入关键字" value="{{iptVal}}" bindchange="bindChange" />
       </view>
-      <view class="search">
+      <view class="search" catchtap="bindChange">
         <text>搜索</text>
       </view>
     </view>

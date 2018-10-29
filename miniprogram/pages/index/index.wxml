@@ -21,7 +21,7 @@
       <view class="main-title">
         <text class="red"></text>
         <text class="title-text">热门推荐</text>
-        <text class="book-more" bindtap="handleMore">更多</text>
+        <text class="book-more" data-title="1" bindtap="handleMore">更多</text>
       </view>
       <view class="books-wrap">
         <view class="books-main" wx:for="{{books}}" wx:key="item.name" wx:if="{{index < 6}}">
@@ -35,7 +35,7 @@
       <view class="main-title">
         <text class="red"></text>
         <text class="title-text">男生最爱</text>
-        <text class="book-more" bindtap="handleMore">更多</text>
+        <text class="book-more" data-title="2" bindtap="handleMore">更多</text>
       </view>
       <view class="books-wrap">
         <view class="books-main" wx:for="{{books}}" wx:key="item.name" wx:if="{{index < 6}}">
@@ -49,7 +49,7 @@
       <view class="main-title">
         <text class="red"></text>
         <text class="title-text">女生最爱</text>
-        <text class="book-more" bindtap="handleMore">更多</text>
+        <text class="book-more" data-title="3" bindtap="handleMore">更多</text>
       </view>
       <view class="books-wrap">
         <view class="books-main" wx:for="{{books}}" wx:key="item.name" wx:if="{{index < 6}}">

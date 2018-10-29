@@ -1,5 +1,5 @@
 // miniprogram/pages/home/home.js
-
+import {http} from "../../util/http.js";
 Page({
 
   /**
@@ -93,9 +93,9 @@ Page({
     })
   },
   // 点击更多
-  handleMore(){
+  handleMore(ev){
     wx.navigateTo({
-      url: '/pages/list/list'
+      url: `/pages/list/list?title=${ev.currentTarget.dataset.title}`
     })
   },
   /**

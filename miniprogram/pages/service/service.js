@@ -1,4 +1,5 @@
 // miniprogram/pages/service/service.js
+import {http} from "../../util/http.js";
 Page({
 
   /**

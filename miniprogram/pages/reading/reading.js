@@ -104,6 +104,44 @@ Page({
       url: "/pages/directory/directory",
     })
   },
+  // 上一章
+  handlePrev(){
+    let _this = this;
+    axios.request({
+      url:"classic",
+      data:'',
+      success(data){
+        // 拿到的数据只取前10条数据
+        wx.showToast({
+          title: "已添加到书架",
+          icon: 'success',
+          duration: 2000,
+        });
+        _this.setData({
+          isMask:false,
+        })
+      }
+    })
+  },
+  handleNext(){
+    let _this = this;
+    axios.request({
+      url:"classic",
+      data:'',
+      success(data){
+        // 拿到的数据只取前10条数据
+        wx.showToast({
+          title: "已添加到书架",
+          icon: 'success',
+          duration: 2000,
+        });
+        _this.setData({
+          isMask:false,
+        })
+      }
+    })
+  },
+  // 下一章
   /**
    * 生命周期函数--监听页面加载
    */

@@ -1,7 +1,6 @@
 // miniprogram/pages/search/search.js
 import {http} from "../../util/http.js";
 Page({
-
   /**
    * 页面的初始数据
    */

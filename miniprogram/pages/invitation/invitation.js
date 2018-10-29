@@ -1,4 +1,5 @@
 // miniprogram/pages/invitation/invitation.js
+import {http} from "../../util/http.js";
 Page({
 
   /**

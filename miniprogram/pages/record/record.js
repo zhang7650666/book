@@ -1,4 +1,5 @@
 // miniprogram/pages/record/record.js
+import {http} from "../../util/http.js";
 Page({
 
   /**
