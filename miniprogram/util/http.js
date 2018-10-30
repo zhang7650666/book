@@ -7,7 +7,7 @@ const tips = {
 class HTTP{
   request(params){
     if(!params.method){
-      params.method = "GET";
+      params.method = "POST";
     }
     wx.request({
       url: config.baseUrl + params.url,

@@ -109,6 +109,7 @@ Page({
     http.request({
       url:"classic",
       data:'',
+      // token:wx.getStorageSync('token'),
       success(data){
         // 拿到的数据只取前10条数据
         console.log(data);

@@ -163,6 +163,18 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    http.request({
+      url: "ad_list",
+      data:{
+        alias:'aaaa',
+      },
+      method:"POST",
+      // token:wx.getStorageSync('token'),
+      success(data) {
+        // 拿到的数据只取前10条数据
+        console.log(data);
+      }
+    })
   },
   // 搜索切换
   handleShow() {
