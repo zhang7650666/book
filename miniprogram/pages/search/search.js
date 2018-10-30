@@ -6,7 +6,7 @@ Page({
    */
   data: {
     iptVal:"", // 输入框的绑定值
-    isShowSearch:false, // searchStorage 展示隐藏
+    isShowSearch:true, // searchStorage 展示隐藏
     sercherStorage:[
       {"id":"0001",name:"坏蛋是怎样炼成的"},
       { "id": "0002", name: "坏蛋是怎样炼成的" },

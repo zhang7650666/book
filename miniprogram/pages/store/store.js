@@ -6,7 +6,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    currentData: 1, // 当前选项卡
+    currentData: 0, // 当前选项卡
     countBook:100, // 总共多少本书
     isEdit: true, // 是否是编辑
     swiperHeight:800,

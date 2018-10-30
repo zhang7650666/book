@@ -44,6 +44,8 @@
   font-size: 30rpx;
   padding: 0 40rpx;
   position: relative;
+  height:100rpx;
+  
 }
 .list-item::after {
   content: "";
@@ -57,10 +59,9 @@
   transform: rotate(45deg) translateY(-50%);
 }
 .list-item.color-red {
-  color:red;
+  color:#EA5149;
 }
 .list-item .list-item-name {
-  line-height: 2.6;
   flex: 1;
 }
 .list-right-box {

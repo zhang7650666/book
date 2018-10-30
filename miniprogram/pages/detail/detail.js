@@ -7,6 +7,8 @@ Page({
    */
   data: {
     id: null,
+    isFirst: false, // 是否第一次阅读
+    isStore:true, // 是否在书架
     books:{
       img: "../../images/u27.jpeg",
       name: "青春年华1",
@@ -77,7 +79,28 @@ Page({
     wx.navigateTo({
       url: "/pages/reading/reading"
     })
-    
+  },
+  // 加入书架
+  handleAdd(){
+    wx.showToast({
+      title: "已添加到书架",
+      icon: 'success',
+      duration: 2000
+    })
+  },
+  // 移出书架
+  handleRemove(){
+    wx.showToast({
+      title: "已从书架中移出",
+      icon: 'success',
+      duration: 2000
+    })
+  },
+  // 跳转目录页面
+  handleDir(){
+    wx.navigateTo({
+      url: "/pages/directory/directory",
+    })
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

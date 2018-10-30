@@ -14,7 +14,7 @@
 <!-- 列表 -->
 <view class="b-user-list-block">
    <view class="list-item" wx:for="{{userList}}" wx:key="item.label" catchtap="handleJump" data-item="{{item}}">
-      <image class="list-icon" mode="widthFix" style="width: 40rpx; " src="../../images/u1018.png"></image>
+      <image class="list-icon" mode="widthFix" style="width: 40rpx; " src="{{item.icon}}"></image>
       <text class="list-item-name">{{item.label}}</text>
      <view class="list-right-box"> 
         <text class="list-desc" wx:if="item.desc">{{item.desc}}</text>

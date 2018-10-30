@@ -48,7 +48,7 @@
   width: 56rpx;
   height: 56rpx;
   border-radius: 60rpx;
-  border: 2rpx solid red;
+  border: 2rpx solid #EA5149;
 }
 .icon-add-book::before,
 .icon-add-book::after,
@@ -59,7 +59,7 @@
   left: 10%;
   width: 80%;
   height: 3rpx;
-  background-color: red;
+  background-color: #EA5149;
 }
 .icon-add-book::after {
   transform: rotate(90deg)

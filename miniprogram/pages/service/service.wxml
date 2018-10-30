@@ -1,10 +1,10 @@
 <!--miniprogram/pages/service/service.wxml-->
 <view class="service-page">
     <view class="code-wrap">
-      <image src="/images/u1601.png"></image>
+      <image src="/images/code.jpeg"></image>
     </view>
     <view class="code-title">
-     <text>慢慢小说</text>
+     <text>满满小说</text>
     </view>
     <view class="title-info">
       <text class="way">关注方式</text>

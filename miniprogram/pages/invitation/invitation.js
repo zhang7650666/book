@@ -15,7 +15,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-  
+    
   },
 
   /**
@@ -79,8 +79,7 @@ Page({
         let flag = this.addCount > this.count ? '已转发' : `获得${integral}积分`;
         wx.showToast({
           title: flag ,
-          // icon: 'success',
-          icon: 'images/u1565.jpeg',
+          icon: 'success',
           duration: 2000
         })
       },
@@ -88,7 +87,7 @@ Page({
         // 转发失败
         wx.showToast({
           title: `邀请失败`,
-          icon: 'images/u1565.jpeg',
+          image: '/images/u1565.png',
           duration: 2000
         })
       }

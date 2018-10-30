@@ -14,12 +14,13 @@ page{
 .main-title{
   display:flex;
   padding:36rpx 0rpx;
+  justify-content: center;
 }
 .main-title .red{
   flex:0 0 8rpx;
   width:8rpx;
   height:30rpx;
-  background:red;
+  background:#EA5149;
   margin-top:6rpx;
 }
 .main-title .title-text{

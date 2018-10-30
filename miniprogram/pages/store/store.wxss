@@ -22,8 +22,8 @@
   color:#222;
 }
 .tab-active{
-  border-bottom: 1px solid #ff0000;
- color:#ff3333;
+  border-bottom: 1px solid #EA5149;
+ color:#EA5149;
 }
 .swiper{
   width: 100%;
@@ -62,11 +62,11 @@
 .operation-wrap .edit{
   flex: 0 0 180rpx;
   width: 180rpx;
-  border:0.5rpx solid red;
+  border:0.5rpx solid #EA5149;
   border-radius:32rpx;
   line-height:50rpx;
   text-align:center;
-  color:red;
+  color:#EA5149;
   font-size: 28rpx;
   background-color: #fff;
 }

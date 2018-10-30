@@ -19,7 +19,7 @@
 }
 .search-main .icon-search{
   position: absolute;
-  top:17rpx;
+  top:23rpx;
   left:20rpx;
 }
 
@@ -39,7 +39,7 @@
   text-align: center;
 }
 .search text{
-  color:#ea4241;
+  color:#EA5149;
   font-size:32rpx;
   font-weight:bold;
 }

@@ -21,7 +21,7 @@
   display:block;
   height:100rpx;
   line-height:100rpx;
-  font-size:32rpx;
+  font-size:34rpx;
   color:#666666;
 }
 .service-page .title-info{
@@ -30,6 +30,6 @@
 .service-page .title-info text{
   display:block;
   color:#666;
-  font-size:24rpx;
+  font-size:26rpx;
   line-height:40rpx;
 }

@@ -35,13 +35,13 @@
     "selectedColor": "#EA5149",
     "list": [
       {
-        "pagePath": "pages/index/index",
+        "pagePath": "pages/store/store",
         "text": "书架",
         "iconPath": "/images/u219.png",
         "selectedIconPath": "/images/u747.png"
       },
       {
-        "pagePath": "pages/store/store",
+        "pagePath": "pages/index/index",
         "text": "书城",
         "iconPath": "/images/u752.png",
         "selectedIconPath": "/images/u224.png"

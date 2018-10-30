@@ -1,5 +1,5 @@
 // miniprogram/pages/reading/reading.js
-import {axios} from "../../util/http.js";
+import {http} from "../../util/http.js";
 let WxParse = require('../../wxParse/wxParse.js');
 Page({
 
@@ -7,6 +7,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    bgActive: 2, // 背景色选中
     readData:{
       title:"不经历风雨怎么能够见到彩虹",
       article:'<div><p>“再一次来到深圳，再次来到广东，我们就是要在这里向世界宣示：中国改革开放永不停步！下一个40年的中国，定当有让世界刮目相看的新成就！”</p><p>24日上午，习近平在深圳参观“大潮起珠江——广东改革开放40周年展览”时坚定作出上述表示。</p><p>展览中，今昔图片强烈对比，历史场景历历再现，全景展示了广东改革开放40年的峥嵘岁月。习近平不时驻足察看，询问有关细节。在会见广东省改革开放相关方面代表时，习近平指出，今年是改革开放40周年。40年来，中国发展成就令世界刮目相看。既然是越走越好，为什么不继续走下去呢？即便我们存在这样那样的一些困难和问题，也要在继续走下去中加以解决、加以克服。我们要坚定沿着改革开放之路走下去，同时要向更深更广的领域中不断开拓，不断提高水平。（记者：张晓松、鞠鹏）,</p></div>',　
@@ -66,23 +67,29 @@ Page({
   handleColor(ev){
     let colorvalue = ev.currentTarget.dataset.colorvalue;
     let bgColor = "";
+    let bgActive = 2;
     if(colorvalue == "1"){
-      bgColor = "#d0d0ce"
+      bgActive = 1;
+      bgColor = "#fff";
     } else if (colorvalue == "2") {
-      bgColor = "#e9dabd"
+      bgColor = "#e9dabd";
+      bgActive = 2;
     } else if (colorvalue == "3") {
-      bgColor = "#5a8258"
+      bgActive = 4;
+      bgColor = "#5a8258";
     } else if (colorvalue == "4") {
-      bgColor = "#0c0b0a"
+      bgColor = "#0c0b0a";
+      bgActive = 4;
     }
     this.setData({
       bgColor,
+      bgActive,
     });
   },
   // 加入书城
   handleJoin(){
     let _this = this;
-    axios.request({
+    http.request({
       url:"classic",
       data:'',
       success(data){
@@ -104,19 +111,25 @@ Page({
       url: "/pages/directory/directory",
     })
   },
+  // 去书城
+  handleStore(){
+    wx.switchTab({
+      url: "/pages/index/index",
+    })
+  },
   // 上一章
   handlePrev(){
     let _this = this;
-    axios.request({
+    http.request({
       url:"classic",
       data:'',
       success(data){
         // 拿到的数据只取前10条数据
-        wx.showToast({
-          title: "已添加到书架",
-          icon: 'success',
-          duration: 2000,
-        });
+        // wx.showToast({
+        //   title: "已添加到书架",
+        //   icon: 'success',
+        //   duration: 2000,
+        // });
         _this.setData({
           isMask:false,
         })
@@ -125,16 +138,16 @@ Page({
   },
   handleNext(){
     let _this = this;
-    axios.request({
+    http.request({
       url:"classic",
       data:'',
       success(data){
         // 拿到的数据只取前10条数据
-        wx.showToast({
-          title: "已添加到书架",
-          icon: 'success',
-          duration: 2000,
-        });
+        // wx.showToast({
+        //   title: "已添加到书架",
+        //   icon: 'success',
+        //   duration: 2000,
+        // });
         _this.setData({
           isMask:false,
         })

@@ -22,12 +22,12 @@ page {
   background:#efeff4;
   border-radius:12rpx;
 }
-.icon-search{
+ .icon-search{
   position: relative;
   top:2rpx;
 }
 .insert{
-  display:inlie-block;
+  display:inline-block ;
   height:56rpx;
   border-radius:12rpx;
   font-size:28rpx;
@@ -56,12 +56,11 @@ page {
   position: relative;
   padding-right: 60rpx;
 }
-.main-title .book-more::before,
-.main-title .book-more::after {
+.main-title .book-more::before{
   content: "";
   position: absolute;
-  top: 10rpx;
-  right: 40rpx;
+  top: 12rpx;
+  right: 45rpx;
   width: 16rpx;
   height: 16rpx;
   border: 2rpx solid #999;
@@ -69,7 +68,7 @@ page {
   transform: rotate(45deg)
 }
 .main-title .book-more::before {
-  right: 52rpx;
+  right: 42rpx;
 }
 .home-main-book {
   border-bottom: 12rpx solid #f2f2f2;

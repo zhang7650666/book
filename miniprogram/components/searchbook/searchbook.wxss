@@ -39,7 +39,7 @@ text{
   display: -webkit-box;
   overflow: hidden;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 4;
 }
 .author-type{
   margin-bottom:20rpx;
@@ -54,9 +54,9 @@ text{
 .author-type .btn{
   flex:0 0 136rpx;
   width:136rpx;
-  border:0.5rpx solid #ff3333;
+  border:0.5rpx solid #EA5149;
   border-radius:10rpx;
-  color:#ff3333;
+  color:#EA5149;
   font-size:26rpx;
   line-height:36rpx;
   text-align:center;

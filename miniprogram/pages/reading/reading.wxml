@@ -42,7 +42,7 @@
     </view>
     <!-- 设置弹框 -->
     <view class="mask-wrap" wx:if="{{isMask}}">
-      <view class="go-book-store arrow-pub">
+      <view class="go-book-store arrow-pub" catchtap="handleStore">
         <text>去书城</text>
       </view>
        <view class="add-book-store arrow-pub">
@@ -56,10 +56,10 @@
               <text class="reduc" catchtap="handleAdd">Aa+</text>
             </view>
             <view class="color-wrap">
-              <text class="gray" data-colorvalue="1" catchtap="handleColor"></text>
-              <text class="pink" data-colorvalue="2" catchtap="handleColor"></text>
-              <text class="blue" data-colorvalue="3" catchtap="handleColor"></text>
-              <text class="black" data-colorvalue="4" catchtap="handleColor"></text>
+              <text class="gray {{bgActive == 1 ? 'active':''}}" data-colorvalue="1" catchtap="handleColor"></text>
+              <text class="pink {{bgActive == 2 ? 'active':''}}"  data-colorvalue="2" catchtap="handleColor" ></text>
+              <text class="blue {{bgActive == 3 ? 'active':''}}" data-colorvalue="3" catchtap="handleColor" ></text>
+              <text class="black {{bgActive == 4 ? 'active':''}}" data-colorvalue="4" catchtap="handleColor"></text>
             </view>
           </view>
           <view class="btn-group-mask" wx:if="{{isPay}}">

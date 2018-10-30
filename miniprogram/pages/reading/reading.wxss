@@ -151,19 +151,22 @@
 }
 .color-wrap .gray{
   border:2rpx solid #fff;
-  background:#d0d0ce;
+  background:#fff;
 }
 .color-wrap .pink{
-  border:2rpx solid #c70807;
+  border:2rpx solid #fff;
   background:#e9dabd;
 }
 .color-wrap .blue{
-  border:2rpx solid #f2f3f2;
+  border:2rpx solid #fff;
   background:#5a8258;
 }
 .color-wrap .black{
   border:2rpx solid #ffffff;
   background:#0c0b0a;
+}
+.color-wrap .active{
+   border:2rpx solid #EA5149;
 }
 
 
@@ -271,14 +274,14 @@ checkbox .wx-checkbox-input.wx-checkbox-input-checked::before {
   line-height:80rpx;
   text-align:center;
   border-radius:20rpx;
-  border: 2rpx solid #e94241;
+  border: 2rpx solid #EA5149;
 }
 .go-btn .keep-btn{
-  background:#e94241;
+  background:#EA5149;
   color:#fff;
   margin-bottom:44rpx;
 }
 .go-btn .share-btn{
   background:#fff;
-  color:#e94241;
+  color:#EA5149;
 }

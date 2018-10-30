@@ -57,5 +57,13 @@
         </view>
       </view>
   </view>
+  <!--大家都在看-->
+  <view class="main-title">
+      <text class="red"></text>
+      <text class="title-text">大家都在看</text>
+    </view>
+    <view  wx:for="{{searchBooks}}" wx:key="item.name" wx:if="{{index <30}}">
+      <search-book books="{{item}}"></search-book>
+    </view>
   <!-- <view class="bar"></view> -->
 </view>

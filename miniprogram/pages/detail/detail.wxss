@@ -4,6 +4,7 @@
   display:flex;
   padding:40rpx 0rpx;
   background:#f6f6f6;
+
 }
 .book-cover{
   flex:0 0 180rpx;
@@ -92,6 +93,7 @@ text{
     padding:8rpx 40rpx;
     justify-content: space-between;
     border-top:1rpx solid #f2f2f2;
+    padding-bottom:100rpx;
 }
 .btn-wrap text{
     flex:0 0 296rpx;
@@ -99,24 +101,18 @@ text{
     width:296rpx;
     height:76rpx;
     line-height:76rpx;
-    border:1rpx solid #e94241;
+    border:1rpx solid #EA5149;
     border-radius:32rpx;
 }
 .btn-wrap .add{
-    color:#e94241;
+    color:#EA5149;
 }
 .btn-wrap .keep{
     color:#fff;
-    background:#e94241;
+    background:#EA5149;
 }
-.btn-remove{
-    display:flex;
-    flex-wrap:wrap;
-    padding:8rpx 40rpx;
-    justify-content: space-between;
-    border-top:1rpx solid #f2f2f2;
-}
-.btn-remove text{
+
+.btn-wrap .btn-remove{
     flex:0 0 296rpx;
     text-align:center;
     width:296rpx;

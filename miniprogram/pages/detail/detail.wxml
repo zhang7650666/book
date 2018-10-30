@@ -28,7 +28,7 @@
         <text>{{books.introduce}}</text>
     </view>
     <!--简介-->
-    <view class="directory-wrap">
+    <view class="directory-wrap" catchtap="handleDir">
         <text class="directory">目录</text>
         <text class="chapter">更新至第99章xxxxxxxxx</text>
     </view>
@@ -43,11 +43,9 @@
         </view>
     </view>
     <view class="btn-wrap">
-        <text class="add">加入书城</text>
-        <text class="keep" bindtap="handleKeep">继续阅读</text>
-    </view>
-    <view class="btn-remove">
-        <text>移除书城</text>
+        <text class="add" catchtap="handleAdd" wx:if="{{!isStore}}">加入书架</text>
+        <text class="btn-remove" wx:if="{{isStore}}"  catchtap="handleRemove">移出书架</text>
+        <text class="keep" bindtap="handleKeep">{{isFirst ? '开始阅读':'继续阅读'}}</text>
     </view>
 </view>
 

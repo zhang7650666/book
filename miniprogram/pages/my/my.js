@@ -30,28 +30,28 @@ Page({
     //列表数据
     userList: [
       {
-        icon: '',
+        icon: '/images/my1.png',
         label: '积分充值',
         url:"/pages/recharge/recharge",
       },
       {
-        icon: '',
+        icon: '/images/my2.png',
         label: '积分记录',
         url: "/pages/record/record",
       },
       {
-        icon: '',
+        icon: '/images/my5.png',
         label: '邀请好友 ',
         desc: '可获得30积分',
         url: "/pages/invitation/invitation",
       },
       {
-        icon: '',
+        icon: '/images/my4.png',
         label: '联系客服 ',
         url: "/pages/service/service",
       },
       {
-        icon: '',
+        icon: '/images/my3.png',
         label: '添加到桌面 ',
         desc: '可获得10积分',
         url: "",

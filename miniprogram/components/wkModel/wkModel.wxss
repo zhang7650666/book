@@ -47,7 +47,7 @@
   display: inline-block;
   width: 70rpx;
   height: 70rpx;
-  border: 1px solid red;
+  border: 1px solid #EA5149;
   border-radius: 100rpx;
   position: relative;
 }
@@ -58,8 +58,8 @@
    left: 25rpx;
    width: 20rpx;
    height: 30rpx;
-   border: 3rpx solid red;
-   border-color:transparent  red red transparent ;
+   border: 3rpx solid #EA5149;
+   border-color:transparent  #EA5149 #EA5149 transparent ;
    transform: rotate(45deg);
 }
 .modal-footer {
@@ -82,7 +82,7 @@
 
 .btn-confirm {
   /* width: 50%; */
-  color: #ec5300;
+  color: #EA5149;
   text-align: center;
   flex: 1;
 }

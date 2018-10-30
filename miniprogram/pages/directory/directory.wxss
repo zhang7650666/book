@@ -45,5 +45,5 @@
 .dir-list .list .is-pay{
   flex: 0 0 60rpx;
   font-size: 30rpx;
-  color:#e94241;
+  color:#EA5149;
 }
