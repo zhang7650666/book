@@ -17,6 +17,9 @@
     </block>
   </swiper>
   <!-- 热门推荐 -->
+  <!-- <button bindtap='tapToAuthorize'>按钮</button>
+  <button open-type="openSetting">打开授权设置页</button> -->
+  <!-- <button open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="onGotUserInfo">获取用户信息</button> -->
   <view class="home-main-book">
       <view class="main-title">
         <text class="red"></text>
