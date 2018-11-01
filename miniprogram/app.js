@@ -1,113 +1,187 @@
 //app.js
-// App({
-//   onLaunch: function () {
-    
-//     if (!wx.cloud) {
-//       console.error('请使用 2.2.3 或以上的基础库以使用云能力')
-//     } else {
-//       wx.cloud.init({
-//         traceUser: true,
-//       })
-//     }
 
-//     this.globalData = {
-
-//     }
-//   }
-// }) 
 
 import { http } from "/util/http.js";
 App({
-  // onLaunch: function (resa) {
-  //   // let openId = (wx.getStorageSync('openId'));
-  //   let openId = false;
-  //   if (openId) {
-  //     wx.getUserInfo({
-  //       success(res) {
-  //         this.globalData.userInfo = res.userInfo;
-  //         // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-  //         // 所以此处加入 callback 以防止这种情况
-  //         if (this.userInfoReadyCallback) {
-  //           this.userInfoReadyCallback(res)
-  //         }
-  //       },
-  //       fail() {
-  //         console.log("获取失败！")
-  //       }
-  //     })
-  //   } else {
-  //     wx.login({
-  //       success(res) {
-  //         console.log(res)
-  //         if (res.code) {
-  //           wx.getUserInfo({
-  //             withCredentials: true,
-  //             success(res_user) {
-  //               console.log(res_user)
-  //               http.request({
-  //                 url: "token",
-  //                 data: {
-  //                   login_code: res.code,
-  //                 },
-  //                 method: "POST",
-  //                 // token:wx.getStorageSync('token'),
-  //                 success(data) {
-  //                   // 拿到的数据只取前10条数据
-  //                   console.log(data);
-  //                 }
-  //               })
-  //             }, 
-  //             fail() {
-  //               wx.showModal({
-  //                 title: '警告通知',
-  //                 content: '您点击了拒绝授权,将无法正常显示个人信息,点击确定重新获取授权。',
-  //                 success(res) {
-  //                   if (res.confirm) {
-  //                     wx.openSetting({
-  //                       success: (res) => {
-  //                         console.log(res)
-  //                         if (res.authSetting["scope.userInfo"]) {////如果用户重新同意了授权登录
-  //                           wx.login({
-  //                             success: function (res_login) {
-  //                               if (res_login.code) {
-  //                                 wx.getUserInfo({
-  //                                   withCredentials: true,
-  //                                   success(res_user) {
-  //                                     http.request({
-  //                                       url: "token",
-  //                                       data: {
-  //                                         login_code: res_login,
-  //                                       },
-  //                                       method: "POST",
-  //                                       // token:wx.getStorageSync('token'),
-  //                                       success(data) {
-  //                                         // 拿到的数据只取前10条数据
-  //                                         console.log('账号信息请求成功');
-  //                                       }
-  //                                     })
-  //                                   }
-  //                                 })
-  //                               }
-  //                             }
-  //                           });
-  //                         }
-  //                       }, 
-  //                       fail(res) {
-  //                         console.log('失败了')
-  //                       }
-  //                     })
-  //                   }
-  //                 }
-  //               })
-  //             }
-  //           })
-  //         }
-  //       }
-  //     })
-  //   }
-  // },
+  
+  onLaunch: function (resa) {
+    this.getUserInfo()
+  },
+  // 请求Token接口
+  getToken(res_login){
+    http.request({
+      url: "token",
+      data: {
+        login_code: res_login.code,
+      },
+      success(data) {
+        // 存token
+        wx.setStorageSync('token',data.token);
+      }
+    })
+  },
+  // 获取 openSetting
+  getOpenSetting(){
+    wx.showModal({
+      title: '提示',
+      content: '您点击了拒绝授权,将无法正常显示个人信息,点击确定重新获取授权。',
+      success(res) {
+        if (res.confirm) {
+          wx.openSetting({
+            success: (res) => {
+              // 如果用户重新同意了授权登录
+              if (res.authSetting["scope.userInfo"]) {
+                wx.login({
+                  success: function (res_login) {
+                    if (res_login.code) {
+                      wx.getUserInfo({
+                        withCredentials: true,
+                        success(res_user) {
+                          wx.setStorageSync('userInfo',res_user.userInfo);
+                          this.globalData.userInfo = res_user.userInfo;
+                          this.getToken(res_login)
+                        }
+                      })
+                    }
+                  }
+                });
+              }
+            }, 
+            fail(res) {
+              this.getOpenSetting();
+            }
+          })
+        }
+      }
+    })
+  },
+  // 授权、登录  获取用户信息 封装
+  getUserInfo(){
+    // let openId = (wx.getStorageSync('openId'));
+    let openId = false;
+    if (openId) {
+      wx.getUserInfo({
+        success(res) {
+          wx.setStorageSync('userInfo',res.userInfo);
+          this.globalData.userInfo = res.userInfo;
+          // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
+          // 所以此处加入 callback 以防止这种情况
+          if (this.userInfoReadyCallback) {
+            this.userInfoReadyCallback(res)
+          }
+        },
+        fail() {
+          wx.showModal({
+            title: '提示',
+            content: '获取用户信息失败，点击确定再次获取',
+            success(res) {
+              if (res.confirm) {
+                this.getUserInfo();
+              }
+            }
+          })
+        }
+      })
+    } else {
+      wx.login({
+        success(res) {
+          if (res.code) {
+            wx.getUserInfo({
+              // 要求有登录状态
+              withCredentials: true,
+              success(res_user) {
+                wx.setStorageSync('userInfo',res.userInfo);
+                this.globalData.userInfo = res.userInfo;
+                this.getToken(res)
+              }, 
+              fail() {
+                this.getOpenSetting();
+              }
+            })
+          }
+        }
+      })
+    }
+  },
   globalData: {
     userInfo: '111',
   }
 })
+
+
+
+/**
+ * 支付函数
+ * @param  {[type]} _payInfo [description]
+ * @return {[type]}          [description]
+ */
+// pay:function(_payInfo,success,fail){
+// 	var payInfo = {
+// 		body:'',
+// 		total_fee:0,
+// 		order_sn:''
+// 	}
+// 	Object.assign(payInfo, _payInfo);
+// 	if(payInfo.body.length==0){
+// 		wx.showToast({
+// 			title:'支付信息描述错误'
+// 		})
+// 		return false;
+// 	}
+// 	if(payInfo.total_fee==0){
+// 		wx.showToast({
+// 			title:'支付金额不能0'
+// 		})
+// 		return false; 
+// 	}
+// 	if(payInfo.order_sn.length==0){
+// 		wx.showToast({
+// 			title:'订单号不能为空'
+// 		})
+// 		return false; 
+// 	}
+// 	var This = this;
+// 	This.getOpenid(function(openid){
+// 		payInfo.openid=openid;
+// 		This.request({
+// 			url:'api/pay/prepay',
+// 			data:payInfo,
+// 			success:function(res){
+// 				var data = res.data;
+// 				console.log(data);
+// 				if(!data.status){
+// 					wx.showToast({
+// 						title:data['errmsg']
+// 					})
+// 					return false;
+// 				}
+// 				This.request({
+// 					url:'api/pay/pay',
+// 					data:{prepay_id:data.data.data.prepay_id},
+// 					success:function(_payResult){
+// 						var payResult = _payResult.data;
+// 						console.log(payResult);
+// 						wx.requestPayment({
+// 							'timeStamp': payResult.timeStamp.toString(),
+// 							'nonceStr': payResult.nonceStr,
+// 							'package': payResult.package,
+// 							'signType': payResult.signType,
+// 							'paySign': payResult.paySign,
+// 							'success': function (succ) {
+// 								success&&success(succ);
+// 							},
+// 							'fail': function (err) {
+// 								fail&&fail(err);
+// 							},
+// 							'complete': function (comp) { 
+ 
+// 							}
+// 						}) 
+// 					}
+// 				})
+// 			}
+// 		})
+// 	})
+// }
+
  
