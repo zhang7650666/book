@@ -4,6 +4,8 @@ const tips = {
   1005:"错误代码1005",
   3000: "错误代码3000",
 }
+let data = JSON.parse(wx.getStorageSync('token'))
+console.log(data.token)
 class HTTP{
   request(params){
     if(!params.method){
@@ -14,6 +16,8 @@ class HTTP{
       data: params.data,
       header: {
         'content-type': 'application/json',
+        'token': data.token,
+        //'unique_id': data.unique_id
       },
       method: params.method,
       success: (res) => { 

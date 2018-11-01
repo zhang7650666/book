@@ -1,10 +1,8 @@
 //app.js
-
-
-import { http } from "/util/http.js";
+import {http} from "./util/http.js";
 App({
-  
   onLaunch: function (resa) {
+    //console.log(222)
     this.getUserInfo()
   },
   // 请求Token接口
@@ -16,12 +14,14 @@ App({
       },
       success(data) {
         // 存token
-        wx.setStorageSync('token',data.token);
+        console.log(data)
+        wx.setStorageSync('token',JSON.stringify(data.data));
       }
     })
   },
   // 获取 openSetting
   getOpenSetting(){
+    let _this = this;
     wx.showModal({
       title: '提示',
       content: '您点击了拒绝授权,将无法正常显示个人信息,点击确定重新获取授权。',
@@ -37,9 +37,9 @@ App({
                       wx.getUserInfo({
                         withCredentials: true,
                         success(res_user) {
-                          wx.setStorageSync('userInfo',res_user.userInfo);
-                          this.globalData.userInfo = res_user.userInfo;
-                          this.getToken(res_login)
+                          wx.setStorageSync('userInfo', JSON.stringify(res_user.userInfo));
+                          _this.globalData.userInfo = res_user.userInfo;
+                          _this.getToken(res_login)
                         }
                       })
                     }
@@ -57,13 +57,14 @@ App({
   },
   // 授权、登录  获取用户信息 封装
   getUserInfo(){
+    let _this = this;
     // let openId = (wx.getStorageSync('openId'));
     let openId = false;
     if (openId) {
       wx.getUserInfo({
         success(res) {
-          wx.setStorageSync('userInfo',res.userInfo);
-          this.globalData.userInfo = res.userInfo;
+          wx.setStorageSync('userInfo', JSON.stringify(res_user.userInfo));
+          _this.globalData.userInfo = res.userInfo;
           // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
           // 所以此处加入 callback 以防止这种情况
           if (this.userInfoReadyCallback) {
@@ -76,7 +77,7 @@ App({
             content: '获取用户信息失败，点击确定再次获取',
             success(res) {
               if (res.confirm) {
-                this.getUserInfo();
+                _this.getUserInfo();
               }
             }
           })
@@ -90,12 +91,12 @@ App({
               // 要求有登录状态
               withCredentials: true,
               success(res_user) {
-                wx.setStorageSync('userInfo',res.userInfo);
-                this.globalData.userInfo = res.userInfo;
-                this.getToken(res)
+                wx.setStorageSync('userInfo', JSON.stringify(res_user.userInfo));
+                _this.globalData.userInfo = res.userInfo;
+                _this.getToken(res)
               }, 
               fail() {
-                this.getOpenSetting();
+                _this.getOpenSetting();
               }
             })
           }
@@ -104,7 +105,7 @@ App({
     }
   },
   globalData: {
-    userInfo: '111',
+    userInfo: null,
   }
 })
 
