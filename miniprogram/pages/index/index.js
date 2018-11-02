@@ -170,7 +170,6 @@ Page({
         alias:'aaaa',
         size:3,
       },
-      method:"POST",
       // token:wx.getStorageSync('token'),
       success(data) {
         // 拿到的数据只取前10条数据

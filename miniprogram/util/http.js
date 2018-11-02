@@ -5,7 +5,6 @@ const tips = {
   3000: "错误代码3000",
 }
 let data = JSON.parse(wx.getStorageSync('token'))
-console.log(data.token)
 class HTTP{
   request(params){
     if(!params.method){
