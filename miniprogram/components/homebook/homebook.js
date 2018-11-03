@@ -40,12 +40,9 @@ Component({
     //   })
     // }
     handleDetail(ev){
-      const bookId = ev.currentTarget.dataset.index;
-      if (bookId) {
         wx.navigateTo({
-          url: "/pages/detail/detail?id=" + bookId,
+          url: `/pages/detail/detail?fiction_id=${books.fiction_id}&fiction_class_id=${books.fiction_class_id}`,
         })
-      }
     },
     // 空函数
     handlenull(){

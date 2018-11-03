@@ -1,18 +1,18 @@
 <!--components/searchbook/searchbook.wxml-->
 <view class="search-book" catchtap="handleDetail">
   <view class="book-cover">
-    <image src="{{books.img}}" mode="widthFix"></image>
+    <image src="{{books.fiction_img}}" mode="widthFix"></image>
   </view>
   <view class="introduce-wrap">
     <view class="book-name">
-      <text>{{books.name}}</text>
+      <text>{{books.fiction_name}}</text>
     </view>
      <view class="introduce">
-      <text>{{books.introduce}}</text>
+      <text>{{books.fiction_desc}}</text>
     </view>
     <view class="author-type">
-      <text class="author">{{books.author}}</text>
-      <text class="btn">{{books.type}}</text>
+      <text class="author">{{books.fiction_author}}</text>
+      <text class="btn" data-classId="{{books.fiction_class_id}}">{{books.fiction_class}}</text>
     </view>
   </view>
 </view>

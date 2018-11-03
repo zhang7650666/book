@@ -23,7 +23,7 @@ Component({
     // 跳转详情页
     handleDetail(){
       wx.navigateTo({
-        url: "/pages/detail/detail?id=123",
+        url: `/pages/detail/detail?fiction_id=${books.fiction_id}&fiction_class_id=${books.fiction_class_id}`,
       })
     },
   }

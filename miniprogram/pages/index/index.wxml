@@ -27,7 +27,7 @@
         <text class="book-more" data-title="1" bindtap="handleMore">更多</text>
       </view>
       <view class="books-wrap">
-        <view class="books-main" wx:for="{{books}}" wx:key="item.name" wx:if="{{index < 6}}">
+        <view class="books-main" wx:for="{{hotBooks}}}" wx:key="item.fiction_id" wx:if="{{index < 6}}">
           <home-book books="{{item}}"></home-book>
         </view>
       </view>
@@ -41,7 +41,7 @@
         <text class="book-more" data-title="2" bindtap="handleMore">更多</text>
       </view>
       <view class="books-wrap">
-        <view class="books-main" wx:for="{{books}}" wx:key="item.name" wx:if="{{index < 6}}">
+        <view class="books-main" wx:for="{{boyBooks}}}" wx:key="item.fiction_id" wx:if="{{index < 6}}">
           <home-book books="{{item}}"></home-book>
         </view>
       </view>
@@ -55,7 +55,7 @@
         <text class="book-more" data-title="3" bindtap="handleMore">更多</text>
       </view>
       <view class="books-wrap">
-        <view class="books-main" wx:for="{{books}}" wx:key="item.name" wx:if="{{index < 6}}">
+        <view class="books-main" wx:for="{{girlsBooks}}}" wx:key="item.fiction_id" wx:if="{{index < 6}}">
           <home-book books="{{item}}"></home-book>
         </view>
       </view>
@@ -65,7 +65,7 @@
       <text class="red"></text>
       <text class="title-text">大家都在看</text>
     </view>
-    <view  wx:for="{{searchBooks}}" wx:key="item.name" wx:if="{{index <30}}">
+    <view  wx:for="{{indexLooks}}" wx:key="item.fiction_id" wx:if="{{index <30}}">
       <search-book books="{{item}}"></search-book>
     </view>
   <!-- <view class="bar"></view> -->

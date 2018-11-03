@@ -26,6 +26,20 @@ Page({
       checked:false,
       value:'自动扣除，不在提示'
     }], // 选中取消
+    fictionId:'', // 小说ID
+    fictionChapter:'', // 小说章节
+    fictionRead:{}, // 小说相关对象
+  },
+   /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function (options) {
+    this.setData({
+      fictionId:options.fictionId, 
+      fictionChapter:options.chapter,
+    });
+    // 小说内容出事话展示
+    this.handleChapter()
   },
   // 点击呼出设置弹框
   handleSet() {
@@ -37,7 +51,7 @@ Page({
   handleAdd(){
     if (this.data.fontSize > 54){
       wx.showToast({
-        title: "字体大小不能操作27px",
+        title: "字体大小不能超过27px",
         icon: 'none',
         duration: 1000,
       })
@@ -52,7 +66,7 @@ Page({
   handleReduc() {
     if (this.data.fontSize < 24) {
       wx.showToast({
-        title: "字体大小不能操作12px",
+        title: "字体大小不能小于12px",
         icon: 'none',
         duration: 2000,
       })
@@ -90,17 +104,15 @@ Page({
   handleJoin(){
     let _this = this;
     http.request({
-      url:"classic",
-      data:'',
-      success(data){
-        // 拿到的数据只取前10条数据
+      url: "add_book_rack",
+      data:{
+        fiction_id:ev.currentTarget.dataset.fictionId,
+      },
+      success(res) {
         wx.showToast({
           title: "已添加到书架",
           icon: 'success',
-          duration: 2000,
-        });
-        _this.setData({
-          isMask:false,
+          duration: 2000
         })
       }
     })
@@ -108,7 +120,7 @@ Page({
   // 跳转到目录页面
   handleDir(){
     wx.navigateTo({
-      url: "/pages/directory/directory",
+      url: `/pages/directory/directory?fictionID=${this.data.fictionId}`,
     })
   },
   // 去书城
@@ -117,52 +129,31 @@ Page({
       url: "/pages/index/index",
     })
   },
-  // 上一章
-  handlePrev(){
+  // 小说当前章节内容
+  handleChapter(ev){
     let _this = this;
+    let chapter = this.data.fiction_chapter;
+    if(ev.currentTarget.dataset.prev){
+      ev.currentTarget.dataset.prev == 'prev' ? chapter = parseInt(this.data.fictionChapter) -1 : chapter = parseInt(this.data.fictionChapter) +1
+    }
     http.request({
-      url:"classic",
-      data:'',
-      success(data){
-        // 拿到的数据只取前10条数据
-        // wx.showToast({
-        //   title: "已添加到书架",
-        //   icon: 'success',
-        //   duration: 2000,
-        // });
+      url:"fiction_read",
+      data:{
+        fiction_id:_this.data.fictionId,
+        fiction_chapter:_this.data.fiction_chapter,
+      },
+      success(res){
+        // 小程序解析html
+        // 小说内容res.data.data.fiction_title
+        WxParse.wxParse('article', 'html', res.data.data.fiction_title, _this, 5);
         _this.setData({
+          fictionRead:res.data,
           isMask:false,
         })
       }
     })
   },
-  handleNext(){
-    let _this = this;
-    http.request({
-      url:"classic",
-      data:'',
-      success(data){
-        // 拿到的数据只取前10条数据
-        // wx.showToast({
-        //   title: "已添加到书架",
-        //   icon: 'success',
-        //   duration: 2000,
-        // });
-        _this.setData({
-          isMask:false,
-        })
-      }
-    })
-  },
-  // 下一章
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
-    let that = this;
-    WxParse.wxParse('article', 'html', that.data.readData.article, that, 5);
-  },
-
+  
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

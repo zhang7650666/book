@@ -1,15 +1,15 @@
 <!--miniprogram/components/homebook/homebook.wxml-->
-<view class="home-book" bindtap="handleDetail" data-index="{{books.id}}">
+<view class="home-book" bindtap="handleDetail" data-index="{{books.fiction_id}}">
   <view class="book-cover">
-    <image src="{{books.img}}" mode="widthFix"></image>
+    <image src="{{books.fiction_img}}" mode="widthFix"></image>
     <view wx:if="{{!isStore && isCur == 1}}
-  class="icon-add-book" catchtap="handleRead" data-index="{{books.id}}"></view>
-  <view class="icon-remove-book" wx:if="{{!isEdit && isCur == 0}}" catchtap="handleRemove" data-index="{{books.id}}"></view>
+  class="icon-add-book" catchtap="handleRead" data-index="{{books.fiction_id}}"></view>
+  <view class="icon-remove-book" wx:if="{{!isEdit && isCur == 0}}" catchtap="handleRemove" data-index="{{books.fiction_id}}"></view>
 </view>
   <view class="name">
-    <text>{{books.name}}</text>
+    <text>{{books.fiction_name}}</text>
   </view>
   <view class="author">
-    <text>{{books.author}}</text>
+    <text>{{books.fiction_author}}</text>
   </view>
 </view>
