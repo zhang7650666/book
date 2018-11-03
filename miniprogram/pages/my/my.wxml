@@ -2,10 +2,10 @@
 <!-- 用户信息 -->
 <view class="b-user-info-block">
   <view class="icon">
-      <image style="width: 90px; height: 90px; background-color: #eeeeee;" mode="widthFix" src="../../images/u1018.png"></image>
+      <image style="width: 90px; height: 90px; background-color: #eeeeee;" mode="widthFix" src="{{userInfo.avatarUrl}}"></image>
   </view>
   <view class="b-user-info">
-    <text class="we-chart-name">微信昵称叫什么</text>
+    <text class="we-chart-name">{{userInfo.nickName}}</text>
     <view class="we-chart-id">ID: <text>{{useId}}</text></view>
     <view class="user-integral"> <image style="width: 46rpx;" mode="widthFix" src="../../images/u1018.png"></image>我的积分：{{integral}}</view>
   </view>

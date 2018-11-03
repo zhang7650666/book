@@ -19,10 +19,7 @@ Page({
       icon: '',
       // title: '标题'
     },
-    //用户名称
-    nickName: '',
-    //用户头像
-    avatarUrl: '',
+    userInfo: {},
     //用户Id,
     useId: 123456789,
     //积分
@@ -63,7 +60,10 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    // this.getUserinfo();
+    let userInfo = wx.getStorageSync('userInfo') || '{}';
+    this.setData({
+      userInfo: JSON.parse(userInfo)
+    })
   },
   // 界面跳转
   handleJump(ev){
@@ -102,26 +102,6 @@ Page({
   onShareAppMessage: function () {
 
   },
-  //获取微信用户信息;
-  // getUserinfo() {
-  //   let that = this;
-  //   wx.getUserInfo({
-  //     success: function (res) {
-  //       that.setData({
-  //         nickName: res.userInfo.nickName,
-  //         avatarUrl: res.userInfo.avatarUrl,
-  //       })
-  //     },
-  //     fail: function () {
-  //       // fail
-  //       console.log("获取失败！")
-  //     },
-  //     complete: function () {
-  //       // complete
-  //       console.log("获取用户信息完成！")
-  //     }
-  //   })
-  // },
   //签到
   userSignIn() {
     this.setData({

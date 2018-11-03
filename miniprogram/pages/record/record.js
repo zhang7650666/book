@@ -14,6 +14,8 @@ Page({
       '3': '积分充值',
     },
     list: [],
+    pageNo: 1,
+    isPullRefresh: false,
     recordList:[
       {
         id:0,
@@ -73,15 +75,56 @@ Page({
   onReady: function () {
 
   },
+  /**
+  * 页面相关事件处理函数--监听用户下拉动作
+  */
+  onPullDownRefresh: function () {
+    const that = this;
+    this.setData({
+      isPullRefresh: true,
+      pageNo: 1
+    })
+    // 显示加载图标
+    wx.showLoading({
+      title: '玩命加载中',
+    })
+    this.getIntegralList(() => {
+      // 隐藏加载框
+      wx.hideLoading();
+    })
+  },
+  /**
+  * 页面上拉触底事件的处理函数
+  */
+  onReachBottom: function () {
+    this.data.pageNo ++ ;
+    this.getIntegralList();
+  },
 
-  getIntegralList() {
-    let list = this.data.recordList.map(v => {
+  getIntegralList(callback) {
+    const that = this;
+    http.request({
+      url: "api/Integral/list",
+      data: {
+        pageNo: that.data.pageNo || 1,
+        pageSize: 20,
+      },
+      success(data) {
+        const list = this.pickIntegralList(data.list || this.data.recordList)
+        this.setData({
+          list: !this.data.list.length && !this.data.isPullRefresh ? [this.data.list, ...list] : list,
+        })
+        callback && callback();
+      }
+    })
+  },
+  // 处理积分显示文字
+  pickIntegralList(list) {
+    let integralList = (list || []).map(v => {
       v.labelText = `${this.data.recordMap[v.type]}${(v.type == '-1' ? ', 扣除' : ', 获得')}${v.integral}积分`;
       return v
     })
-   this.setData({
-     list: list
-   })
+    return integralList;
   }
 
 })

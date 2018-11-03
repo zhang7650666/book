@@ -2,7 +2,6 @@
 import {http} from "./util/http.js";
 App({
   onLaunch: function (resa) {
-    //console.log(222)
     this.getUserInfo()
   },
   // 请求Token接口
@@ -13,8 +12,6 @@ App({
         login_code: res_login.code,
       },
       success(data) {
-        // 存token
-        console.log(data)
         wx.setStorageSync('token',JSON.stringify(data.data));
       }
     })
