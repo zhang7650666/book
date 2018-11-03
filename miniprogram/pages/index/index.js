@@ -7,9 +7,9 @@ Page({
    */
   data: {
     imgUrls: [
-  "http://img06.tooopen.com/images/20160818/tooopen_sy_175866434296.jpg",
-  "http://img06.tooopen.com/images/20160818/tooopen_sy_175866434296.jpg",
-  "http://img06.tooopen.com/images/20160818/tooopen_sy_175833047715.jpg"
+  // "http://img06.tooopen.com/images/20160818/tooopen_sy_175866434296.jpg",
+  // "http://img06.tooopen.com/images/20160818/tooopen_sy_175866434296.jpg",
+  // "http://img06.tooopen.com/images/20160818/tooopen_sy_175833047715.jpg"
     ],
     indicatorDots: true,
     autoplay: true,
@@ -27,7 +27,7 @@ Page({
    */
   onLoad: function (options) {
     // banner接口调用
-    this.postAddList({alias:'aaaa',size:3})
+    this.postAddList({alias:'Index_banner',size:5})
     // hot(热门推荐)，boy（男生推荐），girls（女生推荐）
     this.postIndexHot('hot');
     this.postIndexHot('boy');
@@ -37,6 +37,7 @@ Page({
   },
   // banner图接口请求
   postAddList(obj){
+    const that = this;
     http.request({
       url: "ad_list",
       data:{
@@ -46,6 +47,9 @@ Page({
       success(data) {
         // 拿到的数据只取前10条数据
         console.log(data);
+        that.setData({
+          imgUrls: data.data
+        })
       }
     })
   },

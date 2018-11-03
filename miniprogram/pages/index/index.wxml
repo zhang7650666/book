@@ -10,16 +10,13 @@
   <!-- 轮播图 -->
   <swiper indicator-dots="{{indicatorDots}}"
     autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" circular="{{circular}}">
-    <block wx:for="{{imgUrls}}" wx:key="imgUrls">
+    <block wx:for="{{imgUrls}}" wx:key="item">
       <swiper-item>
-        <image src="{{item}}" class="slide-image" width="355" height="150" style='width:100%; overflow:show;' mode="widthFix"/>
+        <image src="{{item.banner_img}}" class="slide-image" style='width:100%; overflow:show;' mode="widthFix"/>
       </swiper-item>
     </block>
   </swiper>
   <!-- 热门推荐 -->
-  <!-- <button bindtap='tapToAuthorize'>按钮</button>
-  <button open-type="openSetting">打开授权设置页</button> -->
-  <!-- <button open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="onGotUserInfo">获取用户信息</button> -->
   <view class="home-main-book">
       <view class="main-title">
         <text class="red"></text>
@@ -32,7 +29,6 @@
         </view>
       </view>
   </view>
-  <!-- <view class="bar"></view> -->
   <!-- 男生最爱 -->
   <view class="home-main-book">
       <view class="main-title">
@@ -46,7 +42,6 @@
         </view>
       </view>
   </view>
-  <!-- <view class="bar"></view> -->
   <!-- 女生最爱 -->
   <view class="home-main-book">
       <view class="main-title">
@@ -68,5 +63,4 @@
     <view  wx:for="{{indexLooks}}" wx:key="item.fiction_id" wx:if="{{index <30}}">
       <search-book books="{{item}}"></search-book>
     </view>
-  <!-- <view class="bar"></view> -->
 </view>
