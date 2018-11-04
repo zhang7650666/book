@@ -73,7 +73,7 @@ Page({
   // 继续阅读
   handleKeep(){
     wx.navigateTo({
-      url: `/pages/reading/reading?fictionID=${this.data.fictionDetails.fiction_id}&chapter=${this.data.fictionDetails.fiction_look_chapter}`
+      url: `/pages/reading/reading?fiction_id=${this.data.fictionDetails.fiction_id}&chapter=${this.data.fictionDetails.fiction_look_chapter}`
     })
   },
   // 加入书架
