@@ -1,7 +1,7 @@
 <!--components/searchbook/searchbook.wxml-->
 <view class="search-book" catchtap="handleDetail">
   <view class="book-cover">
-    <image src="{{books.fiction_img}}" mode="widthFix"></image>
+    <image  src="{{books.fiction_img}}" binderror="errImg" mode="widthFix" data-out-index="{{outIndex}}"></image>
   </view>
   <view class="introduce-wrap">
     <view class="book-name">
@@ -12,7 +12,7 @@
     </view>
     <view class="author-type">
       <text class="author">{{books.fiction_author}}</text>
-      <text class="btn" data-classId="{{books.fiction_class_id}}">{{books.fiction_class}}</text>
+      <text class="btn" data-classId="{{books.fiction_class}}">{{books.fiction_class}}</text>
     </view>
   </view>
 </view>

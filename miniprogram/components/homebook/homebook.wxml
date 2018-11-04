@@ -1,7 +1,7 @@
 <!--miniprogram/components/homebook/homebook.wxml-->
 <view class="home-book" bindtap="handleDetail" data-index="{{books.fiction_id}}">
   <view class="book-cover">
-    <image src="{{books.fiction_img}}" mode="widthFix"></image>
+    <image  src="{{books.fiction_img}}" binderror="errImg" mode="widthFix" data-out-index="{{outIndex}}" data-inner-index="{{innerIndex}}"></image>
     <view wx:if="{{!isStore && isCur == 1}}
   class="icon-add-book" catchtap="handleRead" data-index="{{books.fiction_id}}"></view>
   <view class="icon-remove-book" wx:if="{{!isEdit && isCur == 0}}" catchtap="handleRemove" data-index="{{books.fiction_id}}"></view>

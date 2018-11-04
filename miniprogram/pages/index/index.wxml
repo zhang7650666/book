@@ -17,41 +17,15 @@
     </block>
   </swiper>
   <!-- 热门推荐 -->
-  <view class="home-main-book">
+  <view class="home-main-book" wx:for="{{booksList}}" wx:key="{{index}}" wx:for-item="outItem" wx:for-index="outIndex">
       <view class="main-title">
         <text class="red"></text>
-        <text class="title-text">热门推荐</text>
+        <text class="title-text">{{outItem.title}}</text>
         <text class="book-more" data-title="1" bindtap="handleMore">更多</text>
       </view>
       <view class="books-wrap">
-        <view class="books-main" wx:for="{{hotBooks}}}" wx:key="item.fiction_id" wx:if="{{index < 6}}">
-          <home-book books="{{item}}"></home-book>
-        </view>
-      </view>
-  </view>
-  <!-- 男生最爱 -->
-  <view class="home-main-book">
-      <view class="main-title">
-        <text class="red"></text>
-        <text class="title-text">男生最爱</text>
-        <text class="book-more" data-title="2" bindtap="handleMore">更多</text>
-      </view>
-      <view class="books-wrap">
-        <view class="books-main" wx:for="{{boyBooks}}}" wx:key="item.fiction_id" wx:if="{{index < 6}}">
-          <home-book books="{{item}}"></home-book>
-        </view>
-      </view>
-  </view>
-  <!-- 女生最爱 -->
-  <view class="home-main-book">
-      <view class="main-title">
-        <text class="red"></text>
-        <text class="title-text">女生最爱</text>
-        <text class="book-more" data-title="3" bindtap="handleMore">更多</text>
-      </view>
-      <view class="books-wrap">
-        <view class="books-main" wx:for="{{girlsBooks}}}" wx:key="item.fiction_id" wx:if="{{index < 6}}">
-          <home-book books="{{item}}"></home-book>
+        <view class="books-main" wx:for="{{outItem.list}}" wx:for-item="innerItem" wx:key="index" wx:for-index="innerIndex">
+          <home-book books="{{innerItem}}" outIndex="{{outIndex}}" innerIndex="{{innerIndex}}" bind:handleImg="handleImg"></home-book>
         </view>
       </view>
   </view>
@@ -61,6 +35,6 @@
       <text class="title-text">大家都在看</text>
     </view>
     <view  wx:for="{{indexLooks}}" wx:key="item.fiction_id" wx:if="{{index <30}}">
-      <search-book books="{{item}}"></search-book>
+      <search-book books="{{item}}" outIndex="{{index}}" bind:lookImg="lookImg"></search-book>
     </view>
 </view>

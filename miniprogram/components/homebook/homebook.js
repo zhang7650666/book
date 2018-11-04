@@ -17,6 +17,13 @@ Component({
     },
     isStore:{
       type: Boolean,
+    },
+    outIndex:{
+      type: Number,
+    },
+    innerIndex: {
+      type: Number,
+      value:-1,
     }
   },
 
@@ -24,29 +31,24 @@ Component({
    * 组件的初始数据
    */
   data: {
-  
   },
-  // attached() {
-  //   this.dataInit();
-  // },
   /**
    * 组件的方法列表
    */
   methods: {
-    // dataInit(){
-    //   let books = this.data.books
-    //   this.setData({
-    //     books:books
-    //   })
-    // }
+    // 跳转详情页
     handleDetail(ev){
         wx.navigateTo({
-          url: `/pages/detail/detail?fiction_id=${books.fiction_id}&fiction_class_id=${books.fiction_class_id}`,
+          url: `/pages/detail/detail?fiction_id=${this.data.books.fiction_id}&fiction_class_id=${this.data.books.fiction_class_id}`,
         })
     },
-    // 空函数
-    handlenull(){
-
+    // 图片路径错误
+    errImg(ev){
+      var indexObj = {
+        outIndex: ev.currentTarget.dataset.outIndex,
+        innerIndex: ev.currentTarget.dataset.innerIndex
+      }
+      this.triggerEvent('handleImg', indexObj) 
     },
     // 删除函数
     handleRemove(ev){

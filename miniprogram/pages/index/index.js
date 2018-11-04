@@ -1,4 +1,5 @@
 // miniprogram/pages/home/home.js
+const app = getApp();
 import {http} from "../../util/http.js";
 Page({
 
@@ -6,19 +7,13 @@ Page({
    * 页面的初始数据
    */
   data: {
-    imgUrls: [
-  // "http://img06.tooopen.com/images/20160818/tooopen_sy_175866434296.jpg",
-  // "http://img06.tooopen.com/images/20160818/tooopen_sy_175866434296.jpg",
-  // "http://img06.tooopen.com/images/20160818/tooopen_sy_175833047715.jpg"
-    ],
+    imgUrls: [], // banner  列表
     indicatorDots: true,
     autoplay: true,
     interval: 5000,
     duration: 300,
     circular:true,
-    hotBooks:[], // 热门推荐
-    boyBooks:[], // 男生推荐
-    girlsBooks:[], // 女生推荐
+    booksList:[], // 小说列表
     indexLooks:[], // 大家都在看
   },
 
@@ -29,10 +24,7 @@ Page({
     // banner接口调用
     this.postAddList({alias:'Index_banner',size:5})
     // hot(热门推荐)，boy（男生推荐），girls（女生推荐）
-    this.postIndexHot('hot');
-    this.postIndexHot('boy');
-    this.postIndexHot('girls');
-    // 大家都在看
+    this.postIndexHot();
     this.postIndexLook();
   },
   // banner图接口请求
@@ -45,8 +37,6 @@ Page({
         size:obj.size,
       },
       success(data) {
-        // 拿到的数据只取前10条数据
-        console.log(data);
         that.setData({
           imgUrls: data.data
         })
@@ -54,29 +44,17 @@ Page({
     })
   },
   // hot(热门推荐)，boy（男生推荐），girls（女生推荐）
-  postIndexHot(arg){
+  postIndexHot(){
     let _this = this;
     http.request({
-      url: "index_hot",
+      url: "album_list",
       data:{
-        type:arg,
+        page:1,
+        size:10
       },
       success(res) {
-        let itemBook = '';
-        switch(arg){
-          case 'hot':
-            itemBook = 'hotBooks';
-            break;
-          case 'boy':
-            itemBook = 'boyBooks';
-            break;
-          case 'girls':
-            itemBook = 'girlsBooks';
-            break;
-        }
         _this.setData({
-          // 这里需要改成调试时候的实际数据
-          itemBook:res.data,
+          booksList:res.data
         })
       }
     })
@@ -85,11 +63,14 @@ Page({
   postIndexLook(){
     let _this = this;
     http.request({
-      url: "index_look",
-      data:{},
+      url: "all_see",
+      data:{
+        page: 1,
+        size: 10
+      },
       success(res) {
+        console.log(res)
         _this.setData({
-          // 这里需要改成调试时候的实际数据
           indexLooks:res.data,
         })
       }
@@ -106,6 +87,22 @@ Page({
      // 1(热门推荐)，2（男生推荐），3（女生推荐）
     wx.navigateTo({
       url: `/pages/list/list?title=${ev.currentTarget.dataset.title}`
+    })
+  },
+  // 1(热门推荐)，2（男生推荐），3（女生推荐） 默认图片路径
+  handleImg(ev) {
+    this.data.booksList[ev.detail.outIndex].list[ev.detail.innerIndex].fiction_img = app.globalData.defaultImg;
+    this.setData({
+      booksList: this.data.booksList
+    })
+  },
+  // 大家都在看默认图片处理
+  lookImg(ev) {
+    // 现在大家都在看的图片没有是因为他们返回的null  这里不要纠结
+    this.data.indexLooks[ev.detail.outIndex].fiction_img = app.globalData.defaultImg;
+    console.log(this.data.indexLooks[ev.detail.outIndex].fiction_img)
+    this.setData({
+      indexLooks: this.data.indexLooks
     })
   },
   /**

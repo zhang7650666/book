@@ -103,6 +103,7 @@ App({
   },
   globalData: {
     userInfo: null,
+    defaultImg:'/images/u69.png'
   }
 })
 
