@@ -14,61 +14,61 @@ Page({
     books: [
       {
         id:0,
-        img: "../../images/u27.jpeg",
+        fiction_img: "../../images/u27.jpeg",
         name: "青春年华1",
         author: "琼瑶"
       },
       {
         id: 1,
-        img: "../../images/u27.jpeg",
+        fiction_img: "../../images/u27.jpeg",
         name: "青春年华2",
         author: "琼瑶"
       },
       {
         id: 2,
-        img: "../../images/u27.jpeg",
+        fiction_img: "../../images/u27.jpeg",
         name: "青春年华3",
         author: "琼瑶"
       },
       {
         id: 3,
-        img: "../../images/u27.jpeg",
+        fiction_img: "../../images/u27.jpeg",
         name: "青春年华4",
         author: "琼瑶"
       },
       {
         id: 4,
-        img: "../../images/u27.jpeg",
+        fiction_img: "../../images/u27.jpeg",
         name: "青春年华2",
         author: "琼瑶"
       },
       {
         id: 5,
-        img: "../../images/u27.jpeg",
+        fiction_img: "../../images/u27.jpeg",
         name: "青春年华3",
         author: "琼瑶"
       },
       {
         id: 6,
-        img: "../../images/u27.jpeg",
+        fiction_img: "../../images/u27.jpeg",
         name: "青春年华4",
         author: "琼瑶"
       },
       {
         id: 7,
-        img: "../../images/u27.jpeg",
+        fiction_img: "../../images/u27.jpeg",
         name: "青春年华2",
         author: "琼瑶"
       },
       {
         id: 8,
-        img: "../../images/u27.jpeg",
+        fiction_img: "../../images/u27.jpeg",
         name: "青春年华3",
         author: "琼瑶"
       },
       {
         id: 8,
-        img: "../../images/u27.jpeg",
+        fiction_img: "../../images/u27.jpeg",
         name: "青春年华4",
         author: "琼瑶"
       }
@@ -76,70 +76,70 @@ Page({
     readArr: [
       {
         id: 0,
-        img: "../../images/u27.jpeg",
+        fiction_img: "../../images/u27.jpeg",
         name: "青春年华1",
         author: "琼瑶",
         isStore:true,
       },
       {
         id: 1,
-        img: "../../images/u27.jpeg",
+        fiction_img: "../../images/u27.jpeg",
         name: "青春年华2",
         author: "琼瑶",
         isStore: false,
       },
       {
         id: 2,
-        img: "../../images/u27.jpeg",
+        fiction_img: "../../images/u27.jpeg",
         name: "青春年华3",
         author: "琼瑶",
         isStore: true,
       },
       {
         id: 3,
-        img: "../../images/u27.jpeg",
+        fiction_img: "../../images/u27.jpeg",
         name: "青春年华4",
         author: "琼瑶",
         isStore: false,
       },
       {
         id: 4,
-        img: "../../images/u27.jpeg",
+        fiction_img: "../../images/u27.jpeg",
         name: "青春年华2",
         author: "琼瑶",
         isStore: true,
       },
       {
         id: 5,
-        img: "../../images/u27.jpeg",
+        fiction_img: "../../images/u27.jpeg",
         name: "青春年华3",
         author: "琼瑶",
         isStore: true,
       },
       {
         id: 6,
-        img: "../../images/u27.jpeg",
+        fiction_img: "../../images/u27.jpeg",
         name: "青春年华4",
         author: "琼瑶",
         isStore: true,
       },
       {
         id: 7,
-        img: "../../images/u27.jpeg",
+        fiction_img: "../../images/u27.jpeg",
         name: "青春年华2",
         author: "琼瑶",
         isStore: true,
       },
       {
         id: 8,
-        img: "../../images/u27.jpeg",
+        fiction_img: "../../images/u27.jpeg",
         name: "青春年华3",
         author: "琼瑶",
         isStore: true,
       },
       {
         id: 8,
-        img: "../../images/u27.jpeg",
+        fiction_img: "../../images/u27.jpeg",
         name: "青春年华4",
         author: "琼瑶",
         isStore: true,

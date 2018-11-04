@@ -90,10 +90,9 @@ text{
 .btn-wrap{
     display:flex;
     flex-wrap:wrap;
-    padding:8rpx 40rpx;
+    padding: 40rpx;
     justify-content: space-between;
     border-top:1rpx solid #f2f2f2;
-    padding-bottom:100rpx;
 }
 .btn-wrap text{
     flex:0 0 296rpx;
@@ -102,7 +101,7 @@ text{
     height:76rpx;
     line-height:76rpx;
     border:1rpx solid #EA5149;
-    border-radius:32rpx;
+    border-radius:76rpx;
 }
 .btn-wrap .add{
     color:#EA5149;

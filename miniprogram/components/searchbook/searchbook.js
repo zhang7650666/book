@@ -31,7 +31,6 @@ Component({
     },
     // 图片路径错误
     errImg(ev) {
-      console.log(ev)
       var indexObj = {
         outIndex: ev.currentTarget.dataset.outIndex,
       }

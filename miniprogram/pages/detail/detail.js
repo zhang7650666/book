@@ -127,7 +127,7 @@ Page({
     http.request({
       url: "fiction_details",
       data:{
-        fiction_id:obj.id,
+        fiction_id: obj.fiction_id,
       },
       success(res) {
         _this.setData({
