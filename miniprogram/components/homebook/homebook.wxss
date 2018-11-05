@@ -16,6 +16,14 @@
     /* width:100%; */
     display:block;
 }
+.book-share {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,.1)
+}
 .home-book .name text{
     display:block;
     min-width: 99%;
@@ -49,6 +57,7 @@
   height: 56rpx;
   border-radius: 60rpx;
   border: 2rpx solid #EA5149;
+  z-index: 90;
 }
 .icon-add-book::before,
 .icon-add-book::after,

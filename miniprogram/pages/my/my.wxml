@@ -21,4 +21,7 @@
      </view>
    </view>
 </view>
+<view wx:if="{{isShareShow}}" class="b-share-box" bindtap="hideShareHandel">
+  <image style="width: 600rpx;" mode="widthFix" src="../../images/add.png"></image>
+</view>
 <wk-model dialogData="{{dialogData}}" showModal="{{signInShowModel}}" bind:onCancel="hideSignInDialog" bind:onConfirmonConfirm="confirmSignInDialog" ></wk-model>

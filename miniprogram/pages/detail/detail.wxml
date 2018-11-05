@@ -3,34 +3,34 @@
     <!--头部详情信息-->
     <view class="search-book">
         <view class="book-cover" bindtap="handleRead">
-            <image src="{{books.fiction_img}}" mode="widthFix"></image>
+            <image src="{{bookDetails.fiction_img}}" mode="widthFix"></image>
         </view>
         <view class="introduce-wrap">
             <view class="book-name">
-                <text>{{books.fiction_name}}</text>
+                <text>{{bookDetails.fiction_name}}</text>
             </view>
             <view>
-                <text>{{books.fiction_author}}</text>
+                <text>{{bookDetails.fiction_author}}</text>
             </view>
             <view>
-                <text>{{books.fiction_class}}</text>
+                <text>{{bookDetails.fiction_class}}</text>
             </view>
             <view>
-                <text>{{books.fiction_number}}</text>
+                <text>{{bookDetails.fiction_number}}</text>
             </view>
             <view>
-                <text>{{books.fiction_over}}</text>
+                <text>{{bookDetails.fiction_over}}</text>
             </view>
         </view>
     </view>
     <!--简介-->
     <view class="introduce-text">
-        <text>{{books.fiction_desc}}</text>
+        <text>{{bookDetails.fiction_desc}}</text>
     </view>
     <!--简介-->
-    <view class="directory-wrap" catchtap="handleDir">
+    <view wx:if="{{bookDetails.fiction_new_chapter}}" class="directory-wrap" catchtap="handleDir">
         <text class="directory">目录</text>
-        <text class="chapter">{{books.fiction_new_chapter}}</text>
+        <text class="chapter">{{bookDetails.fiction_new_chapter}}</text>
     </view>
     <view class="bar"></view>
     <view class="main-title">
@@ -43,9 +43,9 @@
         </view>
     </view>
     <view class="btn-wrap">
-        <text class="add" data-fictionId="{{books.fiction_id}}" catchtap="handleAdd" wx:if="{{isStore == '0'}}">加入书架</text>
+        <text class="add" data-fictionId="{{bookDetails.fiction_id}}" catchtap="handleAdd" wx:if="{{isStore == '0'}}">加入书架</text>
         <text class="btn-remove" wx:if="{{isStore == '1'}}"  catchtap="handleRemove">移出书架</text>
-        <text class="keep" data-fictionId="{{books.fiction_id}}" data-keep="{{books.fiction_look_chapter}}" bindtap="handleKeep">{{isFirst ? '开始阅读':'继续阅读'}}</text>
+        <text class="keep" data-fictionId="{{bookDetails.fiction_id}}" data-keep="{{bookDetails.fiction_look_chapter}}" bindtap="handleKeep">{{isFirst ? '开始阅读':'继续阅读'}}</text>
     </view>
 </view>
 

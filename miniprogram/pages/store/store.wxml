@@ -14,12 +14,12 @@
     <text class="count">喜欢的书要添加到书屋喔！</text>
     <text class="edit" catchtap="handleHistory">清空记录</text>
   </view>
-  <swiper current="{{currentData}}" class='swiper' duration="300" bindchange="bindchange" style="height:{{swiperHeight}}rpx" wx:if="{{books.length > 0 || readArr.length > 0}}">
+  <swiper current="{{currentData}}" class='swiper' duration="300" bindchange="bindchange" style="height:{{swiperHeight}}rpx;min-height: 100%;" wx:if="{{books.length > 0 || readArr.length > 0}}">
     <swiper-item>
       <view class='swiper_con'>
         <view class="books-wrap">
           <view class="books-main" wx:for="{{books}}" wx:key="item.name" >
-            <home-book books="{{item}}" isEdit="{{isEdit}}" isCur="{{currentData}}" bind:removeData="handleRemove"></home-book>
+            <home-book books="{{item}}" isEdit="{{isEdit}}" isCur="{{currentData}}" data-deleteid="{{item.fiction_id}}"  bind:removeData="handleRemove"></home-book>
           </view>
         </view>
       </view>
@@ -27,8 +27,8 @@
     <swiper-item>
       <view class='swiper_con'>
         <view class="books-wrap">
-          <view class="books-main" wx:for="{{readArr}}" wx:key="item.name" >
-            <home-book books="{{item}}" isStore="{{item.isStore}}" isCur="{{currentData}}" bind:removeData="handleRemove"></home-book>
+          <view class="books-main" wx:for="{{books}}" wx:key="item.name" >
+            <home-book books="{{item}}" isStore="{{item.is_collection}}" isCur="{{currentData}}" bind:removeData="handleRemove"></home-book>
           </view>
         </view>
       </view>

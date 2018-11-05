@@ -9,55 +9,56 @@ Page({
     isFirst: false, // 是否第一次阅读
     isStore:"0", // 是否在书架
     fictionDetails: {}, 
-    books:{
-      img: "../../images/u27.jpeg",
-      name: "青春年华1",
-      author: "琼瑶",
-      type:"爱情",
-      wordCount:"字数",
-      flag:"连载/完结",
-      introduce:"简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介",
+    fiction_id: null,
+    bookDetails:{
+      // img: "../../images/u27.jpeg",
+      // name: "青春年华1",
+      // author: "琼瑶",
+      // type:"爱情",
+      // wordCount:"字数",
+      // flag:"连载/完结",
+      // introduce:"简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介",
     },
     bookList:[
-      {
-        id: 5678,
-        img:"../../images/u27.jpeg",
-        name:"青春年华1",
-        author:"琼瑶"
-      },
-      {
-        id: 5678,
-        img:"../../images/u27.jpeg",
-        name:"青春年华2",
-        author:"琼瑶"
-      },
-      {
-        id: 5678,
-        img:"../../images/u27.jpeg",
-        name:"青春年华3",
-        author:"琼瑶"
-      },
-      {
-        id: 5678,
-        img:"../../images/u27.jpeg",
-        name:"青春年华4",
-        author:"琼瑶"
-      },
-      {
-        img:"../../images/u27.jpeg",
-        name:"青春年华2",
-        author:"琼瑶"
-      },
-      {
-        img:"../../images/u27.jpeg",
-        name:"青春年华3",
-        author:"琼瑶"
-      },
-      {
-        img:"../../images/u27.jpeg",
-        name:"青春年华4",
-        author:"琼瑶"
-      }
+      // {
+      //   id: 5678,
+      //   img:"../../images/u27.jpeg",
+      //   name:"青春年华1",
+      //   author:"琼瑶"
+      // },
+      // {
+      //   id: 5678,
+      //   img:"../../images/u27.jpeg",
+      //   name:"青春年华2",
+      //   author:"琼瑶"
+      // },
+      // {
+      //   id: 5678,
+      //   img:"../../images/u27.jpeg",
+      //   name:"青春年华3",
+      //   author:"琼瑶"
+      // },
+      // {
+      //   id: 5678,
+      //   img:"../../images/u27.jpeg",
+      //   name:"青春年华4",
+      //   author:"琼瑶"
+      // },
+      // {
+      //   img:"../../images/u27.jpeg",
+      //   name:"青春年华2",
+      //   author:"琼瑶"
+      // },
+      // {
+      //   img:"../../images/u27.jpeg",
+      //   name:"青春年华3",
+      //   author:"琼瑶"
+      // },
+      // {
+      //   img:"../../images/u27.jpeg",
+      //   name:"青春年华4",
+      //   author:"琼瑶"
+      // }
     ], // 数据列表
   },
 
@@ -65,10 +66,11 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    this.setData({
+      fiction_id: options.fiction_id
+    })
     // 小说详情
-    this.getBookIntro({fiction_id:options.fiction_id});
-    // similar_list同类小说
-    this.postSimilarList({fiction_class_id:options.fiction_class_id})
+    this.getBookIntro();
   },
   // 继续阅读
   handleKeep(){
@@ -77,19 +79,21 @@ Page({
     })
   },
   // 加入书架
-  handleAdd(ev){
+  handleAdd(){
     let _this = this;
     http.request({
-      url: "add_book_rack",
+      url: "add_controller",
       data:{
-        fiction_id:ev.currentTarget.dataset.fictionId,
+        fiction_id: this.data.fiction_id,
       },
       success(res) {
-        wx.showToast({
-          title: "已添加到书架",
-          icon: 'success',
-          duration: 2000
-        })
+        if (res.code == 200) {
+          wx.showToast({
+            title: "已添加到书架",
+            icon: 'success',
+            duration: 1000
+          })
+        }
       }
     })
   },
@@ -122,19 +126,23 @@ Page({
     })
   },
   // 小说详情页接口
-  getBookIntro(obj) {
+  getBookIntro() {
     let _this = this;
+    if (!_this.data.fiction_id) {
+      return ;
+    }
     http.request({
       url: "fiction_details",
       data:{
-        fiction_id: obj.fiction_id,
+        fiction_id: _this.data.fiction_id,
       },
       success(res) {
+        console.log(res)
+        // similar_list同类小说
+        _this.postSimilarList({ fiction_class_id: res.data.fiction_class_id })
         _this.setData({
           // 这里需要改成调试时候的实际数据
-          fictionDetails:res.data,
-          isStore:res.data.fiction_collect,
-          isFirst:res.data.fiction_look_chapter, // 这里注意没有阅读章节的时候返回什么
+          bookDetails: res.data || {},
         })
       }
     })
@@ -145,11 +153,11 @@ Page({
     http.request({
       url: "similar_list",
       data:{
-        ffiction_class_id:obj.fiction_class_id,
+        fiction_class_id: obj.fiction_class_id,
       },
       success(res) {
         _this.setData({
-          bbookList:res.data.data
+          bookList: res.data.data
         })
       }
     })
