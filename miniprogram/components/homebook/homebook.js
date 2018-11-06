@@ -60,7 +60,7 @@ Component({
     // 添加到书架
     handleRead(){
       http.request({
-        url: "classic",
+        url: "add_controller",
         data: '',
         success(data) {
           wx.showToast({

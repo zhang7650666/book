@@ -37,7 +37,7 @@ Page({
   onLoad: function (options) {
     this.setData({
       fiction_id: options.fiction_id, 
-      chapter_id: options.chapter_id,
+      // chapter_id: options.chapter_id,
     });
     // 小说内容出事话展示
     this.handleChapter()
@@ -102,10 +102,10 @@ Page({
     });
   },
   // 加入书城
-  handleJoin(){
+  handleJoin(ev){
     let _this = this;
     http.request({
-      url: "add_book_rack",
+      url: "add_controller",
       data:{
         fiction_id:ev.currentTarget.dataset.fictionId,
       },
@@ -134,7 +134,7 @@ Page({
   handleChapter(ev){
     let _this = this;
     let chapter = this.data.chapter_id;
-    if(ev.currentTarget.dataset.prev){
+    if(ev && ev.currentTarget.dataset.prev){
       ev.currentTarget.dataset.prev == 'prev' ? chapter = parseInt(this.data.fictionChapter) -1 : chapter = parseInt(this.data.fictionChapter) +1
     }
     http.request({
@@ -148,11 +148,13 @@ Page({
       success(res){
         // 小程序解析html
         // 小说内容res.data.data.fiction_title
-        WxParse.wxParse('article', 'html', res.data.data.fiction_title, _this, 5);
-        _this.setData({
-          fictionRead:res.data,
-          isMask:false,
-        })
+        if(res.code == 200){
+          WxParse.wxParse('article', 'html', res.data.data.fiction_title, _this, 5);
+          _this.setData({
+            fictionRead: res.data,
+            isMask: false,
+          })
+        }
       }
     })
   },

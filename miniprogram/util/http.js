@@ -20,10 +20,7 @@ class HTTP{
       },
       method: params.method,
       success: (res) => { 
-        // startsWith
-        // endsWith  
-        let code = res.statusCode.toString();
-        if(code.startsWith("2")){
+        if(res.data.code==200){
             params.success(res.data);
         }else{
           let errCode = res.data.error_code;
