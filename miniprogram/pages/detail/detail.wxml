@@ -3,7 +3,7 @@
     <!--头部详情信息-->
     <view class="search-book">
         <view class="book-cover" bindtap="handleRead">
-            <image src="{{books.fiction_img}}" mode="widthFix"></image>
+            <image src="{{books.fiction_img}}" binderror="errImg" mode="widthFix"></image>
         </view>
         <view class="introduce-wrap">
             <view class="book-name">

@@ -1,4 +1,5 @@
 // miniprogram/pages/detail/detail.js
+const app = getApp();
 import {http} from "../../util/http.js";
 Page({
 
@@ -130,6 +131,7 @@ Page({
         fiction_id:obj.id,
       },
       success(res) {
+
         _this.setData({
           // 这里需要改成调试时候的实际数据
           fictionDetails:res.data,
@@ -145,13 +147,20 @@ Page({
     http.request({
       url: "similar_list",
       data:{
-        ffiction_class_id:obj.fiction_class_id,
+        fiction_class_id:obj.fiction_class_id,
       },
       success(res) {
         _this.setData({
           bbookList:res.data.data
         })
       }
+    })
+  },
+  // 处理错误默认图片
+  errImg() {
+    this.data.fictionDetails.fiction_img = app.globalData.defaultImg
+    this.setData({
+      fictionDetails:this.data.fictionDetails
     })
   },
   /**
