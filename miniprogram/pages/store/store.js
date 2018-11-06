@@ -229,7 +229,6 @@ Page({
         size: this.data.size,
       },
       success(res) {
-        console.log(res.data.list);
         _this.setData({
           books: res.data.list || [],
         });

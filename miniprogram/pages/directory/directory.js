@@ -95,7 +95,7 @@ Page({
     http.request({
       url: "fiction_chapter",
       data: {
-        fiction_id: _this.data.fiction_class_id || '',
+        fiction_id: _this.data.fiction_id || '',
         sort: _this.data.sort,
         page: _this.data.page,
         size: _this.data.size,
@@ -106,6 +106,12 @@ Page({
           dirList: res.data.list
         })
       }
+    })
+  },
+  toReading(ev) {
+    console.log(ev);
+    wx.navigateTo({
+      url: `/pages/reading/reading?fiction_id=${this.data.fiction_id}&chapter_id=${chapter_id}`
     })
   }
 })

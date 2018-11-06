@@ -77,7 +77,7 @@ Page({
   // 继续阅读
   handleKeep(){
     wx.navigateTo({
-      url: `/pages/reading/reading?fiction_id=${this.data.fictionDetails.fiction_id}&chapter=${this.data.fictionDetails.fiction_look_chapter}`
+      url: `/pages/reading/reading?fiction_id=${this.data.fictionDetails.fiction_id}`
     })
   },
   // 加入书架
@@ -105,7 +105,7 @@ Page({
     http.request({
       url: "remove_book_rack",
       data:{
-        fiction_id:ev.currentTarget.dataset.fictionId,
+        fiction_id:ev.currentTarget.dataset.fiction_id,
       },
       success(res) {
         wx.showToast({
@@ -119,12 +119,12 @@ Page({
   // 跳转目录页面
   handleDir(){
     wx.navigateTo({
-      url: `/pages/directory/directory?fictionID=${this.data.fictionDetails.fiction_id}`,
+      url: `/pages/directory/directory?fiction_id=${this.data.fiction_id}`,
     })
   },
   handleRead() {
     wx.navigateTo({
-      url: `/pages/reading/reading?fictionID=${this.data.fictionDetails.fiction_id}&chapter=${this.data.fictionDetails.fiction_look_chapter}`
+      url: `/pages/reading/reading?fiction_id=${this.data.fiction_id}`
     })
   },
   // 小说详情页接口

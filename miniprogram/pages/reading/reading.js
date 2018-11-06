@@ -27,7 +27,8 @@ Page({
       value:'自动扣除，不在提示'
     }], // 选中取消
     fiction_id:'', // 小说ID
-    fictionChapter:'', // 小说章节
+    chapter_id:'', // 小说章节id
+    is_auto_pay: 0, //是否自动购买 0 不；1 自动
     fictionRead:{}, // 小说相关对象
   },
    /**
@@ -36,7 +37,7 @@ Page({
   onLoad: function (options) {
     this.setData({
       fiction_id: options.fiction_id, 
-      fiction_hapter:options.chapter,
+      chapter_id: options.chapter_id,
     });
     // 小说内容出事话展示
     this.handleChapter()
@@ -132,7 +133,7 @@ Page({
   // 小说当前章节内容
   handleChapter(ev){
     let _this = this;
-    let chapter = this.data.fiction_chapter;
+    let chapter = this.data.chapter_id;
     if(ev.currentTarget.dataset.prev){
       ev.currentTarget.dataset.prev == 'prev' ? chapter = parseInt(this.data.fictionChapter) -1 : chapter = parseInt(this.data.fictionChapter) +1
     }
@@ -140,7 +141,9 @@ Page({
       url:"fiction_read",
       data:{
         fiction_id: _this.data.fiction_id,
-        fiction_chapter:_this.data.fiction_chapter,
+        chapter_id: _this.data.chapter_id,
+        is_auto_pay: _this.data.is_auto_pay,
+        is_pay: _this.data.is_pay
       },
       success(res){
         // 小程序解析html

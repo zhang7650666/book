@@ -5,10 +5,10 @@
       <image src="/images/u577.png" mode="widthFix"></image>
     </view>
     <view class="dir-list">
-      <view class="list" wx:for="{{dirList}}" wx:key="item.sort">
-        <text class="sort">第{{item.sort}}章</text>
-        <text class="title">{{item.title}}</text>
-        <text class="is-pay">{{item.isPay ? '收费' : ''}}</text>
+      <view class="list" wx:for="{{dirList}}" wx:key="item.fiction_id" data-item="{{item}}" bindtap="toReading">
+        <!-- <text class="sort">第{{item.sort}}章</text> -->
+        <text class="title">{{item.chapter_name}}</text>
+        <text class="is-pay">{{item.is_pay != 0 ? '收费' : ''}}</text>
       </view>
     </view>
 </view>
