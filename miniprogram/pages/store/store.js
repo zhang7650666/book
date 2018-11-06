@@ -11,139 +11,23 @@ Page({
     isEdit: true, // 是否是编辑
     swiperHeight:800,
     isRead:true,
+    bookPage: 1, // 书架当前页
+    readingPage: 1, //最近阅读当前页
+    size: 10,
+    deleteId: null,
     books: [
-      {
-        id:0,
-        img: "../../images/u27.jpeg",
-        name: "青春年华1",
-        author: "琼瑶"
-      },
-      {
-        id: 1,
-        img: "../../images/u27.jpeg",
-        name: "青春年华2",
-        author: "琼瑶"
-      },
-      {
-        id: 2,
-        img: "../../images/u27.jpeg",
-        name: "青春年华3",
-        author: "琼瑶"
-      },
-      {
-        id: 3,
-        img: "../../images/u27.jpeg",
-        name: "青春年华4",
-        author: "琼瑶"
-      },
-      {
-        id: 4,
-        img: "../../images/u27.jpeg",
-        name: "青春年华2",
-        author: "琼瑶"
-      },
-      {
-        id: 5,
-        img: "../../images/u27.jpeg",
-        name: "青春年华3",
-        author: "琼瑶"
-      },
-      {
-        id: 6,
-        img: "../../images/u27.jpeg",
-        name: "青春年华4",
-        author: "琼瑶"
-      },
-      {
-        id: 7,
-        img: "../../images/u27.jpeg",
-        name: "青春年华2",
-        author: "琼瑶"
-      },
-      {
-        id: 8,
-        img: "../../images/u27.jpeg",
-        name: "青春年华3",
-        author: "琼瑶"
-      },
-      {
-        id: 8,
-        img: "../../images/u27.jpeg",
-        name: "青春年华4",
-        author: "琼瑶"
-      }
-    ], // 数据列表
-    readArr: [
-      {
-        id: 0,
-        img: "../../images/u27.jpeg",
-        name: "青春年华1",
-        author: "琼瑶",
-        isStore:true,
-      },
-      {
-        id: 1,
-        img: "../../images/u27.jpeg",
-        name: "青春年华2",
-        author: "琼瑶",
-        isStore: false,
-      },
-      {
-        id: 2,
-        img: "../../images/u27.jpeg",
-        name: "青春年华3",
-        author: "琼瑶",
-        isStore: true,
-      },
-      {
-        id: 3,
-        img: "../../images/u27.jpeg",
-        name: "青春年华4",
-        author: "琼瑶",
-        isStore: false,
-      },
-      {
-        id: 4,
-        img: "../../images/u27.jpeg",
-        name: "青春年华2",
-        author: "琼瑶",
-        isStore: true,
-      },
-      {
-        id: 5,
-        img: "../../images/u27.jpeg",
-        name: "青春年华3",
-        author: "琼瑶",
-        isStore: true,
-      },
-      {
-        id: 6,
-        img: "../../images/u27.jpeg",
-        name: "青春年华4",
-        author: "琼瑶",
-        isStore: true,
-      },
-      {
-        id: 7,
-        img: "../../images/u27.jpeg",
-        name: "青春年华2",
-        author: "琼瑶",
-        isStore: true,
-      },
-      {
-        id: 8,
-        img: "../../images/u27.jpeg",
-        name: "青春年华3",
-        author: "琼瑶",
-        isStore: true,
-      },
-      {
-        id: 8,
-        img: "../../images/u27.jpeg",
-        name: "青春年华4",
-        author: "琼瑶",
-        isStore: true,
-      }
+      // {
+      //   fiction_id:1,
+      //   fiction_img: "../../images/u27.jpeg",
+      //   fiction_name: "青春年华1",
+      //   fiction_author: "琼瑶"
+      // },
+      // {
+      //   fiction_id: 1,
+      //   fiction_img: "../../images/u27.jpeg",
+      //   fiction_name: "青春年华2",
+      //   fiction_author: "琼瑶"
+      // }
     ], // 数据列表
   },
   //获取当前滑块的index
@@ -160,6 +44,12 @@ Page({
       this.setData({
         currentData: e.target.dataset.current
       })
+      if (this.data.currentData == 1) {
+        this.getRecentlyBookList()
+      }
+      else {
+        this.getBooksList();
+      }
     }
   },
   // 点击编辑
@@ -171,23 +61,15 @@ Page({
   // 移除数据
   handleRemove(ev){
     let _this = this;
+    this.setData({
+      deleteId: ev.currentTarget.dataset.deleteid,
+    })
     wx.showModal({
       content: '确认删除本书吗？',
       confirmColor:'#ff3300',
       success(res) {
         if (res.confirm) {
-          let index = null;
-          _this.data.books.map((item, index) => {
-            if (item.id == ev.detail.id) {
-              index = index;
-              return;
-            };
-          });
-          _this.data.books.splice(index, 1);
-          _this.setData({
-            books: _this.data.books
-          })
-        } else if (res.cancel) {
+          _this.deleteBookFn();
         }
       }
     })
@@ -200,10 +82,7 @@ Page({
       confirmColor: '#ff3300',
       success(res) {
         if (res.confirm) {
-          _this.setData({
-            books: []
-          })
-        } else if (res.cancel) {
+          _this.deleteAllBooks();
         }
       }
     })
@@ -228,12 +107,76 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log()
+    this.getBooksList();
+  },
+  calcSwiperHeight() {
     this.setData({
-       swiperHeight: this.data.books.length % 3 == 0 ? (this.data.books.length / 3 * 370) : (Math.floor(this.data.books.length / 3) + 1) * 370,
-       // books:[],
+      swiperHeight: this.data.books.length % 3 == 0 ? (this.data.books.length / 3 * 370) : (Math.floor(this.data.books.length / 3) + 1) * 370,
     })
-    
+  },
+  //获取最近阅读列表
+  getRecentlyBookList() {
+    const _this = this;
+    http.request({
+      url: "recent_list",
+      data: {
+      },
+      success(res) {
+        _this.setData({
+          books: res.data.list || [],
+        });
+        _this.calcSwiperHeight();
+      }
+    })
+  },
+  //从书架删除
+  deleteBookFn() {
+    const _this = this;
+    http.request({
+      url: "controller_list",
+      data: {
+        controller_id: this.data.deleteId || '',
+      },
+      success(res) {
+        const books = _this.data.books.filter(v => v.fiction_id != _this.data.deleteId)
+        _this.setData({
+          books,
+        })
+      }
+    })
+  },
+  //删除书架
+  deleteAllBooks() {
+    const _this = this;
+    http.request({
+      url: "del_all_Controller",
+      data: {
+      },
+      success(res) {
+        if (res.code == 200) {
+          _this.setData({
+            books: [],
+          });
+        }
+      }
+    })
+  },
+  //获取书架列表
+  getBooksList() {
+    const _this = this;
+    http.request({
+      url: "controller_list",
+      data: {
+        page: this.data.bookPage,
+        size: this.data.size,
+      },
+      success(res) {
+        _this.setData({
+         books: res.data.list || [],
+       });
+        _this.calcSwiperHeight();
+      }
+    })
   },
 
   /**

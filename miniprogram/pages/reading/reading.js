@@ -26,7 +26,7 @@ Page({
       checked:false,
       value:'自动扣除，不在提示'
     }], // 选中取消
-    fictionId:'', // 小说ID
+    fiction_id:'', // 小说ID
     fictionChapter:'', // 小说章节
     fictionRead:{}, // 小说相关对象
   },
@@ -35,8 +35,8 @@ Page({
    */
   onLoad: function (options) {
     this.setData({
-      fictionId:options.fictionId, 
-      fictionChapter:options.chapter,
+      fiction_id: options.fiction_id, 
+      fiction_hapter:options.chapter,
     });
     // 小说内容出事话展示
     this.handleChapter()
@@ -120,7 +120,7 @@ Page({
   // 跳转到目录页面
   handleDir(){
     wx.navigateTo({
-      url: `/pages/directory/directory?fictionID=${this.data.fictionId}`,
+      url: `/pages/directory/directory?fiction_id=${this.data.fiction_id}`,
     })
   },
   // 去书城
@@ -139,7 +139,7 @@ Page({
     http.request({
       url:"fiction_read",
       data:{
-        fiction_id:_this.data.fictionId,
+        fiction_id: _this.data.fiction_id,
         fiction_chapter:_this.data.fiction_chapter,
       },
       success(res){

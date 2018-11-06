@@ -24,6 +24,7 @@ Page({
     useId: 123456789,
     //积分
     integral: '6789',
+    isShareShow: false,
     //列表数据
     userList: [
       {
@@ -51,7 +52,7 @@ Page({
         icon: '/images/my3.png',
         label: '添加到桌面 ',
         desc: '可获得10积分',
-        url: "",
+        itemType: 'share',
       },
     ]
   },
@@ -67,27 +68,21 @@ Page({
   },
   // 界面跳转
   handleJump(ev){
-    let url = ev.currentTarget.dataset.item.url;
-    if(url) {
+    let item = ev.currentTarget.dataset.item;
+    if(item.url) {
       wx.navigateTo({
-        url,
+        url: item.url
       })
-    }else{
-      console.log(11)
-      wx.showShareMenu({
-        withShareTicket: true
+    } else if (item.itemType == 'share'){
+      this.setData({
+        isShareShow: true,
       })
-      // wx.showActionSheet({
-      //   itemList: ['A', 'B', 'C'],
-      //   success: function (res) {
-      //     console.log(JSON.stringify(res))
-      //     console.log(res.tapIndex) // 用户点击的按钮，从上到下的顺序，从0开始
-      //   },
-      //   fail: function (res) {
-      //     console.log(res.errMsg)
-      //   }
-      // })
     }
+  },
+  hideShareHandel() {
+    this.setData({
+      isShareShow: !this.data.isShareShow,
+    })
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

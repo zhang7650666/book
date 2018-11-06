@@ -7,7 +7,9 @@ Page({
    */
   data: {
     searchBooks: [],
-    type:'',
+    album_id:'',
+    page: 1,
+    size: 10,
   },
 
   /**
@@ -15,29 +17,17 @@ Page({
    */
   onLoad: function (options) {
     // 1 人们推荐   2 男生最爱  3 女生最爱
-    let type = '';
-    let title = ''
-    if(options.title == "1"){
-      title = '热门推荐';
-      type = 'hot';
-    }if(options.title == "2"){
-      title = '男生最爱';
-      type = 'boy';
-    }if(options.title == "3"){
-      title = '女生最爱'
-      type = 'girls';
-    }
     wx.setNavigationBarTitle({
-      title: title//页面标题为路由参数
+      title: options.title//页面标题为路由参数
     });
     this.setData({
-      type:type,
+      album_id: options.typeid,
     })
     // 小说列表接口调用
     this.postFictionList({
-      type:this.data.type,
-      page:this.data.page,
-      size:this.data.size,
+      album_id: this.data.album_id,
+      page: this.data.page,
+      size: this.data.size,
       pullDown:false,
       pullUp:false,
     })
@@ -46,30 +36,30 @@ Page({
   postFictionList(obj){
     let _this = this;
     http.request({
-      url: "fiction_list",
+      url: "album_info_list",
       data:{
-        type:obj.type,
-        page:page,
-        size:size,
+        album_id: obj.album_id,
+        page: obj.page,
+        size: obj.size,
       },
       success(res) {
-        if(obj.pullDown){
+        if(!obj.pullDown){
           // 隐藏导航栏加载框
           wx.hideNavigationBarLoading();
           // 停止下拉动作
           wx.stopPullDownRefresh();
           _this.setData({
-            searchBooks:[],
+            searchBooks: obj.page == 1 ? (res.data || []) : this.data.searchBooks.push(res.data),
           });
         };
-        if(obj.pullUp){
+        if(!obj.pullUp){
           // 隐藏加载框
           wx.hideLoading();
         };
-        _this.setData({
-          // 这里需要改成调试时候的实际数据
-          searchBooks:this.data.searchBooks.push(res.data),
-        });
+        // _this.setData({
+        //   // 这里需要改成调试时候的实际数据
+        //   searchBooks:this.data.searchBooks.push(res.data),
+        // });
       }
     })
   },
@@ -105,6 +95,7 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
+    // const isHas
     // 显示顶部刷新图标
     wx.showNavigationBarLoading();
      // 页数+1

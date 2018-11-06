@@ -15,6 +15,9 @@ Page({
     circular:true,
     booksList:[], // 小说列表
     indexLooks:[], // 大家都在看
+    page: 1,
+    size: 10,
+    isSeeEnd: false,
   },
 
   /**
@@ -60,19 +63,21 @@ Page({
     })
   },
   // 大家都在看接口调用
-  postIndexLook(){
+  postIndexLook(callback){
     let _this = this;
     http.request({
       url: "all_see",
       data:{
-        page: 1,
-        size: 10
+        page: this.data.page,
+        size: this.data.size,
       },
       success(res) {
-        console.log(res)
+        const books = 
         _this.setData({
-          indexLooks:res.data,
+            indexLooks: this.data.page == 1 ? (res.data || []) : _this.data.indexLooks.concat(res.data),
+            isSeeEnd: res.data.length == 0,
         })
+        callback && callback();
       }
     })
   },
@@ -85,8 +90,9 @@ Page({
   // 点击更多
   handleMore(ev){
      // 1(热门推荐)，2（男生推荐），3（女生推荐）
+    const params = ev.currentTarget.dataset;
     wx.navigateTo({
-      url: `/pages/list/list?title=${ev.currentTarget.dataset.title}`
+      url: `/pages/list/list?typeid=${params.typeid}&title=${params.title}`
     })
   },
   // 1(热门推荐)，2（男生推荐），3（女生推荐） 默认图片路径
@@ -100,7 +106,6 @@ Page({
   lookImg(ev) {
     // 现在大家都在看的图片没有是因为他们返回的null  这里不要纠结
     this.data.indexLooks[ev.detail.outIndex].fiction_img = app.globalData.defaultImg;
-    console.log(this.data.indexLooks[ev.detail.outIndex].fiction_img)
     this.setData({
       indexLooks: this.data.indexLooks
     })
@@ -144,7 +149,23 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-
+    const that = this;
+    //大家正在看取30本书，大于30本或列表返回为空时，就不在请求了
+    if (this.data.isSeeEnd) {
+      return;
+    }
+    // 显示加载图标
+    wx.showLoading({
+      title: '玩命加载中',
+    })
+    that.setData({
+      page: this.data.page + 1,
+      isSeeEnd: this.data.page + 1 > 3,
+    });
+    // 大家都在看请求
+    this.postIndexLook(() => {
+      wx.hideLoading();
+    });
   },
 
   /**

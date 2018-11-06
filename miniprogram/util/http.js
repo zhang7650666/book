@@ -14,7 +14,7 @@ class HTTP{
       url: config.baseUrl + params.url,
       data: params.data,
       header: {
-        'content-type': 'application/json',
+        'content-Type': 'application/json;charset=utf-8',
         'token': data.token,
         //'unique_id': data.unique_id
       },

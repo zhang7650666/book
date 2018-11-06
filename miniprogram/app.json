@@ -1,11 +1,12 @@
 {
   "cloud": true,
   "pages": [
+    "pages/store/store",
     "pages/index/index",
+    "pages/my/my",
+    "pages/recharge/recharge",
     "pages/reading/reading",
     "pages/home/home",
-    "pages/my/my",
-    "pages/store/store",
     "pages/detail/detail",
     "pages/directory/directory",
     "pages/search/search",
@@ -15,7 +16,6 @@
     "pages/wxPay/wxPay",
     "pages/record/record", 
     "pages/service/service",
-    "pages/recharge/recharge",
     "pages/invitation/invitation"
   ],
   "window": {
