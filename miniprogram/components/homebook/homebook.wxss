@@ -3,7 +3,7 @@
   position:relative;
     padding-bottom:26rpx;
     /* width:180rpx; */
-    width:190rpx;
+    width:180rpx;
 }
 .book-cover {
   position: relative;
@@ -11,8 +11,8 @@
 }
 .home-book .book-cover image{
     /* width:180rpx; */
-    width:190rpx;
-    /* height:240rpx; */
+    width:180rpx;
+    height:240rpx;
     /* width:100%; */
     display:block;
 }

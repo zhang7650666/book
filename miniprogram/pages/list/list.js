@@ -43,7 +43,7 @@ Page({
         size: obj.size,
       },
       success(res) {
-        if(!obj.pullDown){
+        if (obj.pullDown && !obj.pullUp){
           // 隐藏导航栏加载框
           wx.hideNavigationBarLoading();
           // 停止下拉动作
@@ -52,7 +52,7 @@ Page({
             searchBooks: obj.page == 1 ? (res.data || []) : this.data.searchBooks.push(res.data),
           });
         };
-        if(!obj.pullUp){
+        if (!obj.pullDown && obj.pullUp){
           // 隐藏加载框
           wx.hideLoading();
         };
@@ -140,6 +140,5 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-
   }
 })
