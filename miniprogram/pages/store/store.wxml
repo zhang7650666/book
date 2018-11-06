@@ -27,7 +27,7 @@
     <swiper-item>
       <view class='swiper_con'>
         <view class="books-wrap">
-          <view class="books-main" wx:for="{{books}}" wx:key="item.name" >
+          <view class="books-main" wx:for="{{readArr}}" wx:key="item.name" >
             <home-book books="{{item}}" isStore="{{item.is_collection}}" isCur="{{currentData}}" bind:removeData="handleRemove"></home-book>
           </view>
         </view>

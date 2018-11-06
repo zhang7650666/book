@@ -15,6 +15,7 @@ Page({
     readingPage: 1, //最近阅读当前页
     size: 10,
     deleteId: null,
+    readArr:[], // 最近阅读数组
     books: [
       // {
       //   fiction_id:1,
@@ -123,7 +124,7 @@ Page({
       },
       success(res) {
         _this.setData({
-          books: res.data.list || [],
+          readArr: res.data.list || [],
         });
         _this.calcSwiperHeight();
       }
