@@ -40,7 +40,7 @@ Page({
         size: _this.data.size,
       },
       success(res) {
-        if(!obj.pullDown){
+        if (obj.pullDown && !obj.pullUp){
           // 隐藏导航栏加载框
           wx.hideNavigationBarLoading();
           // 停止下拉动作
@@ -49,7 +49,7 @@ Page({
         _this.setData({
           searchBooks: obj.page == 1 ? (res.data || []) : [...this.data.searchBooks, ...res.dat],
         });
-        if(!obj.pullUp){
+        if (!obj.pullDown && obj.pullUp){
           // 隐藏加载框
           wx.hideLoading();
         };
@@ -126,6 +126,5 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-
   }
 })
