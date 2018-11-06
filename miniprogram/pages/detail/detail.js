@@ -11,6 +11,7 @@ Page({
     isStore:"0", // 是否在书架
     fictionDetails: {}, 
     fiction_id: null,
+    fiction_class_id: null,
     bookDetails:{
       // img: "../../images/u27.jpeg",
       // name: "青春年华1",
@@ -142,16 +143,18 @@ Page({
           // 这里需要改成调试时候的实际数据
           bookDetails: res.data || {},
         })
+        _this.postSimilarList()
       }
     })
   },
   // 同类小说
-  postSimilarList(obj){
+  postSimilarList(){
     let _this = this;
     http.request({
       url: "similar_list",
       data:{
-        fiction_class_id:obj.fiction_class_id,
+        fiction_class_id: _this.data.bookDetails.fiction_class_id || '',
+        fiction_id: _this.data.fiction_id || ''
       },
       success(res) {
         _this.setData({

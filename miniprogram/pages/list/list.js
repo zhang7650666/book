@@ -25,9 +25,6 @@ Page({
     })
     // 小说列表接口调用
     this.postFictionList({
-      album_id: this.data.album_id,
-      page: this.data.page,
-      size: this.data.size,
       pullDown:false,
       pullUp:false,
     })
@@ -38,28 +35,24 @@ Page({
     http.request({
       url: "album_info_list",
       data:{
-        album_id: obj.album_id,
-        page: obj.page,
-        size: obj.size,
+        album_id: _this.data.album_id,
+        page: _this.data.page,
+        size: _this.data.size,
       },
       success(res) {
         if(!obj.pullDown){
           // 隐藏导航栏加载框
           wx.hideNavigationBarLoading();
           // 停止下拉动作
-          wx.stopPullDownRefresh();
-          _this.setData({
-            searchBooks: obj.page == 1 ? (res.data || []) : this.data.searchBooks.push(res.data),
-          });
+          wx.stopPullDownRefresh(); 
         };
+        _this.setData({
+          searchBooks: obj.page == 1 ? (res.data || []) : [...this.data.searchBooks, ...res.dat],
+        });
         if(!obj.pullUp){
           // 隐藏加载框
           wx.hideLoading();
         };
-        // _this.setData({
-        //   // 这里需要改成调试时候的实际数据
-        //   searchBooks:this.data.searchBooks.push(res.data),
-        // });
       }
     })
   },
@@ -95,19 +88,16 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
+    const _this = this;
     // const isHas
     // 显示顶部刷新图标
     wx.showNavigationBarLoading();
      // 页数+1
-     that.setData({
+    _this.setData({
       page: 1,
-      size: this.data.size
     });
     // 小说列表接口调用
     this.postFictionList({
-      type:this.data.type,
-      page:this.data.page,
-      size:this.data.size,
       pullDown:true,
       pullUp:false,
     })
@@ -123,14 +113,10 @@ Page({
     })
     // 页数+1
     that.setData({
-      page: this.data.page + 1,
-      size: this.data.size
+      page: this.data.page + 1
     });
     // 小说列表接口调用
     this.postFictionList({
-      type:this.data.type,
-      page:this.data.page,
-      size:this.data.size,
       pullDown:false,
       pullUp:true,
     })
