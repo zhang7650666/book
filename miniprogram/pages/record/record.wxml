@@ -1,7 +1,7 @@
 <!--miniprogram/pages/record/record.wxml-->
 <view class="record-page">
   <view wx:for="{{list}}" wx:key="item.id" class="list-item">
-    <text class="desc">{{item.labelText}}</text>
+    <text class="desc">{{item.content}}</text>
     <text class="time">{{item.time}}</text>
   </view>
 </view>

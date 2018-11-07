@@ -6,7 +6,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    count:100, // 总共多少章节
+    count:0, // 总共多少章节
     fiction_class_id: null,
     sort: 'desc',  //asc
     page: 1,
@@ -36,7 +36,7 @@ Page({
   //获取目录列表
   getDirectoryList(obj) {
     let _this = this;
-    _this.data.sort == 'desc' ? _this.data.sort = 'desc' : _this.data.sort = 'asc';
+    // _this.data.sort == 'desc' ? _this.data.sort = 'desc' : _this.data.sort = 'asc';
     _this.setData({
       sort:_this.data.sort
     });
@@ -60,7 +60,7 @@ Page({
           wx.hideLoading();
         };
         _this.setData({
-          count:res.count,
+          count:res.data.count,
           dirList: _this.data.page == 1 ? ( res.data.list || []) : [..._this.data.dirList, ...res.data.list],
         });
       }
@@ -74,6 +74,9 @@ Page({
   },
   // 排序
   handleSort() {
+    this.setData({
+      sort: this.data.sort == 'desc' ? 'asc' : 'desc',
+    })
     this.getDirectoryList({
       pullDown:false,
       pullUp:false,

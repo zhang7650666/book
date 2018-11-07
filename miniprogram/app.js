@@ -9,7 +9,7 @@ App({
     http.request({
       url: "token",
       data: {
-        login_code: res_login.code,
+        login_code: 'test' || res_login.code,
       },
       success(data) {
         wx.setStorageSync('token',JSON.stringify(data.data));

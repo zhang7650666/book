@@ -47,7 +47,7 @@ Page({
       // 从其他页面到阅读页
       this.setData({
         fiction_id: options.fiction_id, 
-        chapter_id: options.chapter_id,
+        chapter_id: options.chapter_id || 1,
       });
     }
     
@@ -164,7 +164,7 @@ Page({
         // 小程序解析html
         // 小说内容res.data.data.fiction_title
         if(res.code == 200){
-          WxParse.wxParse('article', 'html', res.data, _this, 5);
+          WxParse.wxParse('article', 'html', res.data.content, _this, 5);
           _this.setData({
             fictionRead: res.data,
             isMask: false,

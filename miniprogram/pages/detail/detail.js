@@ -30,7 +30,7 @@ Page({
   // 继续阅读
   handleKeep(){
     wx.navigateTo({
-      url: `/pages/reading/reading?fiction_id=${this.data.fictionDetails.fiction_id}`
+      url: `/pages/reading/reading?fiction_id=${this.data.fiction_id}`
     })
   },
   // 加入书架
@@ -94,6 +94,7 @@ Page({
       success(res) {
         _this.setData({
           bookDetails: res.data || {},
+          isFirst: res.data.fiction_last_chapter_id && res.data.fiction_last_chapter_id == 1
         });
         // 调用同类小说接口
         _this.postSimilarList()

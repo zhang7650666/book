@@ -16,7 +16,7 @@
   flex:1;
 }
 .record-page view .time{
-  flex:0 0 240rpx;
-  min-width:240rpx;
+  flex:0 0 290rpx;
+  min-width:290rpx;
   text-align: right;
 }
