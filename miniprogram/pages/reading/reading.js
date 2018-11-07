@@ -35,12 +35,24 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.setData({
-      fiction_id: options.fiction_id, 
-      // chapter_id: options.chapter_id,
-    });
-    // 小说内容出事话展示
-    this.handleChapter()
+    // 从目录页面到阅读页
+    if(options.chapterInfo){
+      let chapterInfo = JSON.parse(options.chapterInfo);
+      this.setData({
+        fiction_id: chapterInfo.fiction_id, 
+        chapter_id: chapterInfo.chapter_id,
+        isPay:chapterInfo.is_pay,
+      });
+    }else{
+      // 从其他页面到阅读页
+      this.setData({
+        fiction_id: options.fiction_id, 
+        chapter_id: options.chapter_id,
+      });
+    }
+    
+    // 小说内容初始化展示
+    this.handleChapter();
   },
   // 点击呼出设置弹框
   handleSet() {
@@ -52,7 +64,7 @@ Page({
   handleAdd(){
     if (this.data.fontSize > 54){
       wx.showToast({
-        title: "字体大小不能超过27px",
+        title: "字体大小不能超过28px",
         icon: 'none',
         duration: 1000,
       })
@@ -65,7 +77,7 @@ Page({
   },
   // 字号减小
   handleReduc() {
-    if (this.data.fontSize < 24) {
+    if (this.data.fontSize < 26) {
       wx.showToast({
         title: "字体大小不能小于12px",
         icon: 'none',
@@ -135,30 +147,45 @@ Page({
     let _this = this;
     let chapter = this.data.chapter_id;
     if(ev && ev.currentTarget.dataset.prev){
-      ev.currentTarget.dataset.prev == 'prev' ? chapter = parseInt(this.data.fictionChapter) -1 : chapter = parseInt(this.data.fictionChapter) +1
+      ev.currentTarget.dataset.prev == 'prev' ? chapter = parseInt(this.data.chapter_id) -1 : chapter = parseInt(this.data.chapter_id) +1;
     }
+    this.setData({
+      chapter_id:_this.data.chapter_id
+    });
     http.request({
       url:"fiction_read",
       data:{
         fiction_id: _this.data.fiction_id,
         chapter_id: _this.data.chapter_id,
-        is_auto_pay: _this.data.is_auto_pay,
+        is_auto_pay:_this.data.deduction[0].checked,
         is_pay: _this.data.is_pay
       },
       success(res){
         // 小程序解析html
         // 小说内容res.data.data.fiction_title
         if(res.code == 200){
-          WxParse.wxParse('article', 'html', res.data.data.fiction_title, _this, 5);
+          WxParse.wxParse('article', 'html', res.data, _this, 5);
           _this.setData({
             fictionRead: res.data,
             isMask: false,
           })
         }
+      },
+      error(res){
+        if(res.code == 3001){
+          wx.navigateBack({
+            delta: 1
+          })
+        }
       }
     })
   },
-  
+  // checkbox 改变
+  checkboxChange(){
+    this.setData({
+      deduction:!this.data.deduction[0].checked
+    })
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

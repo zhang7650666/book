@@ -2,7 +2,7 @@
 <view>
   <view class="search-show">
     <view  wx:for="{{searchBooks}}" wx:key="item.fiction_id">
-      <search-book books="{{item}}"></search-book>
+      <search-book books="{{item}}" outIndex="{{index}}" bind:lookImg="lookImg"></search-book>
     </view>
   </view>
 </view>

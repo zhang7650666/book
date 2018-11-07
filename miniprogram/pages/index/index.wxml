@@ -12,7 +12,7 @@
     autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" circular="{{circular}}">
     <block wx:for="{{imgUrls}}" wx:key="item">
       <swiper-item>
-        <image src="{{item.banner_img}}" class="slide-image" style='width:100%; overflow:show;' mode="widthFix"/>
+        <image src="{{item.banner_img}}" binderror="errImg" class="slide-image" style='width:100%; overflow:show;' mode="widthFix" data-index="{{index}}"/>
       </swiper-item>
     </block>
   </swiper>
@@ -24,7 +24,7 @@
         <text class="book-more" data-title="{{outItem.title}}" data-typeid="{{outItem.album_id}}" bindtap="handleMore">更多</text>
       </view>
       <view class="books-wrap">
-        <view class="books-main" wx:for="{{outItem.list}}" wx:for-item="innerItem" wx:key="index" wx:for-index="innerIndex">
+        <view class="books-main" wx:for="{{outItem.list}}" wx:for-item="innerItem" wx:key="{{innerIndex}}" wx:for-index="innerIndex">
           <home-book books="{{innerItem}}" outIndex="{{outIndex}}" innerIndex="{{innerIndex}}" bind:handleImg="handleImg"></home-book>
         </view>
       </view>

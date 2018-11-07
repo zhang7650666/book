@@ -12,18 +12,8 @@ Page({
     fictionDetails: {}, 
     fiction_id: null,
     fiction_class_id: null,
-    bookDetails:{
-      // img: "../../images/u27.jpeg",
-      // name: "青春年华1",
-      // author: "琼瑶",
-      // type:"爱情",
-      // wordCount:"字数",
-      // flag:"连载/完结",
-      // introduce:"简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介",
-    },
-    bookList:[
-     
-    ], // 数据列表
+    bookDetails:{},
+    bookList:[], // 数据列表
   },
 
   /**
@@ -31,7 +21,8 @@ Page({
    */
   onLoad: function (options) {
     this.setData({
-      fiction_id: options.fiction_id
+      fiction_id: options.fiction_id,
+      fiction_class_id:options.fiction_class_id,
     })
     // 小说详情
     this.getBookIntro();
@@ -65,9 +56,9 @@ Page({
   handleRemove(){
     let _this = this;
     http.request({
-      url: "remove_book_rack",
+      url: "del_controller",
       data:{
-        fiction_id:ev.currentTarget.dataset.fiction_id,
+        controller_id:ev.currentTarget.dataset.fiction_id,
       },
       success(res) {
         wx.showToast({
@@ -94,7 +85,7 @@ Page({
     let _this = this;
     if (!_this.data.fiction_id) {
       return ;
-    }
+    };
     http.request({
       url: "fiction_details",
       data:{
@@ -102,9 +93,9 @@ Page({
       },
       success(res) {
         _this.setData({
-          // 这里需要改成调试时候的实际数据
           bookDetails: res.data || {},
-        })
+        });
+        // 调用同类小说接口
         _this.postSimilarList()
       }
     })
@@ -115,6 +106,7 @@ Page({
     http.request({
       url: "similar_list",
       data:{
+        // 这个位置有疑问  现在详情页没有返回(fiction_class_id)
         fiction_class_id: _this.data.bookDetails.fiction_class_id || '',
         fiction_id: _this.data.fiction_id || ''
       },

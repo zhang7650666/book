@@ -2,7 +2,7 @@
 <view class="directory-page">
     <view class="directory">
       <text>目录 （共{{count}}章）</text>
-      <image src="/images/u577.png" mode="widthFix"></image>
+      <image src="/images/u577.png" mode="widthFix" catchtap="handleSort"></image>
     </view>
     <view class="dir-list">
       <view class="list" wx:for="{{dirList}}" wx:key="item.fiction_id" data-item="{{item}}" bindtap="toReading">

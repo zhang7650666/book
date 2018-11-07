@@ -121,3 +121,7 @@ text{
     border-radius:32rpx;
     color:#666666;
 }
+
+.main-title .red {
+  margin-top:3rpx;
+}

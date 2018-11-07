@@ -17,9 +17,11 @@ Page({
    */
   onLoad: function (options) {
     // 1 人们推荐   2 男生最爱  3 女生最爱
+    //页面标题为路由参数
     wx.setNavigationBarTitle({
-      title: options.title//页面标题为路由参数
+      title: options.title
     });
+    // 拿到index页面传过来的 album_id
     this.setData({
       album_id: options.typeid,
     })
@@ -47,13 +49,20 @@ Page({
           wx.stopPullDownRefresh(); 
         };
         _this.setData({
-          searchBooks: obj.page == 1 ? (res.data || []) : [...this.data.searchBooks, ...res.dat],
+          searchBooks: _this.data.page == 1 ? (res.data || []) : [..._this.data.searchBooks, ...res.data],
         });
         if (!obj.pullDown && obj.pullUp){
           // 隐藏加载框
           wx.hideLoading();
         };
       }
+    })
+  },
+  lookImg(ev) {
+    // 现在大家都在看的图片没有是因为他们返回的null  这里不要纠结
+    this.data.searchBooks[ev.detail.outIndex].fiction_img = app.globalData.defaultImg;
+    this.setData({
+      searchBooks: this.data.searchBooks
     })
   },
   /**
@@ -107,12 +116,15 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
+    if (this.data.searchBooks.length % this.data.size > 0) {
+      return;
+    }
     // 显示加载图标
     wx.showLoading({
       title: '玩命加载中',
     })
     // 页数+1
-    that.setData({
+    this.setData({
       page: this.data.page + 1
     });
     // 小说列表接口调用

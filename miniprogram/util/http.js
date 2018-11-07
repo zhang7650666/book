@@ -3,6 +3,8 @@ const tips = {
   1:"默认错误提示",
   1005:"错误代码1005",
   3000: "错误代码3000",
+  4001:'删除书架失败',
+  3001:'小说不存在已下架',
 }
 let data = JSON.parse(wx.getStorageSync('token') || '{}')
 class HTTP{
@@ -23,8 +25,13 @@ class HTTP{
         if(res.data.code==200){
             params.success(res.data);
         }else{
-          let errCode = res.data.error_code;
-          this._err_code(errCode);
+          if(params.error){
+            params.error(res.data);
+          }else{
+            let errCode = res.data.code;
+            this._err_code(errCode);
+          }
+          
         }
       },
       fail: (res) => {

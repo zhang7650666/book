@@ -17,7 +17,6 @@ Page({
     indexLooks:[], // 大家都在看
     page: 1,
     size: 10,
-    isSeeEnd: false,
   },
 
   /**
@@ -28,7 +27,11 @@ Page({
     this.postAddList({alias:'Index_banner',size:5})
     // hot(热门推荐)，boy（男生推荐），girls（女生推荐）
     this.postIndexHot();
-    this.postIndexLook();
+    // 大家都在看
+    this.postIndexLook({
+      pullDown: false,
+      pullUp: false,
+    });
   },
   // banner图接口请求
   postAddList(obj){
@@ -63,7 +66,7 @@ Page({
     })
   },
   // 大家都在看接口调用
-  postIndexLook(callback){
+  postIndexLook(obj){
     let _this = this;
     http.request({
       url: "all_see",
@@ -72,16 +75,23 @@ Page({
         size: this.data.size,
       },
       success(res) {
-        const books = 
+        if (!obj.pullDown && obj.pullUp) {
+          // 隐藏加载框
+          wx.hideLoading();
+        };
+        if (obj.pullDown && !obj.pullUp) {
+          // 隐藏导航栏加载框
+          wx.hideNavigationBarLoading();
+          // 停止下拉动作
+          wx.stopPullDownRefresh();
+        };
         _this.setData({
-            indexLooks: this.data.page == 1 ? (res.data || []) : _this.data.indexLooks.concat(res.data),
-            isSeeEnd: res.data.length == 0,
+          indexLooks: _this.data.page == 1 ? (res.data || []) : [..._this.data.indexLooks, ...res.data],
         })
-        callback && callback();
       }
     })
   },
-  // 搜索切换
+  // 搜索跳转
   handleShow() {
     wx.navigateTo({
       url: '/pages/search/search'
@@ -108,6 +118,13 @@ Page({
     this.data.indexLooks[ev.detail.outIndex].fiction_img = app.globalData.defaultImg;
     this.setData({
       indexLooks: this.data.indexLooks
+    })
+  },
+  // banner 默认图片处理
+  errImg(ev){
+    this.data.imgUrls[ev.currentTarget.dataset.index] = '/images/banner.png'
+    this.setData({
+      imgUrls:this.data.imgUrls,
     })
   },
   /**
@@ -142,30 +159,39 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-
+    // 显示顶部刷新图标
+    wx.showNavigationBarLoading();
+    // 页数+1
+    _this.setData({
+      page: 1,
+    });
+    // 小说列表接口调用
+    this.postIndexLook({
+      pullDown: true,
+      pullUp: false,
+    })
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-    const that = this;
     //大家正在看取30本书，大于30本或列表返回为空时，就不在请求了
-    if (this.data.isSeeEnd) {
+    if (this.data.indexLooks.length % this.data.size > 0 || this.data.indexLooks.length >= 30) {
       return;
     }
     // 显示加载图标
     wx.showLoading({
       title: '玩命加载中',
     })
-    that.setData({
+    this.setData({
       page: this.data.page + 1,
-      isSeeEnd: this.data.page + 1 > 3,
     });
     // 大家都在看请求
-    this.postIndexLook(() => {
-      wx.hideLoading();
-    });
+    this.postIndexLook({
+      pullDown: false,
+      pullUp: true,
+    })
   },
 
   /**

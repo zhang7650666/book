@@ -44,7 +44,7 @@
     </view>
     <view class="btn-wrap">
         <text class="add" data-fictionId="{{bookDetails.fiction_id}}" catchtap="handleAdd" wx:if="{{isStore == '0'}}">加入书架</text>
-        <text class="btn-remove" wx:if="{{isStore == '1'}}"  catchtap="handleRemove">移出书架</text>
+        <text class="btn-remove" wx:if="{{isStore == '1'}}" data-fictionId="{{bookDetails.fiction_id}}" catchtap="handleRemove">移出书架</text>
         <text class="keep" data-fictionId="{{bookDetails.fiction_id}}" data-keep="{{bookDetails.fiction_look_chapter}}" bindtap="handleKeep">{{isFirst ? '开始阅读':'继续阅读'}}</text>
     </view>
 </view>
