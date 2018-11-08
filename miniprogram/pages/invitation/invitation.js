@@ -6,16 +6,17 @@ Page({
    * 页面的初始数据
    */
   data: {
-    integral: 10, // 邀请好友送积分
-    count: 3, // 每天只有3次邀请机会
-    addCount: 0, // 转发次数
+    objInfo:{},
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    
+    let objInfo = JSON.parse(options.objInfo);
+    this.setData({
+      objInfo,
+    })
   },
 
   /**
@@ -60,7 +61,22 @@ Page({
   onReachBottom: function () {
 
   },
-
+   // 邀请成功之后的回调函数
+   postActivityBackoff(obj){
+    http.request({
+      url:"activity_backoff",
+      data:{
+        alias:obj.alias,
+      },
+      success(res){
+        wx.showToast({
+          title: obj.status == 1 ? '已转发' : `获得${obj.score}积分` ,
+          icon: 'success',
+          duration: 2000
+        })
+      },
+    })
+   },
   /**
    * 用户点击右上角分享
    */
@@ -76,12 +92,7 @@ Page({
       desc:'主人公在讲述一个小姑娘，对生活的悲伤，与失望。',
       imageUrl: '/images/u27.jpeg',
       success: function (res) {
-        let flag = this.addCount > this.count ? '已转发' : `获得${integral}积分`;
-        wx.showToast({
-          title: flag ,
-          icon: 'success',
-          duration: 2000
-        })
+        this.postActivityBackoff(this.data.objInfo);
       },
       fail: function (res) {
         // 转发失败

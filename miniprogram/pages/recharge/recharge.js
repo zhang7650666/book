@@ -7,43 +7,7 @@ Page({
    */
   data: {
     isActive: 0,
-    topUp:[
-      {
-        id:0,
-        money:1,
-        proportion:50,
-        giving:0,
-        add:0,
-      },
-      {
-        id: 1,
-        money: 2,
-        proportion: 100,
-        giving: 0,
-        add: 0,
-      },
-      {
-        id: 2,
-        money: 3,
-        proportion: 150,
-        giving: 0,
-        add: 0,
-      },
-      {
-        id: 3,
-        money: 6,
-        proportion: 300,
-        giving: 50,
-        add: 1,
-      },
-      {
-        id: 4,
-        money: 10,
-        proportion: 500,
-        giving: 100,
-        add: 2,
-      },
-    ], // 充值列表
+    topUp:[], // 充值列表
   },
   // 修改isActive
   handleActive(ev){
@@ -61,9 +25,21 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    // 积分充值接口调用
+    this.postRechargeCard();
   },
-
+  // 积分充值接口
+  postRechargeCard() {
+    http.request({
+      url:"recharge_card",
+      data:{},
+      success(res){
+        this.setData({
+          topUp: res.data,
+        })
+      },
+    })
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

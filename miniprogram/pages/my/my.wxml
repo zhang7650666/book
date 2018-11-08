@@ -6,18 +6,18 @@
   </view>
   <view class="b-user-info">
     <text class="we-chart-name">{{userInfo.nickName}}</text>
-    <view class="we-chart-id">ID: <text>{{useId}}</text></view>
-    <view class="user-integral"> <image style="width: 46rpx;" mode="widthFix" src="../../images/u1018.png"></image>我的积分：{{integral}}</view>
+    <view class="we-chart-id">ID: <text>{{userData.unique_id}}</text></view>
+    <view class="user-integral"> <image style="width: 46rpx;" mode="widthFix" src="../../images/u1018.png"></image>我的积分：{{userData.user_score}}</view>
   </view>
   <button plain="true" size="mini" type="warn" bindtap="userSignIn">签到</button>
 </view>
 <!-- 列表 -->
 <view class="b-user-list-block">
-   <view class="list-item" wx:for="{{userList}}" wx:key="item.label" catchtap="handleJump" data-item="{{item}}">
+   <view class="list-item" wx:for="{{userList}}" wx:key="index" catchtap="handleJump" data-item="{{item}}">
       <image class="list-icon" mode="widthFix" style="width: 40rpx; " src="{{item.icon}}"></image>
-      <text class="list-item-name">{{item.label}}</text>
+      <text class="list-item-name">{{item.alias}}</text>
      <view class="list-right-box"> 
-        <text class="list-desc" wx:if="item.desc">{{item.desc}}</text>
+        <text class="list-desc" wx:if="item.score">{{item.score}}</text>
      </view>
    </view>
 </view>

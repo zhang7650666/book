@@ -7,10 +7,8 @@ Page({
    */
   data: {
     //用户信息
-    //显示弹窗
-    signInShowModel: false,
-    //弹窗
-    dialogData: {
+    signInShowModel: false, //显示弹窗
+    dialogData: { //弹窗
       //是否只显示确认
       isComfrim: true,
       //描述
@@ -25,36 +23,27 @@ Page({
     //积分
     integral: '6789',
     isShareShow: false,
+    userData:{}, // 用户相关数据
     //列表数据
     userList: [
       {
         icon: '/images/my1.png',
-        label: '积分充值',
+        alias: '积分充值',
         url:"/pages/recharge/recharge",
       },
       {
         icon: '/images/my2.png',
-        label: '积分记录',
+        alias: '积分记录',
         url: "/pages/record/record",
       },
-      {
-        icon: '/images/my5.png',
-        label: '邀请好友 ',
-        desc: '可获得30积分',
-        url: "/pages/invitation/invitation",
-      },
+      {},
       {
         icon: '/images/my4.png',
-        label: '联系客服 ',
+        alias: '联系客服 ',
         url: "/pages/service/service",
       },
-      {
-        icon: '/images/my3.png',
-        label: '添加到桌面 ',
-        desc: '可获得10积分',
-        itemType: 'share',
-      },
-    ]
+      {},
+    ],
   },
 
   /**
@@ -64,14 +53,42 @@ Page({
     let userInfo = wx.getStorageSync('userInfo') || '{}';
     this.setData({
       userInfo: JSON.parse(userInfo)
+    });
+    // 调用用户信息接口
+    this.postUserInfo();
+  },
+  // 用户信息接口请求
+  postUserInfo() {
+    http.request({
+      url:"user_info",
+      data:{},
+      success(res){
+        let invite = {
+          icon:'/images/my5.png',
+          url:"/pages/invitation/invitation",
+          flag:'invite',
+        };
+        let desktop = {
+          icon:'/images/my5.png',
+          itemType:'share',
+          flag:'desktop',
+        }
+        this.data.userList[2] = {...res.data.activity.invite, ... invite}; // 邀请好友添加到数据中
+        this.data.userList[4] = {...res.data.activity.desktop, ...desktop}; // 添加桌面
+        this.setData({
+          userData: res.data,
+          userList:this.data.userList,
+        })
+      },
     })
   },
   // 界面跳转
   handleJump(ev){
     let item = ev.currentTarget.dataset.item;
+    let str = JSON.stringify(item);
     if(item.url) {
       wx.navigateTo({
-        url: item.url
+        url: `${item.url}?objInfo=${str}`,
       })
     } else if (item.itemType == 'share'){
       this.setData({
@@ -79,6 +96,7 @@ Page({
       })
     }
   },
+  // 弹框隐藏
   hideShareHandel() {
     this.setData({
       isShareShow: !this.data.isShareShow,

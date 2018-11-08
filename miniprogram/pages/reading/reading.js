@@ -8,19 +8,10 @@ Page({
    */
   data: {
     bgActive: 2, // 背景色选中
-    readData:{
-      title:"不经历风雨怎么能够见到彩虹",
-      article:'<div><p>“再一次来到深圳，再次来到广东，我们就是要在这里向世界宣示：中国改革开放永不停步！下一个40年的中国，定当有让世界刮目相看的新成就！”</p><p>24日上午，习近平在深圳参观“大潮起珠江——广东改革开放40周年展览”时坚定作出上述表示。</p><p>展览中，今昔图片强烈对比，历史场景历历再现，全景展示了广东改革开放40年的峥嵘岁月。习近平不时驻足察看，询问有关细节。在会见广东省改革开放相关方面代表时，习近平指出，今年是改革开放40周年。40年来，中国发展成就令世界刮目相看。既然是越走越好，为什么不继续走下去呢？即便我们存在这样那样的一些困难和问题，也要在继续走下去中加以解决、加以克服。我们要坚定沿着改革开放之路走下去，同时要向更深更广的领域中不断开拓，不断提高水平。（记者：张晓松、鞠鹏）,</p></div>',　
-    },
-    curPage:1, // 当前页码
-    endPage:true, // 最后一页
     fontSize:36, // 默认字体大小
     showSize:18, // 显示 字体大小
     bgColor: '#e9dabd', // 默认背景颜色
     isMask:false, // 浮层显示隐藏
-    isPay:true, // 是否收费标识
-    consume:2, // 消耗积分
-    integral:100, // 剩余积分
     deduction:[{
       name:'tips',
       checked:false,
@@ -41,13 +32,13 @@ Page({
       this.setData({
         fiction_id: chapterInfo.fiction_id, 
         chapter_id: chapterInfo.chapter_id,
-        isPay:chapterInfo.is_pay,
+        is_pay:chapterInfo.is_pay,
       });
     }else{
       // 从其他页面到阅读页
       this.setData({
         fiction_id: options.fiction_id, 
-        chapter_id: options.chapter_id,
+        chapter_id: '',
       });
     }
     
@@ -157,17 +148,18 @@ Page({
       data:{
         fiction_id: _this.data.fiction_id,
         chapter_id: _this.data.chapter_id,
-        is_auto_pay:_this.data.deduction[0].checked,
+        is_auto_pay:_this.data.is_auto_pay,
         is_pay: _this.data.is_pay
       },
       success(res){
         // 小程序解析html
         // 小说内容res.data.data.fiction_title
         if(res.code == 200){
-          WxParse.wxParse('article', 'html', res.data, _this, 5);
+          WxParse.wxParse('article', 'html', res.data.content, _this, 5);
           _this.setData({
             fictionRead: res.data,
             isMask: false,
+            // is_auto_pay:res.data.is_auto_pay,
           })
         }
       },
@@ -183,7 +175,8 @@ Page({
   // checkbox 改变
   checkboxChange(){
     this.setData({
-      deduction:!this.data.deduction[0].checked
+      deduction:!this.data.deduction[0].checked,
+      is_auto_pay: this.data.deduction[0].checked ? 1 : 0,
     })
   },
   /**

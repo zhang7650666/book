@@ -2,19 +2,21 @@
 <import src="../../wxParse/wxParse.wxml"/>
 <view class="read-page"  style="background:{{bgColor}}">
     <view class="novel-wrap">
-        <!--<text class="novel-title">{{readData.title}}</text>-->
+        <text class="novel-title">{{fictionRead.title}}</text>
         <!--小说内容展示 -->
         <view class="novel-article" bindtap="handleSet" style="font-size:{{fontSize}}rpx; height:{{fictionRead.is_free == 0 ? 'auto':204}}rpx;overflow:hidden;">
             <template is="wxParse" data="{{wxParseData:article.nodes}}" />
         </view>
         <!--积分部分 -->
-        <view wx:if="{{isPay == 1}}">
-            <view class="title-info" wx:if="{{integral < consume}}">
+        <!-- 收费内容展示-->
+        <view wx:if="{{fictionRead.is_pay == 1}}">
+            <!-- 剩余积分小于抵扣积分展示-->
+            <view class="title-info" wx:if="{{fictionRead.user_score < fictionRead.chapter_cost}}">
                 <view class="consume">
-                    <text>阅读本章节需要消耗{{consume}}积分</text>
+                    <text>阅读本章节需要消耗{{fictionRead.chapter_cost}}积分</text>
                 </view>
                 <view class="integral">
-                    <text>我的积分 : {{integral}}积分</text> 
+                    <text>我的积分 : {{fictionRead.user_score}}积分</text> 
                 </view>
                 <view class="deduction" catchtap="checkboxChange">
                     <checkbox-group bindchange="checkboxChange" wx:if="{{!deduction[0].checked}}">
@@ -23,7 +25,7 @@
                         </label>
                     </checkbox-group>
                     <view class="go-btn">
-                        <text class="keep-btn">{{integral > consume ? '继续阅读':'积分充值'}}</text>
+                        <text class="keep-btn">{{fictionRead.user_score > fictionRead.chapter_cost ? '继续阅读':'积分充值'}}</text>
                         <text class="share-btn">分享好友获取积分免费看</text>
                     </view>
                 </view>
@@ -32,7 +34,7 @@
         
     </view>
     
-    <view class="btn-group" wx:if="{{is_pay == 1}}">
+    <view class="btn-group" wx:if="{{fictionRead.is_pay == 1}}">
         <view class="prev" data-prev="prev" catchtap="handleChapter">
             <text class="{{fictionRead.last_catalog_id == 0 ? 'disabled':''}}">上一章</text>
         </view>
@@ -66,7 +68,7 @@
               <text class="black {{bgActive == 4 ? 'active':''}}" data-colorvalue="4" catchtap="handleColor"></text>
             </view>
           </view>
-           <view class="btn-group" wx:if="{{is_pay == 1}}">
+           <view class="btn-group" wx:if="{{fictionRead.is_pay == 1}}">
                 <view class="prev" data-prev="prev" catchtap="handleChapter">
                     <text class="{{fictionRead.last_catalog_id == 0 ? 'disabled':''}}">上一章</text>
                 </view>
