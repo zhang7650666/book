@@ -6,16 +6,16 @@ Page({
    * 页面的初始数据
    */
   data: {
-    recordMap: {
-      '-1': '收费章节阅读',
-      '0': '成功签到',
-      '1': '邀请好友',
-      '2': '添加到桌面',
-      '3': '积分充值',
-    },
     list: [],
+<<<<<<< HEAD
     page: 1,
     size:20,
+=======
+    pageNo: 1,
+    isPullRefresh: false,
+    recordList:[],
+    isLoadEnd: false,
+>>>>>>> 5717d816d95073474cd12db572a8cc9c237ccaae
   },
 
   /**
@@ -89,6 +89,7 @@ Page({
   * 页面上拉触底事件的处理函数
   */
   onReachBottom: function () {
+<<<<<<< HEAD
     if (this.data.list.length % this.data.size > 0) {
       return;
     }
@@ -106,4 +107,40 @@ Page({
       pullUp:true,
     })
   },
+=======
+    this.data.pageNo ++ ;
+    this.getIntegralList();
+  },
+
+  getIntegralList(callback) {
+    const that = this;
+    if (!this.isLoadEnd || this.isPullRefresh) {
+      http.request({
+        url: "user_score_record",
+        data: {
+          pageNo: that.data.pageNo || 1,
+          pageSize: 20,
+        },
+        success(data) {
+          // const list = this.pickIntegralList(data.list)
+          that.setData({
+            list: that.data.pageNo != 1 && !this.data.isPullRefresh ? [this.data.list, ...data.data] : data.data,
+            isLoadEnd: !data.data.length,
+            isPullRefresh: false,
+          })
+          callback && callback();
+        }
+      })
+    }
+  },
+  // 处理积分显示文字
+  // pickIntegralList(list) {
+  //   let integralList = (list || []).map(v => {
+  //     v.labelText = `${this.data.recordMap[v.type]}${(v.type == '-1' ? ', 扣除' : ', 获得')}${v.integral}积分`;
+  //     return v
+  //   })
+  //   return integralList;
+  // }
+
+>>>>>>> 5717d816d95073474cd12db572a8cc9c237ccaae
 })

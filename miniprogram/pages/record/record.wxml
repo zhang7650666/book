@@ -1,6 +1,10 @@
 <!--miniprogram/pages/record/record.wxml-->
 <view class="record-page">
+<<<<<<< HEAD
   <view wx:for="{{list}}" wx:key="item.time" class="list-item">
+=======
+  <view wx:for="{{list}}" wx:key="item.id" class="list-item">
+>>>>>>> 5717d816d95073474cd12db572a8cc9c237ccaae
     <text class="desc">{{item.content}}</text>
     <text class="time">{{item.time}}</text>
   </view>

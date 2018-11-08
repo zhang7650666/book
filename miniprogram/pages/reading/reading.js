@@ -38,7 +38,11 @@ Page({
       // 从其他页面到阅读页
       this.setData({
         fiction_id: options.fiction_id, 
+<<<<<<< HEAD
         chapter_id: '',
+=======
+        chapter_id: options.chapter_id || 1,
+>>>>>>> 5717d816d95073474cd12db572a8cc9c237ccaae
       });
     }
     

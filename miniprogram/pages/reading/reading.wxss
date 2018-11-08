@@ -1,4 +1,7 @@
 /* miniprogram/pages/reading/reading.wxss */
+page {
+  height: 100%;
+}
 .read-page{
   position:relative;
   height:100%;

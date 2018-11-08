@@ -58,16 +58,20 @@ Component({
       this.triggerEvent('removeData', myEventDetail)
     },
     // 添加到书架
-    handleRead(){
+    handleRead(ev){
+      const fiction_id = ev.currentTarget.dataset.fiction_id || 1;
       http.request({
         url: "add_controller",
-        data: '',
+        data: {
+          fiction_id: fiction_id,
+        },
         success(data) {
           wx.showToast({
             title: '已添加到书架',
             icon: 'success',
             duration: 2000
           })
+          // this.triggerEvent('addCallback', true)
         }
       })
     }, 
