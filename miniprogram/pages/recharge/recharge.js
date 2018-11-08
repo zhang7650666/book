@@ -12,7 +12,7 @@ Page({
   // 修改isActive
   handleActive(ev){
     this.setData({
-      isActive:ev.detail.id,
+      isActive: ev.currentTarget.dataset.index,
     })
   },
  // 跳转到支付页面
@@ -30,11 +30,12 @@ Page({
   },
   // 积分充值接口
   postRechargeCard() {
+    let _this = this;
     http.request({
       url:"recharge_card",
       data:{},
       success(res){
-        this.setData({
+        _this.setData({
           topUp: res.data,
         })
       },

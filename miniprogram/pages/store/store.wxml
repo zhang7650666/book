@@ -19,7 +19,7 @@
       <view class='swiper_con'>
         <view class="books-wrap">
           <view class="books-main" wx:for="{{books}}" wx:key="item.name" >
-            <home-book books="{{item}}" isEdit="{{isEdit}}" isCur="{{currentData}}" data-deleteid="{{item.fiction_id}}"  bind:removeData="handleRemove"></home-book>
+            <home-book books="{{item}}" isEdit="{{isEdit}}" isCur="{{currentData}}" data-deleteid="{{item.controller_id}}"  bind:removeData="handleRemove"></home-book>
           </view>
         </view>
       </view>

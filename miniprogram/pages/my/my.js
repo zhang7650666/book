@@ -59,6 +59,7 @@ Page({
   },
   // 用户信息接口请求
   postUserInfo() {
+    let _this = this;
     http.request({
       url:"user_info",
       data:{},
@@ -73,11 +74,11 @@ Page({
           itemType:'share',
           flag:'desktop',
         }
-        this.data.userList[2] = {...res.data.activity.invite, ... invite}; // 邀请好友添加到数据中
-        this.data.userList[4] = {...res.data.activity.desktop, ...desktop}; // 添加桌面
-        this.setData({
+        _this.data.userList[2] = {...res.data.activity.invite, ... invite}; // 邀请好友添加到数据中
+        _this.data.userList[4] = {...res.data.activity.desktop, ...desktop}; // 添加桌面
+        _this.setData({
           userData: res.data,
-          userList:this.data.userList,
+          userList:_this.data.userList,
         })
       },
     })
@@ -117,9 +118,20 @@ Page({
   },
   //签到
   userSignIn() {
-    this.setData({
-      signInShowModel: true,
+    let _this = this;
+    http.request({
+      url: 'activity_backoff',
+      data: {
+        alias:'sign',
+      },
+      success(res) {
+        _this.setData({
+          signInShowModel: true,
+        });
+        _this.postUserInfo();
+      },
     })
+    
   },
   //取消签到框
   hideSignInDialog() {

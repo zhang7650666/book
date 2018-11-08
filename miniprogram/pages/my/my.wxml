@@ -7,7 +7,7 @@
   <view class="b-user-info">
     <text class="we-chart-name">{{userInfo.nickName}}</text>
     <view class="we-chart-id">ID: <text>{{userData.unique_id}}</text></view>
-    <view class="user-integral"> <image style="width: 46rpx;" mode="widthFix" src="../../images/u1018.png"></image>我的积分：{{userData.user_score}}</view>
+    <view class="user-integral"> <image style="width: 46rpx;" mode="widthFix" src="../../images/u1018.png"></image> <text class="my-score">我的积分：{{userData.user_score}}</text></view>
   </view>
   <button plain="true" size="mini" type="warn" bindtap="userSignIn">签到</button>
 </view>
@@ -17,7 +17,7 @@
       <image class="list-icon" mode="widthFix" style="width: 40rpx; " src="{{item.icon}}"></image>
       <text class="list-item-name">{{item.alias}}</text>
      <view class="list-right-box"> 
-        <text class="list-desc" wx:if="item.score">{{item.score}}</text>
+        <text class="list-desc" wx:if="{{item.score}}">可获得{{item.score}}积分</text>
      </view>
    </view>
 </view>

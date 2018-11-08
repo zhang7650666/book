@@ -1,7 +1,7 @@
 /* components/top-up/topUp.wxss */
 .top-up-page{
   position: relative;
-  width:220rpx;
+  /* width:220rpx; */
   align-items: center;
   border:2rpx solid #EA5149;
   margin-top:54rpx;
@@ -53,7 +53,7 @@
   position:absolute; 
   background:#fff;
   color: #EA5149;
-  right:-5rpx;
-  top:-2rpx;
+  right:0rpx;
+  top:0rpx;
   z-index:99 !important;
 }

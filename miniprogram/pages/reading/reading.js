@@ -38,11 +38,7 @@ Page({
       // 从其他页面到阅读页
       this.setData({
         fiction_id: options.fiction_id, 
-<<<<<<< HEAD
-        chapter_id: '',
-=======
         chapter_id: options.chapter_id || 1,
->>>>>>> 5717d816d95073474cd12db572a8cc9c237ccaae
       });
     }
     
@@ -97,7 +93,7 @@ Page({
       bgColor = "#e9dabd";
       bgActive = 2;
     } else if (colorvalue == "3") {
-      bgActive = 4;
+      bgActive = 3;
       bgColor = "#5a8258";
     } else if (colorvalue == "4") {
       bgColor = "#0c0b0a";
@@ -114,7 +110,7 @@ Page({
     http.request({
       url: "add_controller",
       data:{
-        fiction_id:ev.currentTarget.dataset.fictionId,
+        fiction_id:ev.currentTarget.dataset.fictionid,
       },
       success(res) {
         wx.showToast({
@@ -139,6 +135,9 @@ Page({
   },
   // 小说当前章节内容
   handleChapter(ev){
+    if (this.data.fictionRead.last_chapter_id == 0 || this.data.fictionRead.next_chapter_id == 2) {
+      return;
+    }
     let _this = this;
     let chapter = this.data.chapter_id;
     if(ev && ev.currentTarget.dataset.prev){
@@ -165,6 +164,7 @@ Page({
             isMask: false,
             // is_auto_pay:res.data.is_auto_pay,
           })
+          console.log(_this.data.fictionRead.last_chapter_id == 0)
         }
       },
       error(res){

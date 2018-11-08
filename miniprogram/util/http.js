@@ -5,6 +5,11 @@ const tips = {
   3000: "错误代码3000",
   4001:'删除书架失败',
   3001:'小说不存在已下架',
+  6001: "活动次数已用完",
+  1003:"fiction_id不能为空",
+  4001:'删除书架失败',
+  404:'已确认路径无误',
+
 }
 let data = JSON.parse(wx.getStorageSync('token') || '{}')
 class HTTP{

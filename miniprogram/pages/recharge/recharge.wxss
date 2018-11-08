@@ -9,8 +9,8 @@
   justify-content: space-between;
 }
 .recharge-page .top-up .top-up-box{
-  flex:0 0 50%;
-  width:50%;
+  flex:0 0 315rpx;
+  width:315rpx;
 }
 .recharge-page .top-up-btn{
   margin-top:62rpx;

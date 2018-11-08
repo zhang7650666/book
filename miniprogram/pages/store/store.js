@@ -141,10 +141,10 @@ Page({
         controller_id: this.data.deleteId || '',
       },
       success(res) {
-        const books = _this.data.books.filter(v => v.fiction_id != _this.data.deleteId)
+        const books = _this.data.books.filter(v => v.controller_id != _this.data.deleteId)
         _this.setData({
           books,
-        })
+        });
       }
     })
   },

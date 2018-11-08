@@ -90,3 +90,7 @@
   z-index: 90;
   text-align: right;
 }
+.my-score{
+  display:inline-block;
+  margin-left:10rpx;
+}

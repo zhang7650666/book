@@ -21,6 +21,12 @@ page {
     font-size:44rpx;
     line-height:156rpx;
 }
+.novel-article{
+  text-indent: 2em;
+  color:#222;
+  line-height:68rpx;
+  padding-bottom: 30rpx;
+}
 .wxParse-p{
     text-indent: 2em;
     color:#222;
@@ -77,6 +83,9 @@ page {
   left:0rpx;
   right:0rpx;
   bottom:0rpx;
+}
+.mask-wrap .btn-group{
+  margin-top:0rpx;
 }
 .arrow-pub{
   position:fixed;

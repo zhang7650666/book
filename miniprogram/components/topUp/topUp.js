@@ -9,7 +9,11 @@ Component({
     },
     isActive:{
       type:Number
-    }
+    },
+    curIndex: {
+      type: Number
+    },
+    
   },
 
   /**
@@ -25,7 +29,7 @@ Component({
     // 选中当前
     handleActive(ev){
       let myEventDetail = {
-        id: ev.currentTarget.dataset.item.id
+        index: this.data.curIndex
       }
       this.triggerEvent('changeActive', myEventDetail)
     },

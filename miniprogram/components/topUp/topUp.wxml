@@ -1,5 +1,5 @@
 <!--components/top-up/topUp.wxml-->
-<view class="top-up-page {{isActive == topUp.id ? 'active':''}}" data-item="{{topUp}}" catchtap="handleActive">
+<view class="top-up-page {{isActive == curIndex ? 'active':''}}" data-item="{{topUp}}" catchtap="handleActive">
    <text class="money ">{{topUp.amount}} 元</text>
    <view class="discount">
       <text class="proportion">{{topUp.score}}</text>
