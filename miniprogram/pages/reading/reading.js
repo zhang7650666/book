@@ -277,16 +277,17 @@ Page({
     http.request({
       url: "shares_info",
       data: {
-        alias: this.data.objInfo.alias,
+        alias: 'invite',
       },
       success(res) {
+        const shareConfig = res.data;
         return {
-          title: res.title,
-          path: res.path,
-          desc: res.desc,
-          imageUrl: res.img,
+          title: shareConfig.title,
+          path: shareConfig.path,
+          desc: shareConfig.desc,
+          imageUrl: shareConfig.img,
           success: function (res) {
-            _this.postActivityBackoff(this.data.objInfo);
+            _this.postActivityBackoff({ alias: 'invite'});
           },
           fail: function (res) {
             // 转发失败
@@ -299,5 +300,5 @@ Page({
         }
       },
     })
-  }
+  },
 })

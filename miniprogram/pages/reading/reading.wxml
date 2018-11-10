@@ -26,7 +26,7 @@
                     </checkbox-group>
                     <view class="go-btn">
                         <text class="keep-btn" catchtap="handleRead">{{fictionRead.is_pay == 3 ? '积分充值' :'继续阅读'}}</text>
-                        <text class="share-btn" catchtap="handleShare">分享好友获取积分免费看</text>
+                        <!-- <text class="share-btn" catchtap="handleShare">分享好友获取积分免费看</text> -->             <button class="share-btn" open-type="share">分享好友获取积分免费看</button>
                     </view>
                 </view>
             </view>

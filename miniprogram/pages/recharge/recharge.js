@@ -7,12 +7,15 @@ Page({
    */
   data: {
     isActive: 0,
+    isCheckCardId: '',
     topUp:[], // 充值列表
+    topUpMap: {},
   },
   // 修改isActive
   handleActive(ev){
     this.setData({
       isActive: ev.currentTarget.dataset.index,
+      isCheckCardId: ev.currentTarget.dataset.card_id,
     });
   },
  // 跳转到支付页面
@@ -21,12 +24,9 @@ Page({
     http.request({
       url:"wxpay",
       data:{
-        card_id: this.data.topUp[this.data.isActive].card_id,
+        card_id: this.data.isCheckCardId,
       },
       success(res){
-        // wx.navigateTo({
-        //   url: "/pages/wxPay/wxPay",
-        // })
         wx.requestPayment(
           {
             'appId': res.data.appId,
@@ -41,6 +41,9 @@ Page({
             fail() {
 
             },
+            complete(res) {
+              console.log(res);
+            }
           })
       },
     })
@@ -62,6 +65,10 @@ Page({
       success(res){
         _this.setData({
           topUp: res.data,
+          topUpMap: (res.data || []).reduce((map, v) => {
+            map[v.card_id] = v;
+            return map;
+          }, {})
         })
       },
     })

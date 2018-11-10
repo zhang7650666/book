@@ -10,9 +10,12 @@ App({
     http.request({
       url: "token",
       data: {
-        login_code: 'test' || res_login.code,
+        login_code: res_login.login_code,
+        encrypted_data: res_login.encrypted_data,
+        iv: res_login.iv
       },
       success(data) {
+        console.log(data);
         wx.setStorageSync('token', JSON.stringify(data.data));
       }
     })
@@ -36,8 +39,13 @@ App({
                         withCredentials: true,
                         success(res_user) {
                           wx.setStorageSync('userInfo', JSON.stringify(res_user.userInfo));
+                          wx.setStorageSync('encryptedData', res_user.encryptedData);
                           _this.globalData.userInfo = res_user.userInfo;
-                          _this.getToken(res_login)
+                          _this.getToken({
+                            login_code: res_login.code,
+                            encrypted_data: res_user.encryptedData,
+                            iv: res_user.iv
+                          })
                         }
                       })
                     }
@@ -93,11 +101,15 @@ App({
               // 要求有登录状态
               withCredentials: true,
               success(res_user) {
-                console.log(res_user);
+                console.log(res_user)
                 wx.setStorageSync('userInfo', JSON.stringify(res_user.userInfo));
                 wx.setStorageSync('encryptedData', res_user.encryptedData);
                 _this.globalData.userInfo = res.userInfo;
-                _this.getToken(res)
+                _this.getToken({
+                  login_code: res.code,
+                  encrypted_data: res_user.encryptedData,
+                  iv: res_user.iv
+                })
               }, 
               fail() {
                 // _this.getOpenSetting();

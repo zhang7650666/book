@@ -66,10 +66,16 @@ Page({
   getUserInfoFun() {
     wx.getUserInfo({
       success: function (res) {
-        console.log("userInfo:" + res)
-        　
+        wx.setStorageSync('userInfo', JSON.stringify(res_user.userInfo));
+        wx.setStorageSync('encryptedData', res_user.encryptedData); 　
       },
-      fail: S.showPrePage
+      fail: function() {
+        // wx.showToast({
+        //   title: "为了您更好的体验,请先同意授权",
+        //   icon: 'none',
+        //   duration: 2000
+        // });
+      }
     })
   }
 })

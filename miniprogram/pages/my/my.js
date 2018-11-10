@@ -7,7 +7,8 @@ Page({
    */
   data: {
     //用户信息
-    signInShowModel: false, //显示弹窗
+    signInShowModel: false, //显示签到弹窗
+    isShowSignInButton: true,//是否可以签到
     dialogData: { //弹窗
       //是否只显示确认
       isComfrim: true,
@@ -18,11 +19,7 @@ Page({
       // title: '标题'
     },
     userInfo: {},
-    //用户Id,
-    useId: 123456789,
-    //积分
-    integral: '6789',
-    isShareShow: false,
+    isShareShow: false,　//显示添加桌面层
     userData:{}, // 用户相关数据
     //列表数据
     userList: [
@@ -36,13 +33,13 @@ Page({
         alias: '积分记录',
         url: "/pages/record/record",
       },
-      {},
+      // {},
       {
         icon: '/images/my4.png',
         alias: '联系客服 ',
         url: "/pages/service/service",
       },
-      {},
+      // {},
     ],
   },
 
@@ -65,6 +62,7 @@ Page({
       data:{},
       success(res){
         console.log(res);
+
         let invite = {
           icon:'/images/my5.png',
           url:"/pages/invitation/invitation",
@@ -77,11 +75,14 @@ Page({
           flag:'desktop',
           alias: '添加到桌面',
         }
-        _this.data.userList[2] = {...res.data.activity.invite, ... invite}; // 邀请好友添加到数据中
-        _this.data.userList[4] = {...res.data.activity.desktop, ...desktop}; // 添加桌面
+        // _this.data.userList[2] = {...res.data.activity.invite, ... invite}; // 邀请好友添加到数据中
+        // _this.data.userList[4] = {...res.data.activity.desktop, ...desktop}; // 添加桌面
+        _this.data.userList.splice(2, 0, { ...res.data.activity.invite, ...invite });
+        _this.data.userList.splice(4, 0, { ...res.data.activity.desktop, ...desktop });
         _this.setData({
           userData: res.data,
           userList:_this.data.userList,
+          isShowSignInButton: res.data && res.data.activity && res.data.activity.sign && res.data.activity.sign.status == 1
         })
       },
     })
@@ -129,7 +130,7 @@ Page({
       },
       success(res) {
         _this.setData({
-          signInShowModel: true,
+          isShowSignInButton: false,
         });
         _this.postUserInfo();
       },

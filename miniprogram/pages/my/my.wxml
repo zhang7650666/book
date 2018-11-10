@@ -9,7 +9,7 @@
     <view class="we-chart-id">ID: <text>{{userData.unique_id}}</text></view>
     <view class="user-integral"> <image style="width: 46rpx;" mode="widthFix" src="../../images/u1018.png"></image> <text class="my-score">我的积分：{{userData.user_score}}</text></view>
   </view>
-  <button plain="true" size="mini" type="warn" bindtap="userSignIn">签到</button>
+  <button class="user-signin-btn" plain="true" size="mini" type="warn" disabled="{{!isShowSignInButton}}" bindtap="userSignIn">{{isShowSignInButton ? '签到' : '已签到'}}</button>
 </view>
 <!-- 列表 -->
 <view class="b-user-list-block">
@@ -24,4 +24,4 @@
 <view wx:if="{{isShareShow}}" class="b-share-box" bindtap="hideShareHandel">
   <image style="width: 600rpx;" mode="widthFix" src="../../images/add.png"></image>
 </view>
-<wk-model dialogData="{{dialogData}}" showModal="{{signInShowModel}}" bind:onCancel="hideSignInDialog" bind:onConfirmonConfirm="confirmSignInDialog" ></wk-model>
+<wk-model dialogData="{{dialogData}}" showModal="{{signInShowModel}}" bind:onCancel="hideSignInDialog" bind:onConfirm="confirmSignInDialog" ></wk-model>

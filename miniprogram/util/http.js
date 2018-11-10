@@ -32,7 +32,7 @@ class HTTP{
       data: params.data,
       header: {
         'content-Type': 'application/json;charset=utf-8',
-        'token': userToken.token,
+        'token': userToken.token || '',
       },
       method: params.method,
       success: (res) => { 

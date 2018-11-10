@@ -3,7 +3,7 @@
 .b-user-info-block {
   overflow: hidden;
   border-bottom: 1rpx solid #f1f1f1;
-  padding: 40rpx;
+  padding: 36rpx 32rpx;
   box-sizing: border-box;
   display: flex;
   flex-direction: row;
@@ -13,12 +13,14 @@
   color: #222;
 }
 .b-user-info {
-  padding: 0 36rpx;
+  padding: 0 20rpx;
   line-height: 1.5;
   align-self: flex-start;
+  flex: 1;
+  min-width: 280rpx;
 }
 .we-chart-name {
-  font-size: 36rpx;
+  font-size: 32rpx;
   margin-bottom: 10rpx;
   display: block;
 }
@@ -74,8 +76,11 @@
   padding-right: 20rpx;
 }
 .list-desc {
-  font-size: 24rpx;
+  font-size: 26rpx;
   color: #999;
+}
+.user-signin-btn {
+  padding:0 1em !important;
 }
 /* 浮层 */
 .b-share-box {

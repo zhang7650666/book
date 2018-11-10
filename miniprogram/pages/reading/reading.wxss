@@ -232,14 +232,14 @@ page {
   padding:86rpx 60rpx 0rpx 80rpx;
 }
 .title-info .consume text{
-  font-size:24rpx;
+  font-size:28rpx;
   color:#666666;
-  line-height:96rpx;
+  line-height: 2;
 }
 .title-info .integral text{
-  font-size:24rpx;
+  font-size:28rpx;
   color:#666666;
-  line-height:48rpx;
+  line-height: 2;
 }
 
 
@@ -292,8 +292,18 @@ checkbox .wx-checkbox-input.wx-checkbox-input-checked::before {
   background:#EA5149;
   color:#fff;
   margin-bottom:44rpx;
+  font-size: 32rpx;
 }
 .go-btn .share-btn{
   background:#fff;
   color:#EA5149;
+  border: 2rpx solid #EA5149;
+  font-size: 32rpx;
+  border-radius:20rpx;
+}
+checkbox-group {
+  font-size: 28rpx;
+}
+checkbox-group .checkbox {
+  font-size: 28rpx;
 }
