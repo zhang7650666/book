@@ -26,7 +26,7 @@ Component({
     // 跳转详情页
     handleDetail(){
       wx.navigateTo({
-        url: `/pages/detail/detail?fiction_id=${this.data.books.fiction_id}&fiction_class_id=${this.data.books.fiction_class_id}`,
+        url: `/pages/detail/detail?fiction_id=${this.data.books.fiction_id}`,
       })
     },
     // 图片路径错误

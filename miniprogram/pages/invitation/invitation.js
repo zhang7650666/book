@@ -86,22 +86,31 @@ Page({
     //   console.log(ops.target)
     // }
    let _this = this;
-    return {
-      title: '奔跑的小女孩',
-      path: '/pages/index/index',
-      desc:'主人公在讲述一个小姑娘，对生活的悲伤，与失望。',
-      imageUrl: '/images/u27.jpeg',
-      success: function (res) {
-        this.postActivityBackoff(this.data.objInfo);
-      },
-      fail: function (res) {
-        // 转发失败
-        wx.showToast({
-          title: `邀请失败`,
-          image: '/images/u1565.png',
-          duration: 2000
-        })
+   http.request({
+    url:"shares_info",
+    data:{
+      alias:this.data.objInfo.alias,
+    },
+    success(res){
+      return {
+        title: res.title,
+        path: res.path,
+        desc: res.desc,
+        imageUrl: res.img,
+        success: function (res) {
+          _this.postActivityBackoff(this.data.objInfo);
+        },
+        fail: function (res) {
+          // 转发失败
+          wx.showToast({
+            title: `邀请失败`,
+            image: '/images/u1565.png',
+            duration: 2000
+          })
+        }
       }
-    }
+    },
+  })
+    
   }
 })

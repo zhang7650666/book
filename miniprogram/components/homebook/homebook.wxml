@@ -3,8 +3,10 @@
   <view class="book-cover">
     <image  src="{{books.fiction_img}}" binderror="errImg"  mode="widthFix" data-out-index="{{outIndex}}" data-inner-index="{{innerIndex}}"></image>
     <view wx:if="{{!isEdit}}" class="book-share"></view>
+    <!-- 添加icon展示 -->
     <view wx:if="{{!isStore && isCur == 1}}
   class="icon-add-book" catchtap="handleRead" data-fiction_id="{{books.fiction_id}}"></view>
+  <!-- 删除icon展示 -->
   <view class="icon-remove-book" wx:if="{{!isEdit && isCur == 0}}" catchtap="handleRemove" data-index="{{books.fiction_id}}"></view>
 </view>
   <view class="name">

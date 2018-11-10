@@ -12,7 +12,7 @@
     autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" circular="{{circular}}">
     <block wx:for="{{imgUrls}}" wx:key="item">
       <swiper-item>
-        <image src="{{item.banner_img}}" binderror="errImg" class="slide-image" style='width:100%; overflow:show;' mode="widthFix" data-index="{{index}}"/>
+        <image src="{{item.banner_img}}" binderror="errImg" class="slide-image" style='width:100%; overflow:show;' mode="widthFix" data-index="{{index}}" data-fiction_id="{{item.fiction_id}}" bindtap="swipclick"/>
       </swiper-item>
     </block>
   </swiper>

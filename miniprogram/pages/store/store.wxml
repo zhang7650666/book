@@ -6,7 +6,7 @@
   </view>
   <blank-page wx:if="{{(books.length == 0 && currentData == 0) ||(readArr.length == 0 && currentData == 1)}}"></blank-page>
   <view class="operation-wrap" wx:if="{{books.length > 0 && currentData == 0 }}">
-    <text class="count">共{{countBook}}本</text>
+    <text class="count">共{{books.length}}本</text>
     <text class="clear-all-book" wx:if="{{!isEdit}}" catchtap="handleClaer">清空所有</text>
     <text class="edit" catchtap="handleEdit">{{isEdit ? '编辑' : '返回'}}</text>
   </view>
@@ -14,7 +14,9 @@
     <text class="count">喜欢的书要添加到书屋喔！</text>
     <text class="edit" catchtap="handleHistory">清空记录</text>
   </view>
+  
   <swiper current="{{currentData}}" class='swiper' duration="300" bindchange="bindchange" style="height:{{swiperHeight}}rpx;min-height: 100%;" wx:if="{{books.length > 0 || readArr.length > 0}}">
+    <!-- 我的书架 -->
     <swiper-item>
       <view class='swiper_con'>
         <view class="books-wrap">
@@ -24,11 +26,12 @@
         </view>
       </view>
     </swiper-item> 
+    <!-- 最近阅读 -->
     <swiper-item>
       <view class='swiper_con'>
         <view class="books-wrap">
           <view class="books-main" wx:for="{{readArr}}" wx:key="item.name" >
-            <home-book books="{{item}}" isStore="{{item.is_collection}}" isCur="{{currentData}}" bind:removeData="handleRemove"></home-book>
+            <home-book books="{{item}}" isStore="{{item.is_collection}}" isCur="{{currentData}}" bind:addCallback="addCallback" data-index="{{index}}"></home-book>
           </view>
         </view>
       </view>

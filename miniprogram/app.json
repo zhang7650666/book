@@ -1,15 +1,15 @@
 {
   "cloud": true,
   "pages": [
-    "pages/store/store",
     "pages/index/index",
+    "pages/search/search",
+    "pages/store/store",
     "pages/my/my",
     "pages/recharge/recharge",
     "pages/reading/reading",
     "pages/home/home",
     "pages/detail/detail",
     "pages/directory/directory",
-    "pages/search/search",
     "components/homebook/homebook",
     "components/blank/blank",
     "pages/list/list",

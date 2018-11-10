@@ -7,7 +7,6 @@ Page({
    */
   data: {
     currentData: 0, // 当前选项卡
-    countBook:100, // 总共多少本书
     isEdit: true, // 是否是编辑
     swiperHeight:800,
     isRead:true,
@@ -43,7 +42,7 @@ Page({
       })
       if (this.data.currentData == 1) {
         this.getRecentlyBookList()
-      } else {
+      } else if (this.data.currentData == 0){
         this.getBooksList({
           pullDown:false,
           pullUp:false,
@@ -100,9 +99,16 @@ Page({
     })
   },
   calcSwiperHeight() {
-    this.setData({
-      swiperHeight: this.data.books.length % 3 == 0 ? (this.data.books.length / 3 * 370) : (Math.floor(this.data.books.length / 3) + 1) * 370,
-    })
+    if(this.data.currentData == 0){
+      this.setData({
+        swiperHeight: this.data.books.length % 3 == 0 ? (this.data.books.length / 3 * 370) : (Math.floor(this.data.books.length / 3) + 1) * 370,
+      })
+    }else {
+      this.setData({
+        swiperHeight: this.data.readArr.length % 3 == 0 ? (this.data.readArr.length / 3 * 370) : (Math.floor(this.data.readArr.length / 3) + 1) * 370,
+      })
+    }
+    
   },
   //清空最近阅读列表
   deleteReadList() {
@@ -112,8 +118,9 @@ Page({
       data: {},
       success(res) {
         this.setData({
-          books: []
+          readArr: []
         })
+        _this.calcSwiperHeight();
       }
     })
   },
@@ -145,6 +152,7 @@ Page({
         _this.setData({
           books,
         });
+        _this.calcSwiperHeight();
       }
     })
   },
@@ -165,6 +173,7 @@ Page({
           _this.setData({
             books: [],
           });
+          _this.calcSwiperHeight();
         }
       }
     })
@@ -175,8 +184,8 @@ Page({
     http.request({
       url: "controller_list",
       data: {
-        page: this.data.bookPage,
-        size: this.data.size,
+        page: _this.data.bookPage,
+        size: _this.data.size,
       },
       success(res) {
         if (obj.pullDown && !obj.pullUp){
@@ -190,10 +199,19 @@ Page({
           wx.hideLoading();
         };
         _this.setData({
-          books: this.data.bookPage == 1 ? (res.data.list || []) : [..._this.data.books, ...res.data.list],
+          books: _this.data.bookPage == 1 ? (res.data.list || []) : [..._this.data.books, ...res.data.list],
         });
         _this.calcSwiperHeight();
       }
+    })
+  },
+  //最近阅读添加数据成功
+  addCallback(ev){
+    console.log(ev);
+    //readArr
+    this.data.readArr[ev.currentTarget.dataset.index].is_collection = 1;
+    this.setData({
+      readArr: this.data.readArr,
     })
   },
   /**

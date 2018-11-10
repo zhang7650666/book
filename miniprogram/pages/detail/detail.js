@@ -22,7 +22,6 @@ Page({
   onLoad: function (options) {
     this.setData({
       fiction_id: options.fiction_id,
-      fiction_class_id:options.fiction_class_id,
     })
     // 小说详情
     this.getBookIntro();
@@ -53,7 +52,7 @@ Page({
     })
   },
   // 移出书架
-  handleRemove(){
+  handleRemove(ev){
     let _this = this;
     http.request({
       url: "del_controller",

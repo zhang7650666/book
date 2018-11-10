@@ -3,7 +3,7 @@
     <!--头部详情信息-->
     <view class="search-book">
         <view class="book-cover" bindtap="handleRead">
-            <image src="{{books.fiction_img}}" binderror="errImg" mode="widthFix"></image>
+            <image src="{{bookDetails.fiction_img}}" binderror="errImg" mode="widthFix"></image>
         </view>
         <view class="introduce-wrap">
             <view class="book-name">
@@ -43,8 +43,8 @@
         </view>
     </view>
     <view class="btn-wrap">
-        <text class="add" data-fictionId="{{bookDetails.fiction_id}}" catchtap="handleAdd" wx:if="{{isStore == '0'}}">加入书架</text>
-        <text class="btn-remove" wx:if="{{isStore == '1'}}" data-fictionId="{{bookDetails.fiction_id}}" catchtap="handleRemove">移出书架</text>
+        <text class="add" data-fiction_id="{{bookDetails.fiction_id}}" catchtap="handleAdd" wx:if="{{bookDetails.fiction_collection == '0'}}">加入书架</text>
+        <text class="btn-remove" wx:if="{{bookDetails.fiction_collection == '1'}}" data-fiction_id="{{bookDetails.fiction_id}}" catchtap="handleRemove">移出书架</text>
         <text class="keep" data-fictionId="{{bookDetails.fiction_id}}" data-keep="{{bookDetails.fiction_look_chapter}}" bindtap="handleKeep">{{isFirst ? '开始阅读':'继续阅读'}}</text>
     </view>
 </view>

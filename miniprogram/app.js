@@ -1,4 +1,5 @@
 //app.js
+// 注意上线之后 （login_code: 'test' || res_login.code）去掉test
 import {http} from "./util/http.js";
 App({
   onLaunch: function (resa) {
@@ -55,8 +56,8 @@ App({
   // 授权、登录  获取用户信息 封装
   getUserInfo(){
     let _this = this;
-    // let openId = (wx.getStorageSync('openId'));
-    let openId = false;
+    let openId = wx.getStorageSync('openId');
+    // let openId = false;
     if (openId) {
       wx.getUserInfo({
         success(res) {
@@ -101,6 +102,8 @@ App({
       })
     }
   },
+
+  
   globalData: {
     userInfo: null,
     defaultImg:'/images/u69.png'

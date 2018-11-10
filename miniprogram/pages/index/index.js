@@ -127,6 +127,12 @@ Page({
       imgUrls:this.data.imgUrls,
     })
   },
+  // 点击轮播图片事件触发
+  swipclick(ev){
+    wx.navigateTo({
+      url: `/pages/detail/detail?fiction_id=${ev.currentTarget.dataset.fiction_id}`
+    })
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

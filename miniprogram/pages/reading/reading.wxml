@@ -4,14 +4,14 @@
     <view class="novel-wrap" bindtap="handleSet">
         <text class="novel-title">{{fictionRead.title}}</text>
         <!--小说内容展示 -->
-        <view class="novel-article"  style="font-size:{{fontSize}}rpx; height:{{fictionRead.is_free == 0 ? 'auto':204}}rpx;overflow:hidden;">
+        <view class="novel-article"  style="font-size:{{fontSize}}rpx;">
             <template is="wxParse" data="{{wxParseData:article.nodes}}" />
         </view>
         <!--积分部分 -->
         <!-- 收费内容展示-->
         <view wx:if="{{fictionRead.is_pay == 1}}">
             <!-- 剩余积分小于抵扣积分展示-->
-            <view class="title-info" wx:if="{{fictionRead.user_score < fictionRead.chapter_cost}}">
+            <view class="title-info" wx:if="{{(fictionRead.auto_pay == 1 && fictionRead.user_score < fictionRead.chapter_cost) || fictionRead.auto_pay == 0}}">
                 <view class="consume">
                     <text>阅读本章节需要消耗{{fictionRead.chapter_cost}}积分</text>
                 </view>
@@ -19,14 +19,14 @@
                     <text>我的积分 : {{fictionRead.user_score}}积分</text> 
                 </view>
                 <view class="deduction" catchtap="checkboxChange">
-                    <checkbox-group bindchange="checkboxChange" wx:if="{{!deduction[0].checked}}">
+                    <checkbox-group bindchange="checkboxChange" wx:if="{{fictionRead.auto_pay == 0}}">
                         <label class="checkbox" wx:for="{{deduction}}" wx:key="item.name">
                             <checkbox value="{{item.name}}" checked="{{item.checked}}"/>{{item.value}}
                         </label>
                     </checkbox-group>
                     <view class="go-btn">
-                        <text class="keep-btn">{{fictionRead.user_score > fictionRead.chapter_cost ? '继续阅读':'积分充值'}}</text>
-                        <text class="share-btn">分享好友获取积分免费看</text>
+                        <text class="keep-btn" catchtap="handleRead">{{fictionRead.user_score > fictionRead.chapter_cost ? '继续阅读':'积分充值'}}</text>
+                        <text class="share-btn" catchtap="handleShare">分享好友获取积分免费看</text>
                     </view>
                 </view>
             </view>

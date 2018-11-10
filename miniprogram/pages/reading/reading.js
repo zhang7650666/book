@@ -19,7 +19,7 @@ Page({
     }], // 选中取消
     fiction_id:'', // 小说ID
     chapter_id:'', // 小说章节id
-    is_auto_pay: 0, //是否自动购买 0 不；1 自动
+    auto_pay: null, //是否自动购买 0 不；1 自动
     fictionRead:{}, // 小说相关对象
   },
    /**
@@ -135,6 +135,7 @@ Page({
   },
   // 小说当前章节内容
   handleChapter(ev){
+   
     if (this.data.fictionRead.last_chapter_id == 0 || this.data.fictionRead.next_chapter_id == 2) {
       return;
     }
@@ -151,7 +152,7 @@ Page({
       data:{
         fiction_id: _this.data.fiction_id,
         chapter_id: _this.data.chapter_id,
-        is_auto_pay:_this.data.is_auto_pay,
+        is_auto_pay: _this.data.auto_pay == null ? '' : _this.data.auto_pay,
         is_pay: _this.data.is_pay
       },
       success(res){
@@ -162,9 +163,8 @@ Page({
           _this.setData({
             fictionRead: res.data,
             isMask: false,
-            // is_auto_pay:res.data.is_auto_pay,
+            auto_pay:res.data.auto_pay,
           })
-          console.log(_this.data.fictionRead.last_chapter_id == 0)
         }
       },
       error(res){
@@ -177,11 +177,20 @@ Page({
     })
   },
   // checkbox 改变
-  checkboxChange(){
+  checkboxChange(ev){ 
+    if (ev.detail.value){
+      this.setData({
+        auto_pay: ev.detail.value.length,
+      })
+    }
+   
+  },
+  // 继续阅读
+  handleRead(){
     this.setData({
-      deduction:!this.data.deduction[0].checked,
-      is_auto_pay: this.data.deduction[0].checked ? 1 : 0,
+      fictionRead: {},
     })
+    this.handleChapter()
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

@@ -13,13 +13,23 @@ Page({
   handleActive(ev){
     this.setData({
       isActive: ev.currentTarget.dataset.index,
-    })
+    });
   },
  // 跳转到支付页面
   handlePay(){
-    wx.navigateTo({
-      url: "/pages/wxPay/wxPay",
+    let _this = this;
+    http.request({
+      url:"wxpay",
+      data:{
+        card_id: this.data.topUp[this.data.isActive].card_id,
+      },
+      success(res){
+        wx.navigateTo({
+          url: "/pages/wxPay/wxPay",
+        })
+      },
     })
+    
   },
   /**
    * 生命周期函数--监听页面加载

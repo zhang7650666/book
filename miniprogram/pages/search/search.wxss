@@ -1,12 +1,17 @@
 /* miniprogram/pages/search/search.wxss */ 
  /* 搜索样式 */
+ .search-page{
+   position:relative;
+ }
 .search-wrap{
-  position:relative;
+  position:fixed;
+  top:0rpx;
   width:100%;
   padding:20rpx 0rpx;
   display:flex;
   border-bottom:1rpx solid #f2f2f2;
   align-items: center;
+  background:#fff;
 }
 .search-main{
   flex: 0 0 600rpx;
@@ -48,6 +53,7 @@
   border-bottom:1rpx solid #f7f7f7;
   display:flex;
   align-items: center;
+  margin-top:112rpx;
 }
 .search-list .icon-search{
   flex:0 0 40rpx;
@@ -58,7 +64,15 @@
   color:#666666;
   line-height:80rpx;
 }
+.search-show{
+  margin-top:112rpx;
+  padding-bottom:100rpx;
+}
 /* 没有搜索到内容 */
+.no-search{
+  margin-top:112rpx;
+  padding-bottom:100rpx;
+}
 .no-search .no-content{
   width:100%;
   text-align:center;
