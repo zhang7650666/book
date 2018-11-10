@@ -56,11 +56,13 @@ App({
   // 授权、登录  获取用户信息 封装
   getUserInfo(){
     let _this = this;
-    let openId = wx.getStorageSync('openId');
-    // let openId = false;
+    //let openId = wx.getStorageSync('openId');
+    let openId = false;
     if (openId) {
       wx.getUserInfo({
         success(res) {
+          console.log(res);
+          console.log(111)
           wx.setStorageSync('userInfo', JSON.stringify(res_user.userInfo));
           _this.globalData.userInfo = res.userInfo;
           // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
@@ -74,6 +76,7 @@ App({
             title: '提示',
             content: '获取用户信息失败，点击确定再次获取',
             success(res) {
+              console.log(2222)
               if (res.confirm) {
                 _this.getUserInfo();
               }
@@ -84,11 +87,14 @@ App({
     } else {
       wx.login({
         success(res) {
+          console.log(res)
+          console.log(333)
           if (res.code) {
             wx.getUserInfo({
               // 要求有登录状态
               withCredentials: true,
               success(res_user) {
+                console.log(4444)
                 wx.setStorageSync('userInfo', JSON.stringify(res_user.userInfo));
                 _this.globalData.userInfo = res.userInfo;
                 _this.getToken(res)

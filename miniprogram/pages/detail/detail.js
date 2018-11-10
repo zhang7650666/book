@@ -29,7 +29,7 @@ Page({
   // 继续阅读
   handleKeep(){
     wx.navigateTo({
-      url: `/pages/reading/reading?fiction_id=${this.data.fiction_id}`
+      url: `/pages/reading/reading?fiction_id=${this.data.fiction_id}&fiction_name=${this.data.bookDetails.fiction_name}`
     })
   },
   // 加入书架
@@ -76,7 +76,7 @@ Page({
   },
   handleRead() {
     wx.navigateTo({
-      url: `/pages/reading/reading?fiction_id=${this.data.fiction_id}`
+      url: `/pages/reading/reading?fiction_id=${this.data.fiction_id}&fiction_name=${this.data.bookDetails.fiction_name}`
     })
   },
   // 小说详情页接口

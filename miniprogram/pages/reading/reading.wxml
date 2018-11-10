@@ -9,9 +9,9 @@
         </view>
         <!--积分部分 -->
         <!-- 收费内容展示-->
-        <view wx:if="{{fictionRead.is_pay == 1}}">
+        <view wx:if="{{fictionRead.is_pay == 1 || fictionRead.is_pay == 3}}">
             <!-- 剩余积分小于抵扣积分展示-->
-            <view class="title-info" wx:if="{{(fictionRead.auto_pay == 1 && fictionRead.user_score < fictionRead.chapter_cost) || fictionRead.auto_pay == 0}}">
+            <view class="title-info" wx:if="{{(fictionRead.auto_pay == 1 &&  fictionRead.is_pay == 3) || fictionRead.auto_pay == 0}}">
                 <view class="consume">
                     <text>阅读本章节需要消耗{{fictionRead.chapter_cost}}积分</text>
                 </view>
@@ -25,7 +25,7 @@
                         </label>
                     </checkbox-group>
                     <view class="go-btn">
-                        <text class="keep-btn" catchtap="handleRead">{{fictionRead.user_score > fictionRead.chapter_cost ? '继续阅读':'积分充值'}}</text>
+                        <text class="keep-btn" catchtap="handleRead">{{fictionRead.is_pay == 3 ? '积分充值' :'继续阅读'}}</text>
                         <text class="share-btn" catchtap="handleShare">分享好友获取积分免费看</text>
                     </view>
                 </view>

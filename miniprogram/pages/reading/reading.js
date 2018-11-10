@@ -41,7 +41,9 @@ Page({
         chapter_id: options.chapter_id || 1,
       });
     }
-    
+    wx.setNavigationBarTitle({
+      title: options.fiction_name
+    });
     // 小说内容初始化展示
     this.handleChapter();
   },
@@ -187,10 +189,23 @@ Page({
   },
   // 继续阅读
   handleRead(){
-    this.setData({
-      fictionRead: {},
+    
+    if (this.data.fictionRead.is_pay == 3){
+      wx.navigateTo({
+        url: "/pages/recharge/recharge",
+      })
+    } else {
+      this.setData({
+        fictionRead: {},
+      })
+      this.handleChapter()
+    }
+  },
+  // 分享好友
+  handleShare() {
+    wx.navigateTo({
+      url: "/pages/recharge/recharge",
     })
-    this.handleChapter()
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

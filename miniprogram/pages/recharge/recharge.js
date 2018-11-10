@@ -24,9 +24,24 @@ Page({
         card_id: this.data.topUp[this.data.isActive].card_id,
       },
       success(res){
-        wx.navigateTo({
-          url: "/pages/wxPay/wxPay",
-        })
+        // wx.navigateTo({
+        //   url: "/pages/wxPay/wxPay",
+        // })
+        wx.requestPayment(
+          {
+            'appId': res.data.appId,
+            'timeStamp': res.data.timeStamp,
+            'nonceStr': res.data.nonceStr,
+            'package': res.data.package,
+            'signType': res.data.signType,
+            'paySign': res.data.paySign,
+            success(){
+              
+            },
+            fail() {
+
+            },
+          })
       },
     })
     

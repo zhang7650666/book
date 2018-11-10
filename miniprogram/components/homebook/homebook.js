@@ -13,7 +13,7 @@ Component({
     },
     isCur:{
       type:Number,
-      value:9999999,
+      value:9999,
     },
     isStore:{
       type: Boolean,
