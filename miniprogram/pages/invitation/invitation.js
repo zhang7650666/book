@@ -85,32 +85,31 @@ Page({
     //   // 来自页面内转发按钮
     //   console.log(ops.target)
     // }
-   let _this = this;
-   http.request({
-    url:"shares_info",
-    data:{
-      alias:this.data.objInfo.alias,
-    },
-    success(res){
-      return {
-        title: res.title,
-        path: res.path,
-        desc: res.desc,
-        imageUrl: res.img,
-        success: function (res) {
-          _this.postActivityBackoff(this.data.objInfo);
-        },
-        fail: function (res) {
-          // 转发失败
-          wx.showToast({
-            title: `邀请失败`,
-            image: '/images/u1565.png',
-            duration: 2000
-          })
+    let _this = this;
+    http.request({
+      url:"shares_info",
+      data:{
+        alias:this.data.objInfo.alias,
+      },
+      success(res){
+        return {
+          title: res.title,
+          path: res.path,
+          desc: res.desc,
+          imageUrl: res.img,
+          success: function (res) {
+            _this.postActivityBackoff(this.data.objInfo);
+          },
+          fail: function (res) {
+            // 转发失败
+            wx.showToast({
+              title: `邀请失败`,
+              image: '/images/u1565.png',
+              duration: 2000
+            })
+          }
         }
-      }
-    },
-  })
-    
+      },
+    })   
   }
 })

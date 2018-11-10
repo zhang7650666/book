@@ -3,7 +3,7 @@
 import {http} from "./util/http.js";
 App({
   onLaunch: function (resa) {
-    this.getUserInfo()
+    //this.getUserInfo()
   },
   // 请求Token接口
   getToken(res_login){
@@ -27,6 +27,7 @@ App({
         if (res.confirm) {
           wx.openSetting({
             success: (res) => {
+              console.log(res)
               // 如果用户重新同意了授权登录
               if (res.authSetting["scope.userInfo"]) {
                 wx.login({
@@ -46,7 +47,7 @@ App({
               }
             }, 
             fail(res) {
-              this.getOpenSetting();
+              //this.getOpenSetting();
             }
           })
         }
@@ -90,6 +91,7 @@ App({
           console.log(res)
           console.log(333)
           if (res.code) {
+            console.log(555)
             wx.getUserInfo({
               // 要求有登录状态
               withCredentials: true,
