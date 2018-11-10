@@ -3,7 +3,7 @@
 import {http} from "./util/http.js";
 App({
   onLaunch: function (resa) {
-    //this.getUserInfo()
+    this.getUserInfo()
   },
   // 请求Token接口
   getToken(res_login){
@@ -13,7 +13,7 @@ App({
         login_code: 'test' || res_login.code,
       },
       success(data) {
-        wx.setStorageSync('token',JSON.stringify(data.data));
+        wx.setStorageSync('token', JSON.stringify(data.data));
       }
     })
   },
@@ -27,7 +27,6 @@ App({
         if (res.confirm) {
           wx.openSetting({
             success: (res) => {
-              console.log(res)
               // 如果用户重新同意了授权登录
               if (res.authSetting["scope.userInfo"]) {
                 wx.login({
@@ -57,14 +56,13 @@ App({
   // 授权、登录  获取用户信息 封装
   getUserInfo(){
     let _this = this;
-    //let openId = wx.getStorageSync('openId');
-    let openId = false;
+    let openId = wx.getStorageSync('openId');
+    // let openId = false;
     if (openId) {
       wx.getUserInfo({
         success(res) {
-          console.log(res);
-          console.log(111)
           wx.setStorageSync('userInfo', JSON.stringify(res_user.userInfo));
+          wx.setStorageSync('encryptedData', res_user.encryptedData);
           _this.globalData.userInfo = res.userInfo;
           // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
           // 所以此处加入 callback 以防止这种情况
@@ -73,36 +71,39 @@ App({
           }
         },
         fail() {
-          wx.showModal({
-            title: '提示',
-            content: '获取用户信息失败，点击确定再次获取',
-            success(res) {
-              console.log(2222)
-              if (res.confirm) {
-                _this.getUserInfo();
-              }
-            }
+          // wx.showModal({
+          //   title: '提示',
+          //   content: '获取用户信息失败，点击确定再次获取',
+          //   success(res) {
+          //     if (res.confirm) {
+          //       _this.getUserInfo();
+          //     }
+          //   }
+          // })
+          wx.navigateTo({
+            url: '/pages/impower/impower'
           })
         }
       })
     } else {
       wx.login({
         success(res) {
-          console.log(res)
-          console.log(333)
           if (res.code) {
-            console.log(555)
             wx.getUserInfo({
               // 要求有登录状态
               withCredentials: true,
               success(res_user) {
-                console.log(4444)
+                console.log(res_user);
                 wx.setStorageSync('userInfo', JSON.stringify(res_user.userInfo));
+                wx.setStorageSync('encryptedData', res_user.encryptedData);
                 _this.globalData.userInfo = res.userInfo;
                 _this.getToken(res)
               }, 
               fail() {
-                _this.getOpenSetting();
+                // _this.getOpenSetting();
+                wx.navigateTo({
+                  url: '/pages/impower/impower'
+                })
               }
             })
           }

@@ -20,7 +20,8 @@ const tips = {
   1003:"fiction_id不能为空",
   404:'已确认路径无误',
 }
-let data = JSON.parse(wx.getStorageSync('token') || '{}')
+let userToken = JSON.parse(wx.getStorageSync('token') || '{}')
+console.log(userToken);
 class HTTP{
   request(params){
     if(!params.method){
@@ -31,8 +32,7 @@ class HTTP{
       data: params.data,
       header: {
         'content-Type': 'application/json;charset=utf-8',
-        'token': data.token,
-        //'unique_id': data.unique_id
+        'token': userToken.token,
       },
       method: params.method,
       success: (res) => { 

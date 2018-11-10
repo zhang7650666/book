@@ -64,15 +64,18 @@ Page({
       url:"user_info",
       data:{},
       success(res){
+        console.log(res);
         let invite = {
           icon:'/images/my5.png',
           url:"/pages/invitation/invitation",
           flag:'invite',
+          alias: '邀请好友',
         };
         let desktop = {
           icon:'/images/my5.png',
           itemType:'share',
           flag:'desktop',
+          alias: '添加到桌面',
         }
         _this.data.userList[2] = {...res.data.activity.invite, ... invite}; // 邀请好友添加到数据中
         _this.data.userList[4] = {...res.data.activity.desktop, ...desktop}; // 添加桌面
