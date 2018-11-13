@@ -1,6 +1,7 @@
 //app.js
 // 注意上线之后 （login_code: 'test' || res_login.code）去掉test
-import {http} from "./util/http.js";
+import { http, callbackQueue} from "./util/http.js";
+
 App({
   onLaunch: function (resa) {
     this.getUserInfo()
@@ -8,6 +9,7 @@ App({
   // 请求Token接口
   getToken(res_login){
     http.request({
+      isNotToken: true,
       url: "token",
       data: {
         login_code: res_login.login_code,
@@ -16,6 +18,10 @@ App({
       },
       success(data) {
         wx.setStorageSync('token', JSON.stringify(data.data));
+        wx.setStorageSync('isInit', true);
+        callbackQueue.forEach(function (cb, i) {
+          cb && cb();
+        });
       }
     })
   },
@@ -99,9 +105,6 @@ App({
                   encrypted_data: res_user.encryptedData,
                   iv: res_user.iv
                 })
-                if (this.userInfoReadyCallback) {
-                  this.userInfoReadyCallback(res)
-                }
               }, 
               fail() {
                 // _this.getOpenSetting();

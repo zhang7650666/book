@@ -21,37 +21,87 @@ const tips = {
   404:'已确认路径无误',
 }
 let userToken = JSON.parse(wx.getStorageSync('token') || '{}')
+let callbackQueue = [];
 class HTTP{
+  init(callback) {
+    let userToken = wx.getStorageSync('isInit') || false;
+    if (!userToken) {
+      callbackQueue.push(callback)
+    }
+    else if (userToken && callbackQueue.length) {
+      userToken = JSON.parse(wx.getStorageSync('token') || '{}')
+      callbackQueue.forEach(function (cb, i) {
+        cb && cb();
+      });
+      callbackQueue = [];
+    }
+    else {
+      callback();
+    }
+  }
   request(params){
-    if(!params.method){
+    const _this = this;
+    if (!params.method) {
       params.method = "POST";
     }
-    wx.request({
-      url: config.baseUrl + params.url,
-      data: params.data,
-      header: {
-        'content-Type': 'application/json;charset=utf-8',
-        'token': userToken.token || '',
-      },
-      method: params.method,
-      success: (res) => { 
-        if(res.data.code==200){
+    if (params.isNotToken) {
+      wx.request({
+        url: config.baseUrl + params.url,
+        data: params.data,
+        header: {
+          'content-Type': 'application/json;charset=utf-8',
+          'token': userToken.token || '',
+        },
+        method: params.method,
+        success: (res) => {
+          if (res.data.code == 200) {
             params.success(res.data);
-        }else{
-          if(params.error){
-            params.error(res.data);
-          }else{
-            let errCode = res.data.code;
-            this._err_code(errCode);
+          } else {
+            if (params.error) {
+              params.error(res.data);
+            } else {
+              let errCode = res.data.code;
+              _this._err_code(errCode);
+            }
+
           }
-          
-        }
-      },
-      fail: (res) => {
-        this._err_code(1);
-       },
-      complete: (res) => { },
-    })
+        },
+        fail: (res) => {
+          this._err_code(1);
+        },
+        complete: (res) => { },
+      })
+    }
+    else {
+      this.init(function () {
+        wx.request({
+          url: config.baseUrl + params.url,
+          data: params.data,
+          header: {
+            'content-Type': 'application/json;charset=utf-8',
+            'token': userToken.token ? userToken.token : JSON.parse(wx.getStorageSync('token') || '{}').token || '',
+          },
+          method: params.method,
+          success: (res) => {
+            if (res.data.code == 200) {
+              params.success(res.data);
+            } else {
+              if (params.error) {
+                params.error(res.data);
+              } else {
+                let errCode = res.data.code;
+                _this._err_code(errCode);
+              }
+
+            }
+          },
+          fail: (res) => {
+            this._err_code(1);
+          },
+          complete: (res) => { },
+        })
+      })
+    }
   }
   _err_code(errCode){
     if(!errCode){
@@ -64,5 +114,7 @@ class HTTP{
     })
   }
 }
+
 let http = new HTTP();
+export {callbackQueue}
 export {http};
