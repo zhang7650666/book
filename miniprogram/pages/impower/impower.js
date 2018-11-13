@@ -65,9 +65,12 @@ Page({
   },
   getUserInfoFun() {
     wx.getUserInfo({
-      success: function (res) {
+      success: function (res_user) {
         wx.setStorageSync('userInfo', JSON.stringify(res_user.userInfo));
-        wx.setStorageSync('encryptedData', res_user.encryptedData); 　
+        wx.setStorageSync('encryptedData', res_user.encryptedData);
+        wx.navigateTo({
+          url: 'pages/index/index',
+        })
       },
       fail: function() {
         // wx.showToast({

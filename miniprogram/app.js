@@ -15,7 +15,6 @@ App({
         iv: res_login.iv
       },
       success(data) {
-        console.log(data);
         wx.setStorageSync('token', JSON.stringify(data.data));
       }
     })
@@ -79,15 +78,6 @@ App({
           }
         },
         fail() {
-          // wx.showModal({
-          //   title: '提示',
-          //   content: '获取用户信息失败，点击确定再次获取',
-          //   success(res) {
-          //     if (res.confirm) {
-          //       _this.getUserInfo();
-          //     }
-          //   }
-          // })
           wx.navigateTo({
             url: '/pages/impower/impower'
           })
@@ -101,7 +91,6 @@ App({
               // 要求有登录状态
               withCredentials: true,
               success(res_user) {
-                console.log(res_user)
                 wx.setStorageSync('userInfo', JSON.stringify(res_user.userInfo));
                 wx.setStorageSync('encryptedData', res_user.encryptedData);
                 _this.globalData.userInfo = res.userInfo;
@@ -110,6 +99,9 @@ App({
                   encrypted_data: res_user.encryptedData,
                   iv: res_user.iv
                 })
+                if (this.userInfoReadyCallback) {
+                  this.userInfoReadyCallback(res)
+                }
               }, 
               fail() {
                 // _this.getOpenSetting();
@@ -123,8 +115,6 @@ App({
       })
     }
   },
-
-  
   globalData: {
     userInfo: null,
     defaultImg:'/images/u69.png'

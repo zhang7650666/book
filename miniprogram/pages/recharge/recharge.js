@@ -1,5 +1,7 @@
 // miniprogram/pages/recharge/recharge.js
 import {http} from "../../util/http.js";
+// import weixin from 'https://res.wx.qq.com/open/js/jweixin-1.3.2.js'
+// require('https://res.wx.qq.com/open/js/jweixin-1.3.2.js')
 Page({
 
   /**
@@ -21,32 +23,42 @@ Page({
  // 跳转到支付页面
   handlePay(){
     let _this = this;
-    http.request({
-      url:"wxpay",
-      data:{
-        card_id: this.data.isCheckCardId,
-      },
-      success(res){
-        wx.requestPayment(
-          {
-            'appId': res.data.appId,
-            'timeStamp': res.data.timeStamp,
-            'nonceStr': res.data.nonceStr,
-            'package': res.data.package,
-            'signType': res.data.signType,
-            'paySign': res.data.paySign,
-            success(){
-              
-            },
-            fail() {
-
-            },
-            complete(res) {
-              console.log(res);
-            }
-          })
-      },
+    const path = '/pages/wxPay/wxPay?card_id=' + this.data.isCheckCardId;
+    wx.navigateTo({
+      url: path,
     })
+    // http.request({
+    //   url:"wxpay",
+    //   data:{
+    //     card_id: this.data.isCheckCardId,
+    //   },
+    //   success(res){
+    //     const payData = JSON.parse(res.data || '{}')
+    //     let params = `?timestamp=${payData.timeStamp}&nonceStr=${payData.nonceStr}&${payData.package}&signType=${payData.signType}'&paySign=${payData.paySign}&orderId=${res.orderid}&pType=0`
+    //     const path = '/pages/wxPay/wxPay' + params;
+    //     wx.navigateTo({
+    //       url: path,
+    //     })
+    //     // wx.requestPayment(
+    //     //   {
+    //     //     'appId': payData.appId,
+    //     //     'timeStamp': payData.timeStamp,
+    //     //     'nonceStr': payData.nonceStr,
+    //     //     'package': payData.package,
+    //     //     'signType': payData.signType,
+    //     //     'paySign': payData.paySign,
+    //     //     success(res){
+    //     //       console.log(res);
+    //     //     },
+    //     //     fail() {
+
+    //     //     },
+    //     //     complete(res) {
+    //     //       console.log(res);
+    //     //     }
+    //     //   })
+    //   },
+    // })
     
   },
   /**
@@ -65,6 +77,7 @@ Page({
       success(res){
         _this.setData({
           topUp: res.data,
+          isCheckCardId: res.data[0]['card_id'],
           topUpMap: (res.data || []).reduce((map, v) => {
             map[v.card_id] = v;
             return map;

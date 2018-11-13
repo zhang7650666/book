@@ -21,7 +21,6 @@ const tips = {
   404:'已确认路径无误',
 }
 let userToken = JSON.parse(wx.getStorageSync('token') || '{}')
-console.log(userToken);
 class HTTP{
   request(params){
     if(!params.method){
