@@ -65,7 +65,7 @@ Page({
           alias: '邀请好友',
         };
         let desktop = {
-          icon:'/images/my5.png',
+          icon:'/images/my3.png',
           itemType:'share',
           flag:'desktop',
           alias: '添加到桌面',

@@ -3,14 +3,14 @@
     <view class="search-wrap">
       <view class="search-main">
         <icon class="icon-search" type="search" size="14"></icon>
-        <input class="ipt-search" placeholder="请输入关键字" data-value="{{keyword}}" bindchange="bindChange" value='{{keyword}}'/>
+        <input class="ipt-search" placeholder="请输入关键字" data-value="{{keyword}}" bindblur="bindChange" value='{{keyword}}'/>
       </view>
       <view class="search">
         <text>搜索</text>
       </view>
     </view>
-    <!-- 搜索列表 -->
-    <view wx:if="{{isShowSearch && index < 10}}" class="search-list" wx:for="{{sercherStorage}}" wx:key="item.keyword" data-keyword="{{item.keyword}}" bindtap="handleSearch">
+    <!-- 热词列表 -->
+    <view wx:if="{{!searchBooks.length && isShowSearch && index < 10}}" class="search-list" wx:for="{{sercherStorage}}" wx:key="item.keyword" data-keyword="{{item.keyword}}" bindtap="handleSearch">
       <icon class="icon-search" type="search" size="14"></icon>
       <text class="display: inline-block;padding-left: 10rpx;">{{item.keyword}}</text>
     </view>
@@ -27,7 +27,7 @@
       </view>
     </view> -->
     <!-- 没有找到要查看的内容 -->
-    <view class="no-search" wx:if="{{searchBooks.length == 0 && !isShowSearch}}">
+    <view class="no-search" wx:if="{{!searchBooks.length && !isShowSearch}}">
       <view class="no-content">
         <image src="../../images/u337.png" mode="widthFix"></image>
         <text>没有找到您想要的内容</text>
@@ -36,7 +36,7 @@
         <text class="red"></text>
         <text class="title-text">大家都在看</text>
       </view>
-      <view wx:if="{{allLook}}" wx:for="{{allLook}}" wx:key="item.fiction_id">
+      <view wx:if="{{!!allLook.length}}" wx:for="{{allLook}}" wx:key="item.fiction_id">
         <search-book books="{{item}}"></search-book>
       </view>
     </view>

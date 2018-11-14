@@ -14,6 +14,7 @@ Page({
     allLook:[], // 大家都在看数据
     storeKeyword:[], // 存储关键字
     len:10, // 存储数据的条数
+    isLoadEnd: false, //搜索结束是否加载完
   },
   
   /**
@@ -39,9 +40,9 @@ Page({
   // 搜索接口
   postSearch(obj) {
     let _this = this;
-    if (_this.data.keyword == '' || _this.data.keyword == null){
+    if (!_this.data.keyword){
       wx.showToast({
-        title: "关键字不能为空",
+        title: "请输入小说名称或作者",
         icon: 'none',
         duration: 1000,
       });
@@ -68,6 +69,7 @@ Page({
         _this.setData({
           searchBooks: _this.data.page == 1 ? (res.data || []) : [..._this.data.searchBooks, ...res.data],
           isShowSearch: _this.data.searchBooks.length > 0 ? true : false,
+          isLoadEnd: res.data.length > 0
         });
         if(_this.data.searchBooks.length == 0){
           // 大家都在看接口调用
@@ -84,6 +86,7 @@ Page({
   },
   // 大家都在看接口
   postAllSee(obj) {
+    obj = obj || {};
     let _this = this;
     http.request({
       url:"/all_see",
@@ -111,11 +114,6 @@ Page({
   // change事件
   bindChange(ev){
     if (this.data.keyword == ev.detail.value && this.data.keyword != ''){
-      wx.showToast({
-        title: "相同字段不能重复搜索",
-        icon: 'none',
-        duration: 1000,
-      });
       return;
     }
     this.setData({
@@ -178,7 +176,9 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-
+    this.setData({
+      isLoadEnd: false,
+    })
   },
 
   /**
@@ -192,21 +192,16 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-    // 显示顶部刷新图标
-    wx.showNavigationBarLoading();
-     // 页数+1
-    _this.setData({
-      page: 1,
-    });
-    if(this.data.searchBooks.length == 0){
-      this.postAllSee({
-        pullDown:true,
-        pullUp:false,
-      })
-    }else {
+    if (this.data.searchBooks.length) {
+      // 显示顶部刷新图标
+      wx.showNavigationBarLoading();
+      // 页数+1
+      this.setData({
+        page: 1,
+      });
       this.postSearch({
-        pullDown:true,
-        pullUp:false,
+        pullDown: true,
+        pullUp: false,
       })
     } 
   },
@@ -215,28 +210,22 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-    if (this.data.searchBooks.length % this.data.size > 0) {
-      return;
-    } else if(this.data.allLook.length % this.data.size > 0) {
+    if (this.data.isLoadEnd) {
       return;
     }
-    // 显示加载图标
-    wx.showLoading({
-      title: '玩命加载中',
-    })
-    // 页数+1
-    this.setData({
-      page: this.data.page + 1
-    });
-    if(this.data.searchBooks.length == 0){
-      this.postAllSee({
-        pullDown:true,
-        pullUp:false,
+    if (this.data.searchBooks.length) {
+      // 显示加载图标
+      wx.showLoading({
+        title: '加载中',
       })
-    }else {
+      // 页数+1
+      this.setData({
+        page: this.data.page + 1
+      });
+    
       this.postSearch({
-        pullDown:true,
-        pullUp:false,
+        pullDown: true,
+        pullUp: false,
       })
     }
   },

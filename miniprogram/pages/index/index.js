@@ -17,6 +17,7 @@ Page({
     indexLooks:[], // 大家都在看
     page: 1,
     size: 10,
+    shareConfig: {}, //分享的配置
   },
   /**
    * 生命周期函数--监听页面加载
@@ -227,36 +228,58 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-    // if (ops.from === 'button') {
-    //   // 来自页面内转发按钮
-    //   console.log(ops.target)
-    // }
     let _this = this;
-    http.request({
-      url: "shares_info",
-      data: {
-        alias: 'home',
-      },
-      success(res) {
-        const shareConfig = res.data;
-        return {
-          title: shareConfig.title,
-          path: shareConfig.path,
-          desc: shareConfig.desc,
-          imageUrl: shareConfig.img,
-          success: function (res) {
-            _this.postActivityBackoff({alias: 'home'});
-          },
-          fail: function (res) {
-            // 转发失败
-            wx.showToast({
-              title: `邀请失败`,
-              image: '/images/u1565.png',
-              duration: 2000
-            })
-          }
+    if (this.data.shareConfig && this.data.shareConfig.path) {
+      const shareConfig = this.data.shareConfig;
+      return {
+        title: shareConfig.title,
+        path: shareConfig.path,
+        desc: shareConfig.desc,
+        imageUrl: shareConfig.img,
+        success: function (res) {
+          _this.postActivityBackoff({ alias: 'home' });
+        },
+        fail: function (res) {
+          // 转发失败
+          wx.showToast({
+            title: `邀请失败`,
+            image: '/images/u1565.png',
+            duration: 2000
+          })
         }
-      },
-    })
+      }
+    }
+    else {
+      http.request({
+        url: "shares_info",
+        data: {
+          alias: 'home',
+        },
+        success(res) {
+          const shareConfig = res.data;
+          _this.setData({
+            shareConfig,
+          })
+          return {
+            title: shareConfig.title,
+            path: shareConfig.path,
+            desc: shareConfig.desc,
+            imageUrl: shareConfig.img,
+            success: function (res) {
+              _this.postActivityBackoff({ alias: 'home' });
+            },
+            fail: function (res) {
+              // 转发失败
+              wx.showToast({
+                title: `邀请失败`,
+                image: '/images/u1565.png',
+                duration: 2000
+              })
+            }
+          }
+        },
+      })
+    }
+    
   }
 })
