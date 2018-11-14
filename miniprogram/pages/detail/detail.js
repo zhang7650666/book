@@ -1,5 +1,5 @@
 // miniprogram/pages/detail/detail.js
-const app = getApp();
+const APP = getApp();
 import {http} from "../../util/http.js";
 Page({
 
@@ -31,6 +31,13 @@ Page({
     wx.navigateTo({
       url: `/pages/reading/reading?fiction_id=${this.data.fiction_id}&fiction_name=${this.data.bookDetails.fiction_name}`
     })
+  },
+  fictionSet() {
+    if (this.bookDetails.fiction_collection == 0) {
+      this.handleAdd()
+    }else {
+      this.handleRemove();
+    }
   },
   // 加入书架
   handleAdd(){
@@ -135,7 +142,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    APP.routerUploadToken();
   },
 
   /**

@@ -41,20 +41,29 @@ page {
     flex: 0 0 120rpx;
     height:120rpx;
 }
-.btn-group .prev,.btn-group .next,.btn-group .directory{
+.btn-group .prev,
+.btn-group .next,
+.btn-group .directory{
     flex:1;
     height:120rpx;
 }
-.btn-group .prev text,.btn-group .next text {
+.btn-group .prev text,
+.btn-group .next text {
    display:inline-block;
    width:236rpx;
    height:76rpx;
-   border:2rpx solid #cccccc;
+   border:2rpx solid #f1f1f1;
    border-radius:10rpx;
    text-align:center;
    line-height:76rpx;
-   color:#666666;
+   color:#222;
    font-size:28rpx;
+   background-color: #fff;
+}
+.btn-group .prev text.disabled,
+.btn-group .next text.disabled {
+  background-color: #ccc;
+  color: #666;
 }
 .btn-group .next{
   text-align:right;
@@ -62,15 +71,16 @@ page {
 .btn-group .directory{
   flex:0 0 152rpx;
   height:76rpx;
-  border:2rpx solid #cccccc;
+  border:2rpx solid #f1f1f1;
   border-radius:10rpx;
   text-align:center;
   line-height:76rpx;
-  color:#666666;
+  color:#222;
   font-size:28rpx;
   display:flex;
   justify-content: center;
   align-items: center;
+  background-color: #fff;
 }
 .btn-group .directory image{
   display:inline-block;

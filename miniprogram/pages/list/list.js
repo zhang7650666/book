@@ -1,4 +1,5 @@
 // miniprogram/pages/list/list.js
+const APP = getApp();
 import {http} from "../../util/http.js";
 Page({
 
@@ -35,6 +36,7 @@ Page({
   postFictionList(obj){
     let _this = this;
     http.request({
+      isNotToken: true,
       url: "album_info_list",
       data:{
         album_id: _this.data.album_id,
@@ -76,7 +78,6 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
   },
 
   /**

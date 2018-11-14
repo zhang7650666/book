@@ -22,3 +22,7 @@ page {
   padding: 0 50rpx;
   margin-bottom: 100rpx;
 }
+.impower-block button {
+  display: block;
+  width: 100%;
+}

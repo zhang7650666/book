@@ -7,6 +7,7 @@ Page({
    */
   data: {
     objInfo:{},
+    shareInfo: {},
   },
 
   /**
@@ -62,15 +63,16 @@ Page({
 
   },
    // 邀请成功之后的回调函数
-   postActivityBackoff(obj){
+   postActivityBackoff(){
     http.request({
       url:"activity_backoff",
       data:{
-        alias:obj.alias,
+        alias:'invite',
       },
       success(res){
+        console.log(res);
         wx.showToast({
-          title: obj.status == 1 ? '已转发' : `获得${obj.score}积分` ,
+          title: `已转发,获得${_this.data.score}积分`,
           icon: 'success',
           duration: 2000
         })
@@ -81,35 +83,38 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-    // if (ops.from === 'button') {
-    //   // 来自页面内转发按钮
-    //   console.log(ops.target)
-    // }
     let _this = this;
+    const { shareInfo } = this.data;
+    return {
+      title: shareInfo.title,
+      path: shareInfo.path,
+      desc: shareInfo.desc,
+      imageUrl: shareInfo.img,
+      success: function (res) {
+        _this.postActivityBackoff();
+      },
+      fail: function (res) {
+        // 转发失败
+        wx.showToast({
+          title: `邀请失败`,
+          image: '/images/u1565.png',
+          duration: 2000
+        })
+      }
+    }
+  },
+  getShareInfo() {
+    const _this = this;
     http.request({
-      url:"shares_info",
-      data:{
-        alias:this.data.objInfo.alias,
+      url: "shares_info",
+      data: {
+        alias: 'invite',
       },
-      success(res){
-        return {
-          title: res.title,
-          path: res.path,
-          desc: res.desc,
-          imageUrl: res.img,
-          success: function (res) {
-            _this.postActivityBackoff(this.data.objInfo);
-          },
-          fail: function (res) {
-            // 转发失败
-            wx.showToast({
-              title: `邀请失败`,
-              image: '/images/u1565.png',
-              duration: 2000
-            })
-          }
-        }
+      success(res) {
+        _this.setData({
+          shareInfo: res
+        })
       },
-    })   
+    }) 
   }
 })

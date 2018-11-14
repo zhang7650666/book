@@ -31,23 +31,21 @@
                 </view>
             </view>
         </view>
-        
     </view>
-    
-    <view class="btn-group" wx:if="{{fictionRead.is_pay != 1}}">
+    <view wx:if="{{!(fictionRead.is_pay == 1 || fictionRead.is_pay == 3)}}" class="btn-group">
         <view class="prev" data-prev="prev" catchtap="handleChapter">
-            <text class="{{fictionRead.last_catalog_id == 0 ? 'disabled':''}}">上一章</text>
+            <text class="{{!isHasPrev ? 'disabled':''}}">上一章</text>
         </view>
         <view class="directory" catchtap="handleDir">
             <image src="../../images/u645.png" mode="widthFix"></image>
             <text>目录</text>
         </view>
         <view class="next" data-prev="next" catchtap="handleChapter">
-            <text>{{fictionRead.next_catalog_id == 2?'已是最后一章':'下一章'}}</text>
+            <text>{{!isHasNext ?'已是最后一章':'下一章'}}</text>
         </view>
     </view>
     <!-- 设置弹框 -->
-    <view class="mask-wrap" wx:if="{{isMask}}">
+    <view class="mask-wrap" wx:if="{{isMask && !(fictionRead.is_pay == 1 || fictionRead.is_pay == 3)}}">
       <view class="go-book-store arrow-pub" catchtap="handleStore">
         <text>去书城</text>
       </view>

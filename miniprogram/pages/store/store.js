@@ -1,4 +1,5 @@
 // miniprogram/pages/store/store.js
+const APP = getApp();
 import {http} from "../../util/http.js";
 Page({
 
@@ -9,18 +10,22 @@ Page({
     currentData: 0, // 当前选项卡
     isEdit: true, // 是否是编辑
     swiperHeight:800,
-    isRead:true,
     bookPage: 1, // 书架当前页
     readingPage: 1, //最近阅读当前页
     size: 10,
     deleteId: null,
     readArr:[], // 最近阅读数组
     books: [], // 数据列表
+    isLoadData: false, //已经有loading了，接口返回空时才显示空白屏，
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    wx.showLoading({
+      title: '加载中',
+      mask: true
+    })
     this.getBooksList({
       pullDown:false,
       pullUp:false,
@@ -38,7 +43,10 @@ Page({
       return false;
     } else {
       this.setData({
-        currentData: e.target.dataset.current
+        currentData: e.target.dataset.current,
+        isLoadData: false,
+        readArr: [],
+        books: []
       })
       if (this.data.currentData == 1) {
         this.getRecentlyBookList()
@@ -114,10 +122,10 @@ Page({
   deleteReadList() {
     const _this = this;
     http.request({
-      url: 'bannerdel_all_recent',
+      url: 'del_all_recent',
       data: {},
       success(res) {
-        this.setData({
+        _this.setData({
           readArr: []
         })
         _this.calcSwiperHeight();
@@ -134,8 +142,10 @@ Page({
       success(res) {
         _this.setData({
           readArr: res.data.list || [],
+          isLoadData: true,
         });
         _this.calcSwiperHeight();
+        wx.hideLoading();
       }
     })
   },
@@ -198,11 +208,13 @@ Page({
           // 隐藏加载框
           wx.hideLoading();
         };
+
         _this.setData({
           books: _this.data.bookPage == 1 ? (res.data.list || []) : [..._this.data.books, ...res.data.list],
+          isLoadData: true,
         });
-        console.log(_this.data.books);
         _this.calcSwiperHeight();
+        wx.hideLoading();
       }
     })
   },
@@ -226,7 +238,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    APP.routerUploadToken();
   },
 
   /**
@@ -240,7 +252,6 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-
   },
 
   /**

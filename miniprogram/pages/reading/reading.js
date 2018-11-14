@@ -26,7 +26,9 @@ Page({
       yellow: 'default-skin',
       green: 'green-skin',
       black: 'black-skin'
-    }
+    },
+    isHasPrev: false,
+    isHasNext: true,
   },
    /**
    * 生命周期函数--监听页面加载
@@ -127,16 +129,23 @@ Page({
   },
   // 小说当前章节内容
   handleChapter(ev){
-    if (this.data.isHasChapter && (!this.data.fictionRead.last_chapter_id || !this.data.fictionRead.next_chapter_id)) {
-      return;
-    }
     let _this = this;
     let chapter = this.data.chapter_id;
-    if(ev && ev.currentTarget.dataset.prev){
-      ev.currentTarget.dataset.prev == 'prev' ? chapter = parseInt(this.data.chapter_id) -1 : chapter = parseInt(this.data.chapter_id) +1;
+    const fromPost = ev ? ev.currentTarget.dataset.prev : null;
+    if (fromPost) {
+      console.log(this.isHasPrev, this.data.isHasNext);
+      if (fromPost == 'prev' && this.isHasPrev) {
+        chapter = this.data.fictionRead.last_chapter_id;
+      }
+      else if (fromPost == 'next' && this.data.isHasNext) {
+        chapter = this.data.fictionRead.next_chapter_id;
+      }
+      else {
+        return ;
+      }
     }
     this.setData({
-      chapter_id:_this.data.chapter_id
+      chapter_id: chapter,
     });
     http.request({
       url:"fiction_read",
@@ -156,6 +165,8 @@ Page({
             isMask: false,
             auto_pay:res.data.auto_pay,
             isHasChapter: true,
+            isHasPrev: !!res.data.last_chapter_id,
+            isHasNext: !!res.data.next_chapter_id,
           })
         }
       },

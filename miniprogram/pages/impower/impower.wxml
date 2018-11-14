@@ -1,6 +1,6 @@
 <!--pages/impower/impower.wxml-->
 <view class="impower-block">
   <image></image>
-  <text>满满小说需要获得您的头像、昵称等基础信息，只会用于登录，不会用其它用途，点击按钮授权登录</text>
-  <button type="primary" open-type="getUserInfo" hover-class='none' bindgetuserinfo="bindgetuserinfo">授权给满满小说</button>
+  <text>还未登陆，请点击登陆</text>
+  <button type="default" size="default" open-type="getUserInfo" hover-class='none' bindgetuserinfo="bindgetuserinfo">点此登陆</button>
 </view>

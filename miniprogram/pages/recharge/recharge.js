@@ -29,29 +29,44 @@ Page({
         card_id: this.data.isCheckCardId,
       },
       success(res){
-        wx.setStorageSync('orderData', res.data);
-        const path = '/pages/wxPay/wxPay'
-        wx.navigateTo({
-          url: path,
-        })
-        // wx.requestPayment(
-        //   {
-        //     'appId': payData.appId,
-        //     'timeStamp': payData.timeStamp,
-        //     'nonceStr': payData.nonceStr,
-        //     'package': payData.package,
-        //     'signType': payData.signType,
-        //     'paySign': payData.paySign,
-        //     success(res){
-        //       console.log(res);
-        //     },
-        //     fail() {
-
-        //     },
-        //     complete(res) {
-        //       console.log(res);
-        //     }
-        //   })
+        console.log(res)
+        const payData = JSON.parse(res.data || '{}');
+        // wx.setStorageSync('orderData', res.data);
+        // const path = '/pages/wxPay/wxPay'
+        // wx.navigateTo({
+        //   url: path,
+        // })
+        wx.requestPayment(
+          {
+            'appId': payData.appId,
+            'timeStamp': payData.timeStamp,
+            'nonceStr': payData.nonceStr,
+            'package': payData.package,
+            'signType': payData.signType,
+            'paySign': payData.paySign,
+            success(res){
+              wx.showToast({
+                title: '支付成功',
+                icon: 'success',
+                duration: 1000,
+              })
+              setTimeout(function() {
+                wx.navigateBack({
+                  delta: 2
+                })
+              }, 1000)
+            },
+            fail() {
+              wx.showToast({
+                title: '支付失败',
+                icon: 'none',
+                duration: 1000,
+              })
+            },
+            complete(res) {
+              // console.log(res);
+            }
+          })
       },
     })
     

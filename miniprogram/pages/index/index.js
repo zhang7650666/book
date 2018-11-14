@@ -22,6 +22,10 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    wx.showLoading({
+      title: '加载中',
+      mask: true
+    })
     // banner接口调用
     this.postAddList({alias:'Index_banner',size:5})
     // hot(热门推荐)，boy（男生推荐），girls（女生推荐）
@@ -36,6 +40,7 @@ Page({
   postAddList(obj){
     const that = this;
     http.request({
+      isNotToken: true,
       url: "ad_list",
       data:{
         alias:obj.alias,
@@ -52,6 +57,7 @@ Page({
   postIndexHot(){
     let _this = this;
     http.request({
+      isNotToken: true,
       url: "album_list",
       data:{
         page:1,
@@ -61,6 +67,7 @@ Page({
         _this.setData({
           booksList:res.data
         })
+        wx.hideLoading();
       }
     })
   },
@@ -68,6 +75,7 @@ Page({
   postIndexLook(obj){
     let _this = this;
     http.request({
+      isNotToken: true,
       url: "all_see",
       data:{
         page: this.data.page,

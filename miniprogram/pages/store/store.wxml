@@ -4,7 +4,6 @@
     <view class='tab-book-item  {{currentData == 0 ? "tab-active" : ""}}'  data-current = "0" bindtap='checkCurrent'>我的书架</view>
     <view class='tab-book-item  {{currentData == 1 ? "tab-active" : ""}}'  data-current = "1" bindtap='checkCurrent'>最近阅读</view>
   </view>
-  <blank-page wx:if="{{(books.length == 0 && currentData == 0) ||(readArr.length == 0 && currentData == 1)}}"></blank-page>
   <view class="operation-wrap" wx:if="{{books.length > 0 && currentData == 0 }}">
     <text class="count">共{{books.length}}本</text>
     <text class="clear-all-book" wx:if="{{!isEdit}}" catchtap="handleClaer">清空所有</text>
@@ -14,7 +13,6 @@
     <text class="count">喜欢的书要添加到书屋喔！</text>
     <text class="edit" catchtap="handleHistory">清空记录</text>
   </view>
-  
   <swiper current="{{currentData}}" class='swiper' duration="300" bindchange="bindchange" style="height:{{swiperHeight}}rpx;min-height: 100%;" wx:if="{{books.length > 0 || readArr.length > 0}}">
     <!-- 我的书架 -->
     <swiper-item>
@@ -38,4 +36,5 @@
     </swiper-item>
   </swiper>
 </view>
+  <blank-page wx:if="{{isLoadData && (books.length == 0 && currentData == 0) ||(readArr.length == 0 && currentData == 1)}}"></blank-page>
 

@@ -1,4 +1,5 @@
 // miniprogram/pages/my/my.js
+const APP = getApp();
 import {http} from "../../util/http.js";
 Page({
 
@@ -33,13 +34,11 @@ Page({
         alias: '积分记录',
         url: "/pages/record/record",
       },
-      // {},
       {
         icon: '/images/my4.png',
         alias: '联系客服 ',
         url: "/pages/service/service",
       },
-      // {},
     ],
   },
 
@@ -51,8 +50,6 @@ Page({
     this.setData({
       userInfo: JSON.parse(userInfo)
     });
-    // 调用用户信息接口
-    this.postUserInfo();
   },
   // 用户信息接口请求
   postUserInfo() {
@@ -62,7 +59,6 @@ Page({
       data:{},
       success(res){
         console.log(res);
-
         let invite = {
           icon:'/images/my5.png',
           url:"/pages/invitation/invitation",
@@ -75,8 +71,14 @@ Page({
           flag:'desktop',
           alias: '添加到桌面',
         }
-        _this.data.userList.splice(2, 0, { ...res.data.activity.invite, ...invite });
-        _this.data.userList.splice(4, 0, { ...res.data.activity.desktop, ...desktop });
+        //用户共用同一个接口的弊端，签到后，更新积分需要重新读接口
+        let splitCount = !_this.data.isShowSignInButton ? 1 : 0;
+        if (res.data.activity.invite) {
+          _this.data.userList.splice(2, splitCount, { ...res.data.activity.invite, ...invite });
+        }
+        if (res.data.activity.desktop) {
+          _this.data.userList.splice(4, splitCount, { ...res.data.activity.desktop, ...desktop });
+        }
         _this.setData({
           userData: res.data,
           userList:_this.data.userList,
@@ -104,6 +106,14 @@ Page({
     this.setData({
       isShareShow: !this.data.isShareShow,
     })
+  },
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function () {
+    APP.routerUploadToken();
+    // 调用用户信息接口
+    this.postUserInfo();
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
