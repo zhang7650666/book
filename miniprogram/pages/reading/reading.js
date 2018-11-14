@@ -7,10 +7,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-    bgActive: 2, // 背景色选中
     fontSize:36, // 默认字体大小
     showSize:18, // 显示 字体大小
-    bgColor: '#e9dabd', // 默认背景颜色
     isMask:false, // 浮层显示隐藏
     deduction:[{
       name:'tips',
@@ -21,6 +19,14 @@ Page({
     chapter_id:'', // 小说章节id
     auto_pay: null, //是否自动购买 0 不；1 自动
     fictionRead:{}, // 小说相关对象
+    skin: 'default-skin', //阅读风格
+    isHasChapter: false, //是否是阅读进来
+    skinMap: {
+      white: 'white-skin',
+      yellow: 'default-skin',
+      green: 'green-skin',
+      black: 'black-skin'
+    }
   },
    /**
    * 生命周期函数--监听页面加载
@@ -85,25 +91,9 @@ Page({
   },
   // 改变背景色
   handleColor(ev){
-    let colorvalue = ev.currentTarget.dataset.colorvalue;
-    let bgColor = "";
-    let bgActive = 2;
-    if(colorvalue == "1"){
-      bgActive = 1;
-      bgColor = "#fff";
-    } else if (colorvalue == "2") {
-      bgColor = "#e9dabd";
-      bgActive = 2;
-    } else if (colorvalue == "3") {
-      bgActive = 3;
-      bgColor = "#5a8258";
-    } else if (colorvalue == "4") {
-      bgColor = "#0c0b0a";
-      bgActive = 4;
-    }
+    let skin = ev.currentTarget.dataset.skin;
     this.setData({
-      bgColor,
-      bgActive,
+      skin: this.data.skinMap[skin],
     });
   },
   // 加入书城
@@ -137,8 +127,7 @@ Page({
   },
   // 小说当前章节内容
   handleChapter(ev){
-   
-    if (this.data.fictionRead.last_chapter_id == 0 || this.data.fictionRead.next_chapter_id == 2) {
+    if (this.data.isHasChapter && (!this.data.fictionRead.last_chapter_id || !this.data.fictionRead.next_chapter_id)) {
       return;
     }
     let _this = this;
@@ -166,6 +155,7 @@ Page({
             fictionRead: res.data,
             isMask: false,
             auto_pay:res.data.auto_pay,
+            isHasChapter: true,
           })
         }
       },

@@ -75,8 +75,6 @@ Page({
           flag:'desktop',
           alias: '添加到桌面',
         }
-        // _this.data.userList[2] = {...res.data.activity.invite, ... invite}; // 邀请好友添加到数据中
-        // _this.data.userList[4] = {...res.data.activity.desktop, ...desktop}; // 添加桌面
         _this.data.userList.splice(2, 0, { ...res.data.activity.invite, ...invite });
         _this.data.userList.splice(4, 0, { ...res.data.activity.desktop, ...desktop });
         _this.setData({
@@ -118,7 +116,7 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-
+    
   },
   //签到
   userSignIn() {

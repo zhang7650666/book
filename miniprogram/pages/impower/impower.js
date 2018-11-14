@@ -63,22 +63,12 @@ Page({
   onShareAppMessage: function () {
 
   },
-  getUserInfoFun() {
-    wx.getUserInfo({
-      success: function (res_user) {
-        wx.setStorageSync('userInfo', JSON.stringify(res_user.userInfo));
-        wx.setStorageSync('encryptedData', res_user.encryptedData);
-        wx.navigateTo({
-          url: 'pages/index/index',
-        })
-      },
-      fail: function() {
-        // wx.showToast({
-        //   title: "为了您更好的体验,请先同意授权",
-        //   icon: 'none',
-        //   duration: 2000
-        // });
-      }
+  bindgetuserinfo(res_user) {
+    const details = res_user.detail;
+    wx.setStorageSync('userInfo', JSON.stringify(details.userInfo));
+    wx.setStorageSync('encryptedData', details.encryptedData);
+    wx.switchTab({
+      url: `/pages/index/index`,
     })
   }
 })

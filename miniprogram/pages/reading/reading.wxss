@@ -17,20 +17,20 @@ page {
   text-align: justify;
 }
 .novel-title{
-    color:#9a5a44;
+    color:inherit;
     font-size:44rpx;
     line-height:156rpx;
 }
 .novel-article{
   text-indent: 2em;
-  color:#222;
-  line-height:68rpx;
+  color:inherit;
+  line-height: 1.5;
   padding-bottom: 30rpx;
 }
 .wxParse-p{
     text-indent: 2em;
     color:#222;
-    line-height:68rpx;
+    line-height: inherit;
     padding-bottom: 30rpx;
 }
 /* 按钮组 */
@@ -188,11 +188,14 @@ page {
     display:flex;
     padding:0rpx 40rpx;  
 }
-.btn-group-mask .prev,.btn-group-mask .next,.btn-group-mask .directory{
+.btn-group-mask .prev,
+.btn-group-mask .next,
+.btn-group-mask .directory{
     flex:1;
     height:120rpx;
 }
-.btn-group-mask .prev text,.btn-group-mask .next text {
+.btn-group-mask .prev text,
+.btn-group-mask .next text {
    display:inline-block;
    width:236rpx;
    height:76rpx;
@@ -226,6 +229,11 @@ page {
   width:40rpx;
   height:40rpx;
 } 
+.btn-group-mask .prev text.disabled,
+.btn-group-mask .next text.disabled {
+  background-color: #ccc;
+}
+
 
 /* title-info */
 .title-info{
@@ -306,4 +314,26 @@ checkbox-group {
 }
 checkbox-group .checkbox {
   font-size: 28rpx;
+}
+.default-skin {
+  background-color: #e9dabd;
+  color:#222;
+}
+.default-skin .novel-title {
+  color:#9a5a44;
+}
+.white-skin {
+  background-color: #fff;
+  color:#050403;
+}
+.white-skin .novel-title {
+  color:#9a5a44;
+}
+.green-skin {
+  background-color: #5a8258;
+  color:#222;
+}
+.black-skin {
+  background-color: #0c0b0a;
+  color:#fff;
 }

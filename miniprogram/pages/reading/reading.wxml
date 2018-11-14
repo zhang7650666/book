@@ -1,6 +1,6 @@
 <!--miniprogram/pages/reading/reading.wxml-->
 <import src="../../wxParse/wxParse.wxml"/>
-<view class="read-page"  style="background:{{bgColor}}">
+<view class="read-page　{{skin}}" >
     <view class="novel-wrap" bindtap="handleSet">
         <text class="novel-title">{{fictionRead.title}}</text>
         <!--小说内容展示 -->
@@ -62,22 +62,32 @@
               <text class="reduc" catchtap="handleAdd">Aa+</text>
             </view>
             <view class="color-wrap">
-              <text class="gray {{bgActive == 1 ? 'active':''}}" data-colorvalue="1" catchtap="handleColor"></text>
-              <text class="pink {{bgActive == 2 ? 'active':''}}"  data-colorvalue="2" catchtap="handleColor" ></text>
-              <text class="blue {{bgActive == 3 ? 'active':''}}" data-colorvalue="3" catchtap="handleColor" ></text>
-              <text class="black {{bgActive == 4 ? 'active':''}}" data-colorvalue="4" catchtap="handleColor"></text>
+              <text class="gray {{bgActive == 'white' ? 'active':''}}" data-skin="white" catchtap="handleColor"></text>
+              <text class="pink {{bgActive == 'yellow' ? 'active':''}}"  data-skin="yellow" catchtap="handleColor" ></text>
+              <text class="blue {{bgActive == 'green' ? 'active':''}}" data-skin="green" catchtap="handleColor" ></text>
+              <text class="black {{bgActive == 'black' ? 'active':''}}" data-skin="black" catchtap="handleColor"></text>
             </view>
           </view>
            <view class="btn-group-mask">
                 <view class="prev" data-prev="prev" catchtap="handleChapter">
                     <text class="{{fictionRead.last_catalog_id == 0 ? 'disabled':''}}">上一章</text>
                 </view>
+                <!-- <button
+                  type="default"
+                  size="default"
+                  plain="false"
+                  disabled="{{!fictionRead.last_catalog_id}}"
+                  bindtap="handleChapter" hover-class="other-button-hover"
+                  data-prev="prev"
+                  class="prev"> 
+                  上一章 
+                </button> -->
                 <view class="directory" catchtap="handleDir">
                     <image src="../../images/u645.png" mode="widthFix"></image>
                     <text>目录</text>
                 </view>
                 <view class="next" data-prev="next" catchtap="handleChapter">
-                    <text>{{fictionRead.next_catalog_id == 2?'已是最后一章':'下一章'}}</text>
+                    <text>{{!fictionRead.next_catalog_id ?'已是最后一章':'下一章'}}</text>
                 </view>
             </view>
       </view>

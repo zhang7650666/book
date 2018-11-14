@@ -71,7 +71,7 @@ Page({
   // 跳转目录页面
   handleDir(){
     wx.navigateTo({
-      url: `/pages/directory/directory?fiction_id=${this.data.fiction_id}`,
+      url: `/pages/directory/directory?fiction_id=${this.data.fiction_id}&fiction_name=${this.data.bookDetails.fiction_name}`,
     })
   },
   handleRead() {

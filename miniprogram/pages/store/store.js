@@ -201,6 +201,7 @@ Page({
         _this.setData({
           books: _this.data.bookPage == 1 ? (res.data.list || []) : [..._this.data.books, ...res.data.list],
         });
+        console.log(_this.data.books);
         _this.calcSwiperHeight();
       }
     })

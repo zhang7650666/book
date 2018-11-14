@@ -7,10 +7,10 @@ Page({
    */
   data: {
     count:0, // 总共多少章节
-    fiction_class_id: null,
     sort: 'desc',  //asc
     page: 1,
     size: 20,
+    fiction_name: '',
     dirList:[
       {
         sort:1,
@@ -26,11 +26,15 @@ Page({
   onLoad: function (options) {
     this.setData({
       fiction_id: options.fiction_id,
+      fiction_name: options.fiction_name
     })
     //获取目录列表
     this.getDirectoryList({
       pullDown:false,
       pullUp:false,
+    });
+    wx.setNavigationBarTitle({
+      title: options.fiction_name
     });
   },
   //获取目录列表
@@ -69,7 +73,7 @@ Page({
   toReading(ev) {
     let chapterInfo = JSON.stringify(ev.currentTarget.dataset.item);
     wx.navigateTo({
-      url: `/pages/reading/reading?chapterInfo=${chapterInfo}`
+      url: `/pages/reading/reading?chapter_info=${chapterInfo}&fiction_name=${this.data.fiction_name}`
     })
   },
   // 排序

@@ -1,1 +1,24 @@
 /* pages/impower/impower.wxss */
+page {
+  padding: 40rpx;
+  box-sizing: border-box;
+}
+.impower-block {
+  display: flex;
+  flex-direction: column ;
+  justify-content: center ;
+  align-items: center;
+}
+.impower-block image {
+  width: 180rpx;
+  height: 180rpx;
+  background-color: #f1f1f1;
+  border-radius: 200rpx;
+  margin-bottom: 100rpx;
+}
+.impower-block text {
+  font-size: 30rpx;
+  line-height: 2;
+  padding: 0 50rpx;
+  margin-bottom: 100rpx;
+}

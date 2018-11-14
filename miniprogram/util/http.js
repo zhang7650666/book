@@ -29,15 +29,18 @@ class HTTP{
       callbackQueue.push(callback)
     }
     else if (userToken && callbackQueue.length) {
-      userToken = JSON.parse(wx.getStorageSync('token') || '{}')
-      callbackQueue.forEach(function (cb, i) {
-        cb && cb();
-      });
-      callbackQueue = [];
+      this.performCallbackQueue();
     }
     else {
       callback();
     }
+  }
+  performCallbackQueue() {
+    userToken = JSON.parse(wx.getStorageSync('token') || '{}')
+    callbackQueue.forEach(function (cb, i) {
+      cb && cb();
+    });
+    callbackQueue = [];
   }
   request(params){
     const _this = this;

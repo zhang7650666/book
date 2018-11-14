@@ -3,16 +3,20 @@ import {http} from "../../util/http.js";
 Page({
   data: {
     baseUrl: 'http://book.qiyunet.top/wxPay.html',
-    url: 'http://book.qiyunet.top/wxPay.html',
+    url: '',
   },
   onLoad: function (options) {
-    const params = Object.keys(options).forEach((v) => {
-      return v + '=' + Object.keys[v];
-    })
+    let orderParams = wx.getStorageSync('orderData');
+    try{
+      orderParams = JSON.parse(orderParams);
+    }catch(e) {
+      orderParams = {};
+    }
+    const params = Object.keys(orderParams).map(v => {
+      return v + '=' + orderParams[v];
+    }).filter( v => v).join('&')
     this.setData({
       url: this.data.baseUrl + '?' +　params
     })
-    // 获取网页传过来的值
-    // TODO 用es6解构来获取值TODO
   }
 })

@@ -19,77 +19,16 @@ App({
       success(data) {
         wx.setStorageSync('token', JSON.stringify(data.data));
         wx.setStorageSync('isInit', true);
-        callbackQueue.forEach(function (cb, i) {
-          cb && cb();
-        });
-      }
-    })
-  },
-  // 获取 openSetting
-  getOpenSetting(){
-    let _this = this;
-    wx.showModal({
-      title: '提示',
-      content: '您点击了拒绝授权,将无法正常显示个人信息,点击确定重新获取授权。',
-      success(res) {
-        if (res.confirm) {
-          wx.openSetting({
-            success: (res) => {
-              // 如果用户重新同意了授权登录
-              if (res.authSetting["scope.userInfo"]) {
-                wx.login({
-                  success: function (res_login) {
-                    if (res_login.code) {
-                      wx.getUserInfo({
-                        withCredentials: true,
-                        success(res_user) {
-                          wx.setStorageSync('userInfo', JSON.stringify(res_user.userInfo));
-                          wx.setStorageSync('encryptedData', res_user.encryptedData);
-                          _this.globalData.userInfo = res_user.userInfo;
-                          _this.getToken({
-                            login_code: res_login.code,
-                            encrypted_data: res_user.encryptedData,
-                            iv: res_user.iv
-                          })
-                        }
-                      })
-                    }
-                  }
-                });
-              }
-            }, 
-            fail(res) {
-              //this.getOpenSetting();
-            }
-          })
-        }
+        http.performCallbackQueue();
       }
     })
   },
   // 授权、登录  获取用户信息 封装
   getUserInfo(){
     let _this = this;
-    let openId = wx.getStorageSync('openId');
-    // let openId = false;
-    if (openId) {
-      wx.getUserInfo({
-        success(res) {
-          wx.setStorageSync('userInfo', JSON.stringify(res_user.userInfo));
-          wx.setStorageSync('encryptedData', res_user.encryptedData);
-          _this.globalData.userInfo = res.userInfo;
-          // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-          // 所以此处加入 callback 以防止这种情况
-          if (this.userInfoReadyCallback) {
-            this.userInfoReadyCallback(res)
-          }
-        },
-        fail() {
-          wx.navigateTo({
-            url: '/pages/impower/impower'
-          })
-        }
-      })
-    } else {
+    let encryptedData = wx.getStorageSync('encryptedData');
+    // let encryptedData = false;
+    if (!encryptedData) {
       wx.login({
         success(res) {
           if (res.code) {
@@ -107,7 +46,6 @@ App({
                 })
               }, 
               fail() {
-                // _this.getOpenSetting();
                 wx.navigateTo({
                   url: '/pages/impower/impower'
                 })
