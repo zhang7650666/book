@@ -40,7 +40,6 @@ Page({
   //获取目录列表
   getDirectoryList(obj) {
     let _this = this;
-    // _this.data.sort == 'desc' ? _this.data.sort = 'desc' : _this.data.sort = 'asc';
     _this.setData({
       sort:_this.data.sort
     });
@@ -66,6 +65,7 @@ Page({
         _this.setData({
           count:res.data.count,
           dirList: _this.data.page == 1 ? ( res.data.list || []) : [..._this.data.dirList, ...res.data.list],
+          isLoadEnd: res.data.list && res.data.list.length > 0,
         });
       }
     })
@@ -104,7 +104,9 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-
+    this.setData({
+      isLoadEnd: false,
+    })
   },
 
   /**
@@ -133,12 +135,12 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-    if (this.data.dirList.length % this.data.size > 0) {
+    if (this.data.isLoadEnd) {
       return;
     }
     // 显示加载图标
     wx.showLoading({
-      title: '玩命加载中',
+      title: '加载中',
     })
     // 页数+1
     this.setData({

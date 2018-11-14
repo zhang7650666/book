@@ -1,3 +1,5 @@
 {
-  "navigationBarTitleText": ""
+  "navigationBarTitleText": "",
+  "enablePullDownRefresh": true,
+  "onReachBottomDistance": 50
 }

@@ -58,7 +58,6 @@ Page({
       url:"user_info",
       data:{},
       success(res){
-        console.log(res);
         let invite = {
           icon:'/images/my5.png',
           url:"/pages/invitation/invitation",

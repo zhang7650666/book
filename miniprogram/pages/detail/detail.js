@@ -20,6 +20,10 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    wx.showLoading({
+      title: '加载中',
+      mask: true
+    });
     this.setData({
       fiction_id: options.fiction_id,
     })
@@ -104,6 +108,7 @@ Page({
         });
         // 调用同类小说接口
         _this.postSimilarList()
+        wx.hideLoading();
       }
     })
   },

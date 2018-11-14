@@ -34,6 +34,10 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    wx.showLoading({
+      title: '加载中',
+      mask: true
+    });
     // 从目录页面到阅读页
     if(options.chapterInfo){
       let chapterInfo = JSON.parse(options.chapterInfo);
@@ -158,6 +162,7 @@ Page({
       success(res){
         // 小程序解析html
         // 小说内容res.data.data.fiction_title
+        wx.hideLoading();
         if(res.code == 200){
           WxParse.wxParse('article', 'html', res.data.content, _this, 5);
           _this.setData({

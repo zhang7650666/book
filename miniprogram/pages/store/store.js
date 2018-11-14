@@ -49,7 +49,10 @@ Page({
         books: []
       })
       if (this.data.currentData == 1) {
-        this.getRecentlyBookList()
+        this.getRecentlyBookList({
+          pullDown: false,
+          pullUp: false,
+        })
       } else if (this.data.currentData == 0){
         this.getBooksList({
           pullDown:false,
@@ -133,13 +136,23 @@ Page({
     })
   },
   //获取最近阅读列表
-  getRecentlyBookList() {
+  getRecentlyBookList(obj) {
     const _this = this;
     http.request({
       url: "recent_list",
       data: {
       },
       success(res) {
+        if (obj.pullDown && !obj.pullUp) {
+          // 隐藏导航栏加载框
+          wx.hideNavigationBarLoading();
+          // 停止下拉动作
+          wx.stopPullDownRefresh();
+        };
+        if (!obj.pullDown && obj.pullUp) {
+          // 隐藏加载框
+          wx.hideLoading();
+        };
         _this.setData({
           readArr: res.data.list || [],
           isLoadData: true,
@@ -260,38 +273,66 @@ Page({
   onPullDownRefresh: function () {
     // 显示顶部刷新图标
     wx.showNavigationBarLoading();
-     // 页数+1
-    this.setData({
-      bookPage: 1,
-    });
-    // 小说列表接口调用
-    this.getBooksList({
-      pullDown:true,
-      pullUp:false,
-    })
+    if (this.data.currentData == 0) {
+      // 页数+1
+      this.setData({
+        bookPage: 1,
+      });
+      // 小说列表接口调用
+      this.getBooksList({
+        pullDown: true,
+        pullUp: false,
+      })
+    }
+    else {
+      // 页数+1
+      this.setData({
+        readingPage: 1,
+      });
+      // 小说列表接口调用
+      this.getRecentlyBookList({
+        pullDown: true,
+        pullUp: false,
+      })
+    }
+    
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-    if(this.data.books.length % this.data.size > 0){
+    if (this.data.isLoadEnd) {
       return;
     }
-    // 显示加载图标
-    wx.showLoading({
-      title: '玩命加载中',
-    })
-    // 页数+1
-    this.setData({
-      bookPage: this.data.bookPage + 1
-    });
-    // 小说列表接口调用
-    
-    this.getBooksList({
-      pullDown:false,
-      pullUp:true,
-    })
+    if (this.data.currentData == 0) {
+      // 显示加载图标
+      wx.showLoading({
+        title: '加载中',
+      })
+      // 页数+1
+      this.setData({
+        bookPage: this.data.bookPage + 1
+      });
+      // 小说列表接口调用
+
+      this.getBooksList({
+        pullDown: false,
+        pullUp: true,
+      })
+    }
+    else {
+      // 页数+1
+      this.setData({
+        readingPage: this.data.readingPage + 1,
+      });
+      // 小说列表接口调用
+      this.getRecentlyBookList({
+        pullDown: false,
+        pullUp: true,
+      })
+    }
+   
   },
 
   /**

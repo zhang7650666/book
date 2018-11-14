@@ -1,6 +1,7 @@
 /* miniprogram/pages/record/record.wxss */
 .record-page{
   position: relative;
+  overflow-y:　scroll;
 }
 .record-page .list-item{
   display:flex;

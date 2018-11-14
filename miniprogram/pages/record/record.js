@@ -9,12 +9,18 @@ Page({
     list: [],
     page: 1,
     size:20,
+    isLoadEnd: false,
+    isRefreshEnd: false,
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    wx.showLoading({
+      title: '加载中',
+      mask: true
+    })
     this.getIntegralList(
       {
         pullDown:false,
@@ -27,8 +33,8 @@ Page({
     http.request({
       url: "user_score_record",
       data: {
-        // page: _this.data.page || 1,
-        // size: _this.data.size,
+        page: _this.data.page || 1,
+        size: _this.data.size,
       },
       success(res) {
         if (obj.pullDown && !obj.pullUp){
@@ -37,32 +43,31 @@ Page({
           // 停止下拉动作
           wx.stopPullDownRefresh(); 
         };
-        _this.setData({
-          searchBooks: _this.data.page == 1 ? (res.data || []) : [..._this.data.searchBooks, ...res.data],
-        });
         if (!obj.pullDown && obj.pullUp){
           // 隐藏加载框
           wx.hideLoading();
         };
         _this.setData({
           list: _this.data.page == 1 ? (res.data || []) : [..._this.data.list, ...res.data],
+          isLoadEnd: res.data.length > 0
         })
+        wx.hideLoading();
       }
     })
   },
-  // 处理积分显示文字
-  // pickIntegralList(list) {
-  //   let integralList = (list || []).map(v => {
-  //     v.labelText = `${this.data.recordMap[v.type]}${(v.type == '-1' ? ', 扣除' : ', 获得')}${v.integral}积分`;
-  //     return v
-  //   })
-  //   return integralList;
-  // },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-
+    
+  },
+  /**
+  * 生命周期函数--监听页面隐藏
+  */
+  onHide: function () {
+    this.setData({
+      isLoadEnd: false,
+    })
   },
   /**
   * 页面相关事件处理函数--监听用户下拉动作
@@ -70,7 +75,7 @@ Page({
   onPullDownRefresh: function () {
     wx.showNavigationBarLoading();
       // 页数+1
-    _this.setData({
+    this.setData({
       page: 1,
     });
     this.getIntegralList({
@@ -82,12 +87,13 @@ Page({
   * 页面上拉触底事件的处理函数
   */
   onReachBottom: function () {
-    if (this.data.list.length % this.data.size > 0) {
+    if (this.data.isLoadEnd) {
       return;
     }
     // 显示加载图标
     wx.showLoading({
-      title: '玩命加载中',
+      title: '加载中',
+      mask: true
     })
     // 页数+1
     this.setData({

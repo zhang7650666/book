@@ -3,5 +3,7 @@
   "usingComponents": {
     "home-book": "/components/homebook/homebook",
     "blank-page": "/components/blank/blank"
-  }
+  },
+  "enablePullDownRefresh": true,
+  "onReachBottomDistance": 50
 }
