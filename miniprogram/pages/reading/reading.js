@@ -17,6 +17,7 @@ Page({
     }], // 选中取消
     fiction_id:'', // 小说ID
     chapter_id:'', // 小说章节id
+    fiction_name: '',
     auto_pay: null, //是否自动购买 0 不；1 自动
     fictionRead:{}, // 小说相关对象
     skin: 'default-skin', //阅读风格
@@ -48,6 +49,7 @@ Page({
         chapter_id: chapterInfo.chapter_id,
         is_pay:chapterInfo.is_pay,
         activityMap,
+        fiction_name: options.fiction_name
       });
     }else{
       // 从其他页面到阅读页
@@ -55,6 +57,7 @@ Page({
         fiction_id: options.fiction_id, 
         chapter_id: options.chapter_id || 1,
         activityMap,
+        fiction_name: options.fiction_name
       });
     }
     wx.setNavigationBarTitle({
@@ -126,7 +129,7 @@ Page({
   // 跳转到目录页面
   handleDir(){
     wx.navigateTo({
-      url: `/pages/directory/directory?fiction_id=${this.data.fiction_id}`,
+      url: `/pages/directory/directory?fiction_id=${this.data.fiction_id}&fiction_name=${this.data.fiction_name}`,
     })
   },
   // 去书城

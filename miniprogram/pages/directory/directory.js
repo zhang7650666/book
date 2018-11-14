@@ -11,6 +11,7 @@ Page({
     page: 1,
     size: 20,
     fiction_name: '',
+    fiction_id: '',
     dirList:[
       {
         sort:1,
@@ -73,7 +74,7 @@ Page({
   toReading(ev) {
     let chapterInfo = JSON.stringify(ev.currentTarget.dataset.item);
     wx.navigateTo({
-      url: `/pages/reading/reading?chapter_info=${chapterInfo}&fiction_name=${this.data.fiction_name}`
+      url: `/pages/reading/reading?chapter_info=${chapterInfo}&fiction_id=${this.data.fiction_id}&fiction_name=${this.data.fiction_name}`
     })
   },
   // 排序
