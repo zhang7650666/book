@@ -8,6 +8,7 @@ Page({
   data: {
     objInfo:{},
     shareInfo: {},
+    activityMap: {}
   },
 
   /**
@@ -15,8 +16,10 @@ Page({
    */
   onLoad: function (options) {
     let objInfo = JSON.parse(options.objInfo);
+    let activityMap = JSON.parse(wx.getStorageSync('activityMap') || '{}')
     this.setData({
       objInfo,
+      activityMap,
     })
   },
 
@@ -64,15 +67,16 @@ Page({
   },
    // 邀请成功之后的回调函数
    postActivityBackoff(){
+     const _this = this;
     http.request({
       url:"activity_backoff",
       data:{
         alias:'invite',
       },
       success(res){
-        console.log(res);
+        const score = _this.data.activityMap['invite'].score
         wx.showToast({
-          title: `已转发,获得${_this.data.score}积分`,
+          title: `恭喜你获得,获得${score}积分`,
           icon: 'success',
           duration: 2000
         })

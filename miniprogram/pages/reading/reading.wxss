@@ -11,7 +11,7 @@ page {
   flex-direction: column;
 }
 .novel-wrap{
-  padding: 24rpx;
+  padding: 40rpx;
   padding-bottom: 160rpx;
   flex: 1 0 auto;
   text-align: justify;

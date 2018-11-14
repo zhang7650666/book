@@ -23,7 +23,8 @@ Page({
     isShareShow: false,　//显示添加桌面层
     userData:{}, // 用户相关数据
     //列表数据
-    userList: [
+    userList: [],
+    list: [
       {
         icon: '/images/my1.png',
         alias: '积分充值',
@@ -46,9 +47,11 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    let userInfo = wx.getStorageSync('userInfo') || '{}';
+    const _this = this;
+    let userInfo = JSON.parse(wx.getStorageSync('userInfo') || '{}');
     this.setData({
-      userInfo: JSON.parse(userInfo)
+      userInfo: userInfo,
+      userList: [..._this.data.list]
     });
   },
   // 用户信息接口请求
@@ -57,7 +60,8 @@ Page({
     http.request({
       url:"user_info",
       data:{},
-      success(res){
+      success(res){ 
+        wx.setStorageSync('activityMap', JSON.stringify(res.data.activity || {}))
         let invite = {
           icon:'/images/my5.png',
           url:"/pages/invitation/invitation",
@@ -71,17 +75,18 @@ Page({
           alias: '添加到桌面',
         }
         //用户共用同一个接口的弊端，签到后，更新积分需要重新读接口
-        let splitCount = !_this.data.isShowSignInButton ? 1 : 0;
+        let list = [..._this.data.list]
+        // let splitCount = !_this.data.isShowSignInButton ? 1 : 0;
         if (res.data.activity.invite) {
-          _this.data.userList.splice(2, splitCount, { ...res.data.activity.invite, ...invite });
+          list.splice(2, 0, { ...res.data.activity.invite, ...invite });
         }
         if (res.data.activity.desktop) {
-          _this.data.userList.splice(4, splitCount, { ...res.data.activity.desktop, ...desktop });
+          list.splice(4, 0, { ...res.data.activity.desktop, ...desktop });
         }
         _this.setData({
           userData: res.data,
-          userList:_this.data.userList,
-          isShowSignInButton: res.data && res.data.activity && res.data.activity.sign && res.data.activity.sign.status == 1
+          userList:list,
+          isShowSignInButton: res.data && res.data.activity && res.data.activity.sign && res.data.activity.sign.status == 1,
         })
       },
     })
@@ -119,6 +124,12 @@ Page({
    */
   onReady: function () {
     
+  },
+  /**
+   * 生命周期函数--监听页面隐藏
+   */
+  onHide: function () {
+
   },
 
   /**

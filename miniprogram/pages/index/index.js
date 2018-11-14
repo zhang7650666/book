@@ -18,11 +18,16 @@ Page({
     page: 1,
     size: 10,
     shareConfig: {}, //分享的配置
+    activityMap: {}
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    let activityMap = JSON.parse(wx.getStorageSync('activityMap') || '{}')
+    this.setData({
+      activityMap,
+    })
     wx.showLoading({
       title: '加载中',
       mask: true
@@ -216,8 +221,9 @@ Page({
         alias: obj.alias,
       },
       success(res) {
+        const score = _this.data.activityMap['invite'].score
         wx.showToast({
-          title: obj.status == 1 ? '已转发' : `获得${obj.score}积分`,
+          title:`恭喜你，获得${score}积分`,
           icon: 'success',
           duration: 2000
         })

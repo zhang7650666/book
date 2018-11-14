@@ -29,11 +29,13 @@ Page({
     },
     isHasPrev: false,
     isHasNext: true,
+    activityMap: {}
   },
    /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    let activityMap = JSON.parse(wx.getStorageSync('activityMap') || '{}')
     wx.showLoading({
       title: '加载中',
       mask: true
@@ -45,12 +47,14 @@ Page({
         fiction_id: chapterInfo.fiction_id, 
         chapter_id: chapterInfo.chapter_id,
         is_pay:chapterInfo.is_pay,
+        activityMap,
       });
     }else{
       // 从其他页面到阅读页
       this.setData({
         fiction_id: options.fiction_id, 
         chapter_id: options.chapter_id || 1,
+        activityMap,
       });
     }
     wx.setNavigationBarTitle({
@@ -137,8 +141,7 @@ Page({
     let chapter = this.data.chapter_id;
     const fromPost = ev ? ev.currentTarget.dataset.prev : null;
     if (fromPost) {
-      console.log(this.isHasPrev, this.data.isHasNext);
-      if (fromPost == 'prev' && this.isHasPrev) {
+      if (fromPost == 'prev' && this.data.isHasPrev) {
         chapter = this.data.fictionRead.last_chapter_id;
       }
       else if (fromPost == 'next' && this.data.isHasNext) {
@@ -263,8 +266,9 @@ Page({
         alias: obj.alias,
       },
       success(res) {
+        const score = _this.data.activityMap['invite'].score
         wx.showToast({
-          title: obj.status == 1 ? '已转发' : `获得${obj.score}积分`,
+          title: `恭喜你，获得${score}积分`,
           icon: 'success',
           duration: 2000
         })
@@ -275,36 +279,57 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-    // if (ops.from === 'button') {
-    //   // 来自页面内转发按钮
-    //   console.log(ops.target)
-    // }
     let _this = this;
-    http.request({
-      url: "shares_info",
-      data: {
-        alias: 'invite',
-      },
-      success(res) {
-        const shareConfig = res.data;
-        return {
-          title: shareConfig.title,
-          path: shareConfig.path,
-          desc: shareConfig.desc,
-          imageUrl: shareConfig.img,
-          success: function (res) {
-            _this.postActivityBackoff({ alias: 'invite'});
-          },
-          fail: function (res) {
-            // 转发失败
-            wx.showToast({
-              title: `邀请失败`,
-              image: '/images/u1565.png',
-              duration: 2000
-            })
-          }
+    if (this.data.shareConfig && this.data.shareConfig.path) {
+      const shareConfig = this.data.shareConfig;
+      return {
+        title: shareConfig.title,
+        path: shareConfig.path,
+        desc: shareConfig.desc,
+        imageUrl: shareConfig.img,
+        success: function (res) {
+          _this.postActivityBackoff({ alias: 'home' });
+        },
+        fail: function (res) {
+          // 转发失败
+          wx.showToast({
+            title: `邀请失败`,
+            image: '/images/u1565.png',
+            duration: 2000
+          })
         }
-      },
-    })
+      }
+    }
+    else {
+      http.request({
+        url: "shares_info",
+        data: {
+          alias: 'invite',
+        },
+        success(res) {
+          const shareConfig = res.data;
+          _this.setData({
+            shareConfig,
+          })
+          return {
+            title: shareConfig.title,
+            path: shareConfig.path,
+            desc: shareConfig.desc,
+            imageUrl: shareConfig.img,
+            success: function (res) {
+              _this.postActivityBackoff({ alias: 'invite'});
+            },
+            fail: function (res) {
+              // 转发失败
+              wx.showToast({
+                title: `邀请失败`,
+                image: '/images/u1565.png',
+                duration: 2000
+              })
+            }
+          }
+        },
+      })
+    }
   },
 })
