@@ -1,4 +1,5 @@
 <!--miniprogram/pages/detail/detail.wxml-->
+<import src="../../wxParse/wxParse.wxml"/>
 <view class="detail-page">
     <!--头部详情信息-->
     <view class="search-book">
@@ -25,7 +26,8 @@
     </view>
     <!--简介-->
     <view class="introduce-text">
-        <text>{{bookDetails.fiction_desc}}</text>
+        <!-- <text>{{bookDetails.fiction_desc}}</text> -->
+        <template is="wxParse" data="{{wxParseData:article.nodes}}" />
     </view>
     <!--简介-->
     <view wx:if="{{bookDetails.fiction_new_chapter}}" class="directory-wrap" catchtap="handleDir">

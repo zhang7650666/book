@@ -41,14 +41,14 @@ text{
 .introduce-text{
   padding:26rpx 40rpx;
 }
-.introduce-text text{
+.introduce-text view{
   color:#666666;
   font-size:32rpx;
   line-height:50rpx;
   display: -webkit-box;
   overflow: hidden;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 5;
+  /* -webkit-box-orient: vertical;
+  -webkit-line-clamp: 5; */
   text-align: justify;
 }
 /* 目录*/
@@ -107,6 +107,10 @@ text{
 }
 .btn-wrap text{
     border:1rpx solid #EA5149;
+}
+
+.introduce-text .wxParse-span {
+  font-size: 26rpx;
 }
 .btn-wrap .add{
     color:#EA5149;

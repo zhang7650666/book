@@ -41,6 +41,7 @@ Page({
         url: "/pages/service/service",
       },
     ],
+    activityMap: {}
   },
 
   /**

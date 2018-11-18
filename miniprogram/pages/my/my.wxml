@@ -9,7 +9,7 @@
     <view class="we-chart-id">ID: <text>{{userData.unique_id}}</text></view>
     <view class="user-integral"> <image style="width: 46rpx;" mode="widthFix" src="../../images/u1018.png"></image> <text class="my-score">我的积分：{{userData.user_score}}</text></view>
   </view>
-  <button class="user-signin-btn" plain="true" size="mini" type="warn" disabled="{{!isShowSignInButton}}" bindtap="userSignIn">{{isShowSignInButton ? '签到' : '已签到'}}</button>
+  <button wx:if="{{!!activityMap.sign}}" class="user-signin-btn" plain="true" size="mini" type="warn" disabled="{{!isShowSignInButton}}" bindtap="userSignIn">{{isShowSignInButton ? '签到' : '已签到'}}</button>
 </view>
 <!-- 列表 -->
 <view class="b-user-list-block">

@@ -1,6 +1,7 @@
 // miniprogram/pages/detail/detail.js
 const APP = getApp();
 import {http} from "../../util/http.js";
+let WxParse = require('../../wxParse/wxParse.js');
 Page({
 
   /**
@@ -103,6 +104,8 @@ Page({
         fiction_id: _this.data.fiction_id,
       },
       success(res) {
+        const desc = res.data.fiction_desc || '';
+        WxParse.wxParse('article', 'html', desc, _this, 5);
         _this.setData({
           bookDetails: res.data || {},
           isFirst: res.data.fiction_last_chapter_id && res.data.fiction_last_chapter_id == 1
@@ -132,7 +135,7 @@ Page({
   },
   // 处理错误默认图片
   errImg() {
-    this.data.fictionDetails.fiction_img = app.globalData.defaultImg
+    this.data.fictionDetails.fiction_img = APP.globalData.defaultImg
     this.setData({
       fictionDetails:this.data.fictionDetails
     })
@@ -200,8 +203,8 @@ Page({
    */
   onShareAppMessage: function () {
     let _this = this;
-    const { shareConfig } = this.data;
-    if (shareConfig && shareConfig.path) {
+    // const { shareConfig } = this.data;
+    // if (shareConfig && shareConfig.path) {
       return {
         title: shareConfig.title,
         path: shareConfig.path,
@@ -219,38 +222,38 @@ Page({
           })
         }
       }
-    }
-    else {
-      http.request({
-        url: "shares_info",
-        data: {
-          alias: 'fiction',
-        },
-        success(res) {
-          const shareConfig = res.data;
-          _this.setData({
-            shareConfig,
-          })
-          return {
-            title: shareConfig.title,
-            path: shareConfig.path,
-            desc: shareConfig.desc,
-            imageUrl: shareConfig.img,
-            success: function (res) {
-              _this.postActivityBackoff({ alias: 'fiction' });
-            },
-            fail: function (res) {
-              // 转发失败
-              wx.showToast({
-                title: `邀请失败`,
-                image: '/images/u1565.png',
-                duration: 2000
-              })
-            }
-          }
-        },
-      })
-    }
+    // }
+    // else {
+      // http.request({
+      //   url: "shares_info",
+      //   data: {
+      //     alias: 'fiction',
+      //   },
+      //   success(res) {
+      //     const shareConfig = res.data;
+      //     _this.setData({
+      //       shareConfig,
+      //     })
+      //     return {
+      //       title: shareConfig.title,
+      //       path: shareConfig.path,
+      //       desc: shareConfig.desc,
+      //       imageUrl: shareConfig.img,
+      //       success: function (res) {
+      //         _this.postActivityBackoff({ alias: 'fiction' });
+      //       },
+      //       fail: function (res) {
+      //         // 转发失败
+      //         wx.showToast({
+      //           title: `邀请失败`,
+      //           image: '/images/u1565.png',
+      //           duration: 2000
+      //         })
+      //       }
+      //     }
+      //   },
+      // })
+    // }
     
   }
 })

@@ -101,7 +101,10 @@ class HTTP{
           fail: (res) => {
             this._err_code(1);
           },
-          complete: (res) => { },
+          complete: (res) => {
+            wx.hideLoading();
+            params.complete && params.complete(res)
+          },
         })
       })
     }
