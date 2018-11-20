@@ -80,9 +80,9 @@ Page({
       success(res){
         // const score = _this.data.activityMap['invite'].score
         wx.showToast({
-          title: `恭喜你获得,获得${_this.data.score}积分`,
+          title: `获得${_this.data.score}积分`,
           icon: 'success',
-          duration: 1000,
+          duration: 3000,
           success: () => {
             // wx.hideToast()
           },

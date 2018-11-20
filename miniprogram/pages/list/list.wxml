@@ -5,5 +5,6 @@
       <search-book books="{{item}}" outIndex="{{index}}" bind:lookImg="lookImg"></search-book>
     </view>
   </view>
+  <loading-more isHide="{{isHideLoadMore}}"></loading-more>
 </view>
 

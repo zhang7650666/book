@@ -20,12 +20,7 @@ Component({
    */
   data: {
     isGive: false,
-  },
-  onload(options) {
-    const bookData = this.properties.topUp;
-    this.setData({
-      isGive: bookData && (bookData.give || bookData.giveScore)
-    })
+    gitText: null
   },
   /**
    * 组件的方法列表
@@ -38,5 +33,28 @@ Component({
       }
       this.triggerEvent('changeActive', myEventDetail)
     },
-  }
+  },
+  lifetimes: {
+    attached: function () {
+      // 在组件实例进入页面节点树时执行
+      const bookData = this.properties.topUp;
+      let gitText = [];
+      if (Number(bookData.give) > 0) {
+        gitText.push(`多送${Number(bookData.give)}元`);
+      }
+      if (!!bookData.giveScore) {
+        if (gitText.length) {
+          gitText.push('+')
+        }
+        gitText.push(`${bookData.giveScore}积分`)
+      }
+      this.setData({
+        isGive: true,
+        gitText: gitText.join(""),
+      })
+    },
+    detached: function () {
+      // 在组件实例被从页面节点树移除时执行
+    },
+  },
 })

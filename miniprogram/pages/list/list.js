@@ -11,6 +11,7 @@ Page({
     album_id:'',
     page: 1,
     size: 10,
+    isHideLoadMore: true,
   },
 
   /**
@@ -50,13 +51,15 @@ Page({
           // 停止下拉动作
           wx.stopPullDownRefresh(); 
         };
-        _this.setData({
-          searchBooks: _this.data.page == 1 ? (res.data || []) : [..._this.data.searchBooks, ...res.data],
-        });
         if (!obj.pullDown && obj.pullUp){
           // 隐藏加载框
           wx.hideLoading();
         };
+
+        _this.setData({
+          searchBooks: _this.data.page == 1 ? (res.data || []) : [..._this.data.searchBooks, ...res.data],
+          isHideLoadMore: true,
+        });
       }
     })
   },
@@ -120,13 +123,14 @@ Page({
     if (this.data.searchBooks.length % this.data.size > 0) {
       return;
     }
-    // 显示加载图标
-    wx.showLoading({
-      title: '玩命加载中',
-    })
+    // // 显示加载图标
+    // wx.showLoading({
+    //   title: '玩命加载中',
+    // })
     // 页数+1
     this.setData({
-      page: this.data.page + 1
+      page: this.data.page + 1,
+      isHideLoadMore: false,
     });
     // 小说列表接口调用
     this.postFictionList({

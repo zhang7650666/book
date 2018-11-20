@@ -74,5 +74,5 @@ page {
   border-bottom: 12rpx solid #f2f2f2;
 }
 swiper {
-  height: 400rpx;
+  height: 280rpx;
 }

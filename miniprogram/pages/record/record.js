@@ -11,6 +11,7 @@ Page({
     size:20,
     isLoadEnd: false,
     isRefreshEnd: false,
+    isHideLoadMore: true,
   },
 
   /**
@@ -49,7 +50,8 @@ Page({
         };
         _this.setData({
           list: _this.data.page == 1 ? (res.data || []) : [..._this.data.list, ...res.data],
-          isLoadEnd: res.data.length > 0
+          isLoadEnd: res.data.length < 0,
+          isHideLoadMore: true,
         })
         wx.hideLoading();
       }
@@ -90,14 +92,15 @@ Page({
     if (this.data.isLoadEnd) {
       return;
     }
-    // 显示加载图标
-    wx.showLoading({
-      title: '加载中',
-      mask: true
-    })
+    // // 显示加载图标
+    // wx.showLoading({
+    //   title: '加载中',
+    //   mask: true
+    // })
     // 页数+1
     this.setData({
-      page: this.data.page + 1
+      page: this.data.page + 1,
+      isHideLoadMore: false,
     });
     // 小说列表接口调用
     this.getIntegralList({

@@ -11,7 +11,7 @@
 .book-cover image{
   display:block;
   width:180rpx;
-  height:228rpx;
+  height:240rpx;
 }
 .introduce-wrap{
   flex:0 0 426rpx;

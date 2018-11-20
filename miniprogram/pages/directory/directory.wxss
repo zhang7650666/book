@@ -2,6 +2,11 @@
 .directory-page{
   position: relative;
 }
+.directory-empty {
+  display: block;
+  padding: 40px;
+  font-size: 32rpx;
+}
 .directory{
   display:flex;
   border-bottom:2rpx solid #f7f7f7;
@@ -30,6 +35,9 @@
   line-height:100rpx;
   font-size:32rpx;
   color:#222;
+}
+.dir-list .list.active {
+  color:#EA5149;
 }
 .dir-list .list .sort{
   flex:0 0 120rpx;

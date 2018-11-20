@@ -4,4 +4,5 @@
     <text class="desc">{{item.content}}</text>
     <text class="time">{{item.time}}</text>
   </view>
+  <loading-more isHide="{{isHideLoadMore}}"></loading-more>
 </view>

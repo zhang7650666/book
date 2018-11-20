@@ -38,11 +38,11 @@ Page({
       url: `/pages/reading/reading?fiction_id=${this.data.fiction_id}&fiction_name=${this.data.bookDetails.fiction_name}`
     })
   },
-  fictionSet() {debugger;
+  fictionSet(ev) {;
     if (this.data.bookDetails.fiction_collection == 0) {
-      this.handleAdd()
+      this.handleAdd(ev)
     }else {
-      this.handleRemove();
+      this.handleRemove(ev);
     }
   },
   // 加入书架
@@ -54,13 +54,17 @@ Page({
         fiction_id: this.data.fiction_id,
       },
       success(res) {
-        if (res.code == 200) {
-          wx.showToast({
-            title: "已添加到书架",
-            icon: 'success',
-            duration: 1000
-          })
-        }
+        _this.setData({
+          bookDetails: {
+            ..._this.data.bookDetails,
+            ...{ fiction_collection: 1 }
+          }
+        })
+        wx.showToast({
+          title: "已添加到书架",
+          icon: 'success',
+          duration: 1000
+        })
       }
     })
   },
@@ -70,9 +74,15 @@ Page({
     http.request({
       url: "del_controller",
       data:{
-        controller_id:ev.currentTarget.dataset.fiction_id,
+        controller_id: ev.currentTarget.dataset.collection_id,
       },
       success(res) {
+        _this.setData({
+          bookDetails : {
+            ... _this.data.bookDetails,
+            ...{ fiction_collection: 0}
+          }
+        })
         wx.showToast({
           title: "已从书架中移出",
           icon: 'success',
@@ -88,9 +98,18 @@ Page({
     })
   },
   handleRead() {
-    wx.navigateTo({
-      url: `/pages/reading/reading?fiction_id=${this.data.fiction_id}&fiction_name=${this.data.bookDetails.fiction_name}`
-    })
+    if (this.data.fiction_id == 0) {
+      wx.showToast({
+        title: '小说已下架',
+        icon:'none',
+        duration: 2000,
+      })
+    }
+    else {
+      wx.navigateTo({
+        url: `/pages/reading/reading?fiction_id=${this.data.fiction_id}&fiction_name=${this.data.bookDetails.fiction_name}`
+      })
+    }
   },
   // 小说详情页接口
   getBookIntro() {

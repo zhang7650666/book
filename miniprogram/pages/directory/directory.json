@@ -1,5 +1,8 @@
 {
   "navigationBarTitleText": "",
   "enablePullDownRefresh": true,
-  "onReachBottomDistance": 50
+  "onReachBottomDistance": 50,
+  "usingComponents": {
+    "loading-more": "/components/loadingMore/loadingMore"
+  }
 }

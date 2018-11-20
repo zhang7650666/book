@@ -2,9 +2,9 @@
 <view class="top-up-page {{isActive == curIndex ? 'active':''}}" data-item="{{topUp}}" catchtap="handleActive">
    <text class="money ">{{topUp.amount}} 元</text>
    <view class="discount">
-      <text class="proportion">{{topUp.score}}</text>
-      <text class="giving" wx:if="{{isGive}}">{{topUp.give ? topUp.give + ' + ' : ''}}{{topUp.giveScore}}积分</text>
-      <text class="integral"> 积分</text>
+      <text class="proportion">{{topUp.score}}积分</text>
+      <!-- <text class="giving">{{{topUp.score}}</text> -->
+      <!-- <text class="integral"> 积分</text> -->
    </view>
-   <text class="add" wx:if="{{topUp.give > 0}}">{{topUp.give}}</text>
+   <text class="add" wx:if="{{gitText}}">{{gitText}}</text>
 </view>

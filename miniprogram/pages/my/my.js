@@ -40,6 +40,11 @@ Page({
         alias: '联系客服 ',
         url: "/pages/service/service",
       },
+      {
+        icon: '/images/my4.png',
+        alias: '清除缓存 ',
+        itemType: 'clearStore',
+      },
     ],
     activityMap: {}
   },
@@ -83,7 +88,7 @@ Page({
           list.splice(2, 0, { ...res.data.activity.invite, ...invite });
         }
         if (res.data.activity.desktop) {
-          list.splice(4, 0, { ...res.data.activity.desktop, ...desktop });
+          list.splice(5, 0, { ...res.data.activity.desktop, ...desktop });
         }
         _this.setData({
           userData: res.data,
@@ -108,6 +113,18 @@ Page({
       this.setData({
         isShareShow: true,
       })
+    } else if (item.itemType == 'clearStore') {
+      //清除本地信息;
+      try {
+        wx.clearStorageSync()
+        wx.showToast({
+          title: '清除成功！',
+          icon: 'success',
+          duration: 2000,
+        })
+      } catch (e) {
+        // Do something when catch error
+      }
     }
   },
   // 弹框隐藏

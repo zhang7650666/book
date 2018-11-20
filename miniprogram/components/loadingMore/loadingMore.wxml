@@ -1,0 +1,6 @@
+<!--components/loadingMore/loadingMore.wxml-->
+ <view hidden="{{isHide}}" class="weui-loadmore" >
+    <view class="weui-loading"></view>
+    <view class="weui-loadmore__tips">正在加载</view>
+ </view>
+   

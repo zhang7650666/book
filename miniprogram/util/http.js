@@ -90,7 +90,8 @@ class HTTP{
               params.success(res.data);
             } else {
               if (params.error) {
-                params.error(res.data);
+                _this._err_code(errCode);
+                params.error && params.error(res.data);
               } else {
                 let errCode = res.data.code;
                 _this._err_code(errCode);

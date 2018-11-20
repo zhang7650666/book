@@ -1,15 +1,16 @@
 <!--miniprogram/pages/directory/directory.wxml-->
 <view class="directory-page">
-    <view class="directory">
+  <text wx:if="{{isFirstLoadEnd && !dirList.length}}" class="directory-empty">当前小说还未上传章节，请耐心等候</text>
+    <view class="directory" wx:if="{{dirList.length > 0}}">
       <text>目录 （共{{count}}章）</text>
       <image src="/images/u577.png" mode="widthFix" catchtap="handleSort"></image>
     </view>
     <view class="dir-list">
-      <view class="list" wx:for="{{dirList}}" wx:key="item.chapter_id" data-item="{{item}}" bindtap="toReading">
-        <!-- <text class="sort">第{{item.sort}}章</text> -->
+      <view wx:for="{{dirList}}" wx:key="item.chapter_id"  class="list {{chapter_id == item.chapter_id ? 'active' : ''}}" data-item="{{item}}" bindtap="toReading">
         <text class="title">{{item.chapter_name}}</text>
         <text class="is-pay">{{item.is_pay != 0 ? '收费' : ''}}</text>
       </view>
     </view>
+   <loading-more isHide="{{isHideLoadMore}}"></loading-more>
 </view>
 

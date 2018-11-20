@@ -41,7 +41,7 @@
             <text>目录</text>
         </view>
         <view class="next" data-prev="next" catchtap="handleChapter">
-            <text>{{!isHasNext ?'已是最后一章':'下一章'}}</text>
+            <text>{{!fictionRead.next_chapter_id ?'已是最后一章':'下一章'}}</text>
         </view>
     </view>
     <!-- 设置弹框 -->
@@ -49,8 +49,8 @@
       <view class="go-book-store arrow-pub" catchtap="handleStore">
         <text>去书城</text>
       </view>
-       <view class="add-book-store arrow-pub">
-        <text catchtap="handleJoin" data-fictionId="{{fiction_id}}">加入书架</text>
+       <view wx:if="{{fictionRead.chapter_id == 0}}" class="add-book-store arrow-pub">
+        <text catchtap="handleJoin" data-fiction_id="{{fiction_id}}">加入书架</text>
       </view>
        <view class="mask-main">
           <view class="size-color">
@@ -60,32 +60,22 @@
               <text class="reduc" catchtap="handleAdd">Aa+</text>
             </view>
             <view class="color-wrap">
-              <text class="gray {{bgActive == 'white' ? 'active':''}}" data-skin="white" catchtap="handleColor"></text>
-              <text class="pink {{bgActive == 'yellow' ? 'active':''}}"  data-skin="yellow" catchtap="handleColor" ></text>
-              <text class="blue {{bgActive == 'green' ? 'active':''}}" data-skin="green" catchtap="handleColor" ></text>
-              <text class="black {{bgActive == 'black' ? 'active':''}}" data-skin="black" catchtap="handleColor"></text>
+              <text class="gray {{skin == 'white-skin' ? 'active':''}}" data-skin="white" catchtap="handleColor"></text>
+              <text class="pink {{skin == 'default-skin' ? 'active':''}}"  data-skin="yellow" catchtap="handleColor" ></text>
+              <text class="blue {{skin == 'green-skin' ? 'active':''}}" data-skin="green" catchtap="handleColor" ></text>
+              <text class="black {{skin == 'black-skin' ? 'active':''}}" data-skin="black" catchtap="handleColor"></text>
             </view>
           </view>
            <view class="btn-group-mask">
                 <view class="prev" data-prev="prev" catchtap="handleChapter">
                     <text class="{{fictionRead.last_catalog_id == 0 ? 'disabled':''}}">上一章</text>
                 </view>
-                <!-- <button
-                  type="default"
-                  size="default"
-                  plain="false"
-                  disabled="{{!fictionRead.last_catalog_id}}"
-                  bindtap="handleChapter" hover-class="other-button-hover"
-                  data-prev="prev"
-                  class="prev"> 
-                  上一章 
-                </button> -->
                 <view class="directory" catchtap="handleDir">
                     <image src="../../images/u645.png" mode="widthFix"></image>
                     <text>目录</text>
                 </view>
                 <view class="next" data-prev="next" catchtap="handleChapter">
-                    <text>{{!fictionRead.next_catalog_id ?'已是最后一章':'下一章'}}</text>
+                    <text>{{!fictionRead.next_chapter_id ?'已是最后一章':'下一章'}}</text>
                 </view>
             </view>
       </view>

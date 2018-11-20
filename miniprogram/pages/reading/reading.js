@@ -13,7 +13,7 @@ Page({
     deduction:[{
       name:'tips',
       checked:false,
-      value:'自动扣除，不在提示'
+      value:'自动扣除，不再提示'
     }], // 选中取消
     fiction_id:'', // 小说ID
     chapter_id:'', // 小说章节id
@@ -21,7 +21,6 @@ Page({
     auto_pay: null, //是否自动购买 0 不；1 自动
     fictionRead:{}, // 小说相关对象
     skin: 'default-skin', //阅读风格
-    isHasChapter: false, //是否是阅读进来
     skinMap: {
       white: 'white-skin',
       yellow: 'default-skin',
@@ -55,7 +54,7 @@ Page({
       // 从其他页面到阅读页
       this.setData({
         fiction_id: options.fiction_id, 
-        chapter_id: options.chapter_id || 1,
+        chapter_id: options.chapter_id || null,
         activityMap,
         fiction_name: options.fiction_name
       });
@@ -115,7 +114,7 @@ Page({
     http.request({
       url: "add_controller",
       data:{
-        fiction_id:ev.currentTarget.dataset.fictionid,
+        fiction_id: ev.currentTarget.dataset.fiction_id,
       },
       success(res) {
         wx.showToast({
@@ -129,7 +128,7 @@ Page({
   // 跳转到目录页面
   handleDir(){
     wx.navigateTo({
-      url: `/pages/directory/directory?fiction_id=${this.data.fiction_id}&fiction_name=${this.data.fiction_name}`,
+      url: `/pages/directory/directory?fiction_id=${this.data.fiction_id}&fiction_name=${this.data.fiction_name}&chapter_id=${this.data.chapter_id}`,
     })
   },
   // 去书城
@@ -157,11 +156,13 @@ Page({
     this.setData({
       chapter_id: chapter,
     });
+    const param = _this.data.chapter_id ? { chapter_id: _this.data.chapter_id} : {}
     http.request({
       url:"fiction_read",
       data:{
         fiction_id: _this.data.fiction_id,
-        chapter_id: _this.data.chapter_id,
+        // chapter_id: _this.data.chapter_id,
+        ...param,
         is_auto_pay: _this.data.auto_pay == null ? '' : _this.data.auto_pay,
         is_pay: _this.data.is_pay
       },
@@ -175,19 +176,19 @@ Page({
             fictionRead: res.data,
             isMask: false,
             auto_pay:res.data.auto_pay,
-            isHasChapter: true,
             isHasPrev: !!res.data.last_chapter_id,
             isHasNext: !!res.data.next_chapter_id,
+            chapter_id: res.data.chapter_id
           })
         }
       },
-      error(res){
-        if(res.code == 3001){
-          wx.navigateBack({
-            delta: 1
-          })
-        }
-      }
+      // error(res){
+      //   if(res.code == 3001){
+      //     wx.navigateBack({
+      //       delta: 1
+      //     })
+      //   }
+      // }
     })
   },
   // checkbox 改变
@@ -201,7 +202,6 @@ Page({
   },
   // 继续阅读
   handleRead(){
-    
     if (this.data.fictionRead.is_pay == 3){
       wx.navigateTo({
         url: "/pages/recharge/recharge",
