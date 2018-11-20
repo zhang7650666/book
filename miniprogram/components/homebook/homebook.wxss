@@ -8,6 +8,7 @@
 .book-cover {
   position: relative;
   margin-bottom: 6rpx;
+  background-color: #f1f1f1;
 }
 .home-book .book-cover image{
     /* width:180rpx; */

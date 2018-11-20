@@ -15,13 +15,18 @@ Component({
     },
     
   },
-
   /**
    * 组件的初始数据
    */
   data: {
+    isGive: false,
   },
-
+  onload(options) {
+    const bookData = this.properties.topUp;
+    this.setData({
+      isGive: bookData && (bookData.give || bookData.giveScore)
+    })
+  },
   /**
    * 组件的方法列表
    */

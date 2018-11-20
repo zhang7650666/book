@@ -1,7 +1,7 @@
 <!--miniprogram/components/homebook/homebook.wxml-->
 <view class="home-book" bindtap="handleDetail" data-index="{{books.fiction_id}}">
   <view class="book-cover">
-    <image  src="{{books.fiction_img}}" binderror="errImg"  mode="widthFix" data-out-index="{{outIndex}}" data-inner-index="{{innerIndex}}"></image>
+    <image  src="{{books.fiction_img}}" binderror="errImg"  mode="widthFix" data-out-index="{{outIndex}}" data-inner-index="{{innerIndex}}" onerror=""></image>
     <view wx:if="{{!isEdit}}" class="book-share"></view>
     <!-- 添加icon展示 -->
     <view wx:if="{{!isStore && isCur == 1}}

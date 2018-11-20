@@ -54,6 +54,7 @@ Page({
       userInfo: userInfo,
       userList: [..._this.data.list]
     });
+    this.postUserInfo();
   },
   // 用户信息接口请求
   postUserInfo() {
@@ -86,8 +87,11 @@ Page({
         }
         _this.setData({
           userData: res.data,
-          userList:list,
-          isShowSignInButton: res.data && res.data.activity && res.data.activity.sign && res.data.activity.sign.status == 1,
+          userList:(list || []).map( v => {
+            v.score = v.count ? v.count * v.score : v.score
+            return v
+          }),
+          isShowSignInButton: res.data && res.data.activity && res.data.activity.sign && res.data.activity.sign.status == 1 || false,
         })
       },
     })

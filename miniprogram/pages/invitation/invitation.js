@@ -6,9 +6,10 @@ Page({
    * 页面的初始数据
    */
   data: {
-    objInfo:{},
     shareInfo: {},
-    activityMap: {}
+    activityMap: {},
+    score: '',
+    count: ''
   },
 
   /**
@@ -20,7 +21,10 @@ Page({
     this.setData({
       objInfo,
       activityMap,
+      score: activityMap['invite'] ? activityMap['invite']['score'] : '',
+      count: activityMap['invite'] ? activityMap['invite']['count'] : ''
     })
+    this.getShareInfo();
   },
 
   /**
@@ -74,11 +78,19 @@ Page({
         alias:'invite',
       },
       success(res){
-        const score = _this.data.activityMap['invite'].score
+        // const score = _this.data.activityMap['invite'].score
         wx.showToast({
-          title: `恭喜你获得,获得${score}积分`,
+          title: `恭喜你获得,获得${_this.data.score}积分`,
           icon: 'success',
-          duration: 2000
+          duration: 1000,
+          success: () => {
+            // wx.hideToast()
+          },
+          complete: () => {
+            setTimeout(function() {
+              wx.hideToast()
+            }, 3000)
+          }
         })
       },
     })
@@ -89,6 +101,7 @@ Page({
   onShareAppMessage: function () {
     let _this = this;
     const { shareInfo } = this.data;
+    console.log(shareInfo);
     return {
       title: shareInfo.title,
       path: shareInfo.path,

@@ -42,12 +42,12 @@ Page({
       mask: true
     });
     // 从目录页面到阅读页
-    if(options.chapterInfo){
-      let chapterInfo = JSON.parse(options.chapterInfo);
+    if (options.chapter_info){
+      let chapter_info = JSON.parse(options.chapter_info);
       this.setData({
-        fiction_id: chapterInfo.fiction_id, 
-        chapter_id: chapterInfo.chapter_id,
-        is_pay:chapterInfo.is_pay,
+        fiction_id: chapter_info.fiction_id, 
+        chapter_id: chapter_info.chapter_id,
+        is_pay:chapter_info.is_pay,
         activityMap,
         fiction_name: options.fiction_name
       });

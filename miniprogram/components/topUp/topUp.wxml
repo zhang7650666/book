@@ -3,7 +3,7 @@
    <text class="money ">{{topUp.amount}} 元</text>
    <view class="discount">
       <text class="proportion">{{topUp.score}}</text>
-      <text class="giving" wx:if="{{topUp.giveScore > 0}}"> + {{topUp.giveScore}}</text>
+      <text class="giving" wx:if="{{isGive}}">{{topUp.give ? topUp.give + ' + ' : ''}}{{topUp.giveScore}}积分</text>
       <text class="integral"> 积分</text>
    </view>
    <text class="add" wx:if="{{topUp.give > 0}}">{{topUp.give}}</text>

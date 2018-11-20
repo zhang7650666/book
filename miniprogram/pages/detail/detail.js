@@ -38,8 +38,8 @@ Page({
       url: `/pages/reading/reading?fiction_id=${this.data.fiction_id}&fiction_name=${this.data.bookDetails.fiction_name}`
     })
   },
-  fictionSet() {
-    if (this.bookDetails.fiction_collection == 0) {
+  fictionSet() {debugger;
+    if (this.data.bookDetails.fiction_collection == 0) {
       this.handleAdd()
     }else {
       this.handleRemove();
