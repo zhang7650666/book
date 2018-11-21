@@ -1,33 +1,35 @@
 <!--miniprogram/pages/reading/reading.wxml-->
 <import src="../../wxParse/wxParse.wxml"/>
-<view class="read-page　{{skin}}" >
-    <view class="novel-wrap" bindtap="handleSet">
+<view class="read-page　{{skin}}" style="{{(fictionRead.is_pay == 1 || fictionRead.is_pay == 3) && ((fictionRead.auto_pay == 1 &&  fictionRead.is_pay == 3) || fictionRead.auto_pay == 0) ? 'height:100vh' : 'min-height: 100vh'}} ">
+  <scroll-view scroll-y bindtap="handleSet">
+    <!-- <view class="novel-wrap" bindtap="handleSet"> -->
         <text class="novel-title">{{fictionRead.title}}</text>
         <!--小说内容展示 -->
         <view class="novel-article"  style="font-size:{{fontSize}}rpx;">
             <template is="wxParse" data="{{wxParseData:article.nodes}}" />
         </view>
-        <!--积分部分 -->
-        <!-- 收费内容展示-->
-        <view wx:if="{{fictionRead.is_pay == 1 || fictionRead.is_pay == 3}}">
-            <!-- 剩余积分小于抵扣积分展示-->
-            <view class="title-info" wx:if="{{(fictionRead.auto_pay == 1 &&  fictionRead.is_pay == 3) || fictionRead.auto_pay == 0}}">
-                <view class="consume">
-                    <text>阅读本章节需要消耗{{fictionRead.chapter_cost}}积分</text>
-                </view>
-                <view class="integral">
-                    <text>我的积分 : {{fictionRead.user_score}}积分</text> 
-                </view>
-                <view class="deduction" catchtap="checkboxChange">
-                    <checkbox-group bindchange="checkboxChange" wx:if="{{fictionRead.auto_pay == 0}}">
-                        <label class="checkbox" wx:for="{{deduction}}" wx:key="item.name">
-                            <checkbox value="{{item.name}}" checked="{{item.checked}}"/>{{item.value}}
-                        </label>
-                    </checkbox-group>
-                    <view class="go-btn">
-                        <text class="keep-btn" catchtap="handleRead">{{fictionRead.is_pay == 3 ? '积分充值' :'继续阅读'}}</text>
-                        <!-- <text class="share-btn" catchtap="handleShare">分享好友获取积分免费看</text> -->             <button class="share-btn" open-type="share">分享好友获取积分免费看</button>
-                    </view>
+    <!-- </view> -->
+    </scroll-view>
+    <!--积分部分 -->
+    <!-- 收费内容展示-->
+    <view wx:if="{{fictionRead.is_pay == 1 || fictionRead.is_pay == 3}}">
+        <!-- 剩余积分小于抵扣积分展示-->
+        <view class="title-info" wx:if="{{(fictionRead.auto_pay == 1 &&  fictionRead.is_pay == 3) || fictionRead.auto_pay == 0}}">
+            <view class="consume">
+                <text>阅读本章节需要消耗{{fictionRead.chapter_cost}}积分</text>
+            </view>
+            <view class="integral">
+                <text>我的积分 : {{fictionRead.user_score}}积分</text> 
+            </view>
+            <view class="deduction" catchtap="checkboxChange">
+                <checkbox-group bindchange="checkboxChange" wx:if="{{fictionRead.auto_pay == 0}}">
+                    <label class="checkbox" wx:for="{{deduction}}" wx:key="item.name">
+                        <checkbox value="{{item.name}}" checked="{{item.checked}}"/>{{item.value}}
+                    </label>
+                </checkbox-group>
+                <view class="go-btn">
+                    <text class="keep-btn" catchtap="handleRead">{{fictionRead.is_pay == 3 ? '积分充值' :'继续阅读'}}</text>
+                    <!-- <text class="share-btn" catchtap="handleShare">分享好友获取积分免费看</text> -->             <button class="share-btn" open-type="share">分享好友获取积分免费看</button>
                 </view>
             </view>
         </view>

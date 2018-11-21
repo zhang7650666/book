@@ -82,15 +82,7 @@ Page({
         wx.showToast({
           title: `获得${_this.data.score}积分`,
           icon: 'success',
-          duration: 3000,
-          success: () => {
-            // wx.hideToast()
-          },
-          complete: () => {
-            setTimeout(function() {
-              wx.hideToast()
-            }, 3000)
-          }
+          duration: 3000
         })
       },
     })
@@ -101,7 +93,6 @@ Page({
   onShareAppMessage: function () {
     let _this = this;
     const { shareInfo } = this.data;
-    console.log(shareInfo);
     return {
       title: shareInfo.title,
       path: shareInfo.path,

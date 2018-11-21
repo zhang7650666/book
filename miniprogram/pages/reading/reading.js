@@ -29,7 +29,9 @@ Page({
     },
     isHasPrev: false,
     isHasNext: true,
-    activityMap: {}
+    activityMap: {},
+    viewHeight: '100%',
+    shareConfig: {},
   },
    /**
    * 生命周期函数--监听页面加载
@@ -169,7 +171,6 @@ Page({
       success(res){
         // 小程序解析html
         // 小说内容res.data.data.fiction_title
-        wx.hideLoading();
         if(res.code == 200){
           WxParse.wxParse('article', 'html', res.data.content, _this, 5);
           _this.setData({
@@ -178,8 +179,14 @@ Page({
             auto_pay:res.data.auto_pay,
             isHasPrev: !!res.data.last_chapter_id,
             isHasNext: !!res.data.next_chapter_id,
-            chapter_id: res.data.chapter_id
+            chapter_id: res.data.chapter_id,
+            isMask: _this.data.isMask ? _this.data.isMask : false,
           })
+          wx.pageScrollTo({
+            scrollTop: 2,
+            duration: 0
+          })
+          wx.hideLoading();
         }
       },
       // error(res){
@@ -230,7 +237,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    this.getShareInfo();
   },
 
   /**
@@ -281,58 +288,51 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
+  onShareAppMessage: function (res) {
     let _this = this;
-    if (this.data.shareConfig && this.data.shareConfig.path) {
-      const shareConfig = this.data.shareConfig;
-      return {
-        title: shareConfig.title,
-        path: shareConfig.path,
-        desc: shareConfig.desc,
-        imageUrl: shareConfig.img,
-        success: function (res) {
-          _this.postActivityBackoff({ alias: 'home' });
-        },
-        fail: function (res) {
-          // 转发失败
-          wx.showToast({
-            title: `邀请失败`,
-            image: '/images/u1565.png',
-            duration: 2000
-          })
-        }
-      }
+    let shareConfig = {};
+    if (res.from === 'button') {
+      shareConfig = this.data.shareConfig;
     }
     else {
-      http.request({
-        url: "shares_info",
-        data: {
-          alias: 'invite',
-        },
-        success(res) {
-          const shareConfig = res.data;
-          _this.setData({
-            shareConfig,
-          })
-          return {
-            title: shareConfig.title,
-            path: shareConfig.path,
-            desc: shareConfig.desc,
-            imageUrl: shareConfig.img,
-            success: function (res) {
-              _this.postActivityBackoff({ alias: 'invite'});
-            },
-            fail: function (res) {
-              // 转发失败
-              wx.showToast({
-                title: `邀请失败`,
-                image: '/images/u1565.png',
-                duration: 2000
-              })
-            }
-          }
-        },
-      })
+      //当前小说的信息
+      shareConfig = {
+        'title': '',
+        'path': '',
+        'desc': '',
+        'img': ''
+      };
+    }
+    return {
+      title: shareConfig.title,
+      path: shareConfig.path,
+      desc: shareConfig.desc,
+      imageUrl: shareConfig.img,
+      success: function (res) {
+        _this.postActivityBackoff({ alias: 'home' });
+      },
+      fail: function (res) {
+        // 转发失败
+        wx.showToast({
+          title: `邀请失败`,
+          image: '/images/u1565.png',
+          duration: 2000
+        })
+      }
     }
   },
+  getShareInfo() {
+    http.request({
+      url: "shares_info",
+      data: {
+        alias: 'invite',
+      },
+      success(res) {
+        const shareConfig = res.data;
+        _this.setData({
+          shareConfig,
+        })
+      },
+    })
+  }
 })
