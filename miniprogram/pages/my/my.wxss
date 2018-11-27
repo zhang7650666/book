@@ -69,7 +69,7 @@
 }
 .list-right-box {
   overflow: hidden;
-  width: 27%;
+  width: 32%;
 }
 .list-icon {
   display: inline-block;

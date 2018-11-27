@@ -1,5 +1,5 @@
 // miniprogram/pages/my/my.js
-const APP = getApp();
+const app = getApp();
 import {http} from "../../util/http.js";
 Page({
 
@@ -41,12 +41,14 @@ Page({
         url: "/pages/service/service",
       },
       {
-        icon: '/images/my4.png',
+        icon: '/images/my6.png',
         alias: '清除缓存 ',
         itemType: 'clearStore',
       },
     ],
-    activityMap: {}
+    systemInfo: {},
+    activityMap: {},
+    isAndroid: ''
   },
 
   /**
@@ -57,7 +59,8 @@ Page({
     let userInfo = JSON.parse(wx.getStorageSync('userInfo') || '{}');
     this.setData({
       userInfo: userInfo,
-      userList: [..._this.data.list]
+      userList: [..._this.data.list],
+      isAndroid: app.globalData.isAndroid,
     });
     this.postUserInfo();
   },
@@ -80,6 +83,7 @@ Page({
           itemType:'share',
           flag:'desktop',
           alias: '添加到桌面',
+          score: null
         }
         //用户共用同一个接口的弊端，签到后，更新积分需要重新读接口
         let list = [..._this.data.list]
@@ -87,7 +91,7 @@ Page({
         if (res.data.activity.invite) {
           list.splice(2, 0, { ...res.data.activity.invite, ...invite });
         }
-        if (res.data.activity.desktop) {
+        if (res.data.activity.desktop && _this.data.isAndroid) {
           list.splice(5, 0, { ...res.data.activity.desktop, ...desktop });
         }
         _this.setData({
@@ -96,6 +100,7 @@ Page({
             v.score = v.count ? v.count * v.score : v.score
             return v
           }),
+          activityMap: res.data.activity,
           isShowSignInButton: res.data && res.data.activity && res.data.activity.sign && res.data.activity.sign.status == 1 || false,
         })
       },
@@ -137,7 +142,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    APP.routerUploadToken();
+    app.routerUploadToken();
     // 调用用户信息接口
     this.postUserInfo();
   },
@@ -153,13 +158,6 @@ Page({
   onHide: function () {
 
   },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-    
-  },
   //签到
   userSignIn() {
     let _this = this;
@@ -171,6 +169,7 @@ Page({
       success(res) {
         _this.setData({
           isShowSignInButton: false,
+          signInShowModel: true,
         });
         _this.postUserInfo();
       },

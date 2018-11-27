@@ -48,12 +48,14 @@
   font-size:32rpx;
   font-weight:bold;
 }
+.search-list-block {
+  margin-top:112rpx;
+}
 /* 搜索列表 */
 .search-list{
   border-bottom:1rpx solid #f7f7f7;
   display:flex;
   align-items: center;
-  margin-top:112rpx;
 }
 .search-list .icon-search{
   flex:0 0 40rpx;
@@ -65,7 +67,7 @@
   line-height:80rpx;
 }
 .search-show{
-  margin-top:112rpx;
+  /* margin-top:112rpx; */
   padding-bottom:100rpx;
 }
 /* 没有搜索到内容 */

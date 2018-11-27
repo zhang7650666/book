@@ -18,7 +18,7 @@ const tips = {
   4004:'清除书架阅读历史失败',
   6001: "活动次数已用完",
   1003:"fiction_id不能为空",
-  404:'已确认路径无误',
+  // 404:'已确认路径无误',
 }
 let userToken = JSON.parse(wx.getStorageSync('token') || '{}')
 let callbackQueue = [];
@@ -89,22 +89,30 @@ class HTTP{
             if (res.data.code == 200) {
               params.success(res.data);
             } else {
+              let errCode = res.data.code;
               if (params.error) {
                 _this._err_code(errCode);
                 params.error && params.error(res.data);
               } else {
-                let errCode = res.data.code;
                 _this._err_code(errCode);
               }
-
+              if (res.data.code == 3002 || res.data.code == 3001) {
+                setTimeout( () => {
+                  wx.navigateBack({
+                    delta: 1
+                  })
+                }, 2000)
+              }
             }
           },
           fail: (res) => {
             this._err_code(1);
           },
           complete: (res) => {
-            wx.hideLoading();
-            params.complete && params.complete(res)
+            setTimeout(() => {
+              wx.hideLoading();
+            }, 2000)
+            params.complete && params.complete(res.data)
           },
         })
       })

@@ -16,11 +16,11 @@
             <view>
                 <text>{{bookDetails.fiction_class}}</text>
             </view>
-            <view>
+            <!-- <view>
                 <text>{{bookDetails.fiction_number}}</text>
-            </view>
+            </view> -->
             <view>
-                <text>{{bookDetails.fiction_over}}</text>
+                <text>{{bookDetails.fiction_over == 1 ? '完结' : '连载中'}}</text>
             </view>
         </view>
     </view>
@@ -47,7 +47,7 @@
     <view class="btn-wrap">
         <text class="add" data-collection_id="{{bookDetails.collection_id}}" catchtap="fictionSet">{{bookDetails.fiction_collection == 0 ? '加入书架':'移出书架'}}</text>
         <!-- <text class="btn-remove" data-fiction_id="{{bookDetails.fiction_id}}" catchtap="handleRemove"></text> -->
-        <text class="keep" data-fictionId="{{bookDetails.fiction_id}}" data-keep="{{bookDetails.fiction_look_chapter}}" bindtap="handleKeep">{{isFirst ? '开始阅读':'继续阅读'}}</text>
+        <text class="keep" data-fictionId="{{bookDetails.fiction_id}}" bindtap="handleKeep">{{isFirst ? '开始阅读':'继续阅读'}}</text>
     </view>
 </view>
 

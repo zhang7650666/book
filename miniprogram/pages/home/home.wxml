@@ -1,7 +1,0 @@
-<!--miniprogram/pages/home/home.wxml-->
-<view class="view-block">
- <view class="image-parent">
-  <image src="../../images/u27.jpeg" mode="widthFix"></image>
- </view>
-45678909876790
-</view>

@@ -19,7 +19,6 @@ Component({
    * 组件的初始数据
    */
   data: {
-    isGive: false,
     gitText: null
   },
   /**
@@ -42,14 +41,7 @@ Component({
       if (Number(bookData.give) > 0) {
         gitText.push(`多送${Number(bookData.give)}元`);
       }
-      if (!!bookData.giveScore) {
-        if (gitText.length) {
-          gitText.push('+')
-        }
-        gitText.push(`${bookData.giveScore}积分`)
-      }
       this.setData({
-        isGive: true,
         gitText: gitText.join(""),
       })
     },

@@ -55,3 +55,11 @@
   font-size: 30rpx;
   color:#EA5149;
 }
+
+.button-group {
+  padding: 30rpx;
+  text-align: center;
+}
+.m-l-6 {
+  margin-left: 60rpx;
+}

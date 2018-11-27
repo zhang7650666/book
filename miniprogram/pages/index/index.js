@@ -41,6 +41,7 @@ Page({
       pullDown: false,
       pullUp: false,
     });
+    this.getShareInfo();
   },
   // banner图接口请求
   postAddList(obj){
@@ -214,78 +215,64 @@ Page({
   },
 
   // 邀请成功之后的回调函数
-  postActivityBackoff(obj) {
-    http.request({
-      url: "activity_backoff",
-      data: {
-        alias: obj.alias,
-      },
-      success(res) {
-        const score = _this.data.activityMap['invite'].score
-        wx.showToast({
-          title:`恭喜你，获得${score}积分`,
-          icon: 'success',
-          duration: 2000
-        })
-      },
-    })
-  },
+  // postActivityBackoff(obj) {
+  //   http.request({
+  //     url: "activity_backoff",
+  //     data: {
+  //       alias: 'home',
+  //     },
+  //     success(res) {
+  //       const score = _this.data.activityMap['invite'].score
+  //       wx.showToast({
+  //         title:`恭喜你，获得${score}积分`,
+  //         icon: 'success',
+  //         duration: 2000
+  //       })
+  //     },
+  //   })
+  // },
   /**
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-    let _this = this;
-    if (this.data.shareConfig && this.data.shareConfig.path) {
-      const shareConfig = this.data.shareConfig;
-      return {
-        title: shareConfig.title,
-        path: shareConfig.path,
-        desc: shareConfig.desc,
-        imageUrl: shareConfig.img,
-        success: function (res) {
-          _this.postActivityBackoff({ alias: 'home' });
-        },
-        fail: function (res) {
-          // 转发失败
-          wx.showToast({
-            title: `邀请失败`,
-            image: '/images/u1565.png',
-            duration: 2000
-          })
-        }
+    const _this = this;
+    const { shareConfig ={}} = this.data;
+    return {
+      title: shareConfig.title,
+      path: shareConfig.path,
+      desc: shareConfig.desc,
+      imageUrl: shareConfig.img,
+      success: function (res) {
+        // _this.postActivityBackoff({ alias: 'home' });
+        wx.showToast({
+          title: `分享成功`,
+          icon: 'success',
+          duration: 2000
+        })
+      },
+      fail: function (res) {
+        // 转发失败
+        wx.showToast({
+          title: `邀请失败`,
+          image: '/images/u1565.png',
+          duration: 2000
+        })
       }
     }
-    else {
-      http.request({
-        url: "shares_info",
-        data: {
-          alias: 'home',
-        },
-        success(res) {
-          const shareConfig = res.data;
-          _this.setData({
-            shareConfig,
-          })
-          return {
-            title: shareConfig.title,
-            path: shareConfig.path,
-            desc: shareConfig.desc,
-            imageUrl: shareConfig.img,
-            success: function (res) {
-              _this.postActivityBackoff({ alias: 'home' });
-            },
-            fail: function (res) {
-              // 转发失败
-              wx.showToast({
-                title: `邀请失败`,
-                image: '/images/u1565.png',
-                duration: 2000
-              })
-            }
-          }
-        },
-      })
-    }
-    
+  },
+  getShareInfo() {
+    const _this = this;
+    http.request({
+      url: "shares_info",
+      data: {
+        alias: 'home',
+      },
+      success(res) {
+        const shareConfig = res.data;
+        _this.setData({
+          shareConfig,
+        })
+      },
+    })
   }
 })

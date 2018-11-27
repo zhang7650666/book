@@ -2,7 +2,7 @@
 <view class="top-up-page {{isActive == curIndex ? 'active':''}}" data-item="{{topUp}}" catchtap="handleActive">
    <text class="money ">{{topUp.amount}} 元</text>
    <view class="discount">
-      <text class="proportion">{{topUp.score}}积分</text>
+      <text class="proportion">{{topUp.score + topUp.giveScore}}积分</text>
       <!-- <text class="giving">{{{topUp.score}}</text> -->
       <!-- <text class="integral"> 积分</text> -->
    </view>

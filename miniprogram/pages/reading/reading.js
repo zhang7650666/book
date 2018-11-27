@@ -30,33 +30,35 @@ Page({
     isHasPrev: false,
     isHasNext: true,
     activityMap: {},
-    viewHeight: '100%',
     shareConfig: {},
+    fictionShareConfig: {},
+    is_pay: 0, //是否购买小说
+    score: '',
   },
    /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
     let activityMap = JSON.parse(wx.getStorageSync('activityMap') || '{}')
-    wx.showLoading({
-      title: '加载中',
-      mask: true
-    });
+    // wx.showLoading({
+    //   title: '加载中',
+    //   mask: true
+    // });
     // 从目录页面到阅读页
     if (options.chapter_info){
       let chapter_info = JSON.parse(options.chapter_info);
       this.setData({
         fiction_id: chapter_info.fiction_id, 
         chapter_id: chapter_info.chapter_id,
-        is_pay:chapter_info.is_pay,
         activityMap,
-        fiction_name: options.fiction_name
+        fiction_name: options.fiction_name,
+        score: activityMap['invite'] ? activityMap['invite']['score'] : '',
       });
     }else{
       // 从其他页面到阅读页
       this.setData({
         fiction_id: options.fiction_id, 
-        chapter_id: options.chapter_id || null,
+        chapter_id: options.chapter_id || 0,
         activityMap,
         fiction_name: options.fiction_name
       });
@@ -66,6 +68,8 @@ Page({
     });
     // 小说内容初始化展示
     this.handleChapter();
+    this.getShareInfo(); 
+    this.getFictionShareInfo();
   },
   // 点击呼出设置弹框
   handleSet() {
@@ -130,7 +134,7 @@ Page({
   // 跳转到目录页面
   handleDir(){
     wx.navigateTo({
-      url: `/pages/directory/directory?fiction_id=${this.data.fiction_id}&fiction_name=${this.data.fiction_name}&chapter_id=${this.data.chapter_id}`,
+      url: `/pages/directory/directory?fiction_id=${this.data.fiction_id}&fiction_name=${this.data.fiction_name}&chapter_id=${this.data.chapter_id}&last_chapter_id=${this.data.chapter_id}`,
     })
   },
   // 去书城
@@ -141,6 +145,12 @@ Page({
   },
   // 小说当前章节内容
   handleChapter(ev){
+    if (!!this.data.fictionRead.next_chapter_id) {
+      wx.showLoading({
+        title: '加载中',
+        mask: true
+      });
+    }
     let _this = this;
     let chapter = this.data.chapter_id;
     const fromPost = ev ? ev.currentTarget.dataset.prev : null;
@@ -181,6 +191,7 @@ Page({
             isHasNext: !!res.data.next_chapter_id,
             chapter_id: res.data.chapter_id,
             isMask: _this.data.isMask ? _this.data.isMask : false,
+            is_pay: res.data.auto_pay == 0 ? 0 : 1,
           })
           wx.pageScrollTo({
             scrollTop: 2,
@@ -189,13 +200,9 @@ Page({
           wx.hideLoading();
         }
       },
-      // error(res){
-      //   if(res.code == 3001){
-      //     wx.navigateBack({
-      //       delta: 1
-      //     })
-      //   }
-      // }
+      complete(res) {
+
+      }
     })
   },
   // checkbox 改变
@@ -209,13 +216,15 @@ Page({
   },
   // 继续阅读
   handleRead(){
-    if (this.data.fictionRead.is_pay == 3){
+    const _this = this;
+    if (this.data.fictionRead.is_pay == 3 || (this.data.fictionRead.is_pay == 1 && this.data.fictionRead.auto_pay == 0 && this.data.fictionRead.user_score <= 0)){
       wx.navigateTo({
         url: "/pages/recharge/recharge",
       })
     } else {
       this.setData({
         fictionRead: {},
+        is_pay: 1,
       })
       this.handleChapter()
     }
@@ -237,7 +246,6 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    this.getShareInfo();
   },
 
   /**
@@ -270,17 +278,29 @@ Page({
 
   // 邀请成功之后的回调函数
   postActivityBackoff(obj) {
+    const _this = this;
     http.request({
       url: "activity_backoff",
       data: {
-        alias: obj.alias,
+        alias: 'invite',
       },
       success(res) {
         const score = _this.data.activityMap['invite'].score
         wx.showToast({
-          title: `恭喜你，获得${score}积分`,
+          title: `获得${score}积分`,
           icon: 'success',
           duration: 2000
+        })
+        //这里使用了强制的方法，修改某个值，并不生效
+        const status = _this.data.fictionRead.auto_pay == 1 ? true : false;
+        const checkedStatus = { name: "tips", checked: status, value: "自动扣除，不再提示" };
+        _this.setData({
+          fictionRead: {
+            ..._this.data.fictionRead,
+            user_score: (_this.data.fictionRead.user_score || 0) + score,
+            is_pay: 1,
+          },
+          deduction: [checkedStatus]
         })
       },
     })
@@ -291,17 +311,14 @@ Page({
   onShareAppMessage: function (res) {
     let _this = this;
     let shareConfig = {};
+    let chareFrom = 'self'
     if (res.from === 'button') {
-      shareConfig = this.data.shareConfig;
+      shareConfig = this.data.shareConfig || {};
+      chareFrom = 'button';
     }
     else {
       //当前小说的信息
-      shareConfig = {
-        'title': '',
-        'path': '',
-        'desc': '',
-        'img': ''
-      };
+      shareConfig = this.data.fictionShareConfig || {};
     }
     return {
       title: shareConfig.title,
@@ -309,7 +326,21 @@ Page({
       desc: shareConfig.desc,
       imageUrl: shareConfig.img,
       success: function (res) {
-        _this.postActivityBackoff({ alias: 'home' });
+        if (chareFrom != 'button') {
+          wx.showToast({
+            title: `分享成功`,
+            icon: 'success',
+            duration: 2000
+          })
+        }
+        else {
+          _this.postActivityBackoff({ alias: 'fiction' });
+          // wx.showToast({
+          //   title: `获得${_this.data.score}积分`,
+          //   icon: 'success',
+          //   duration: 2000
+          // })
+        }
       },
       fail: function (res) {
         // 转发失败
@@ -321,11 +352,29 @@ Page({
       }
     }
   },
+  getFictionShareInfo() {
+    const _this = this;
+    http.request({
+      url: "shares_info",
+      data: {
+        alias: 'fiction',
+        fiction_id: _this.data.fiction_id || '',
+      },
+      success(res) {
+        const fictionShareConfig = res.data;
+        _this.setData({
+          fictionShareConfig,
+        })
+      },
+    })
+  },
   getShareInfo() {
+    const _this = this;
     http.request({
       url: "shares_info",
       data: {
         alias: 'invite',
+        fiction_id: _this.data.fiction_id || '',
       },
       success(res) {
         const shareConfig = res.data;

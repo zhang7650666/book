@@ -10,7 +10,7 @@
     <text class="edit" catchtap="handleEdit">{{isEdit ? '编辑' : '返回'}}</text>
   </view>
   <view class="operation-wrap" wx:if="{{currentData == 1 && readArr.length > 0}}">
-    <text class="count">喜欢的书要添加到书屋喔！</text>
+    <text class="count">喜欢的书要添加到书架喔！</text>
     <text class="edit" catchtap="handleHistory">清空记录</text>
   </view>
   <swiper current="{{currentData}}" class='swiper' duration="300" bindchange="bindchange" style="height:{{swiperHeight}}rpx;min-height: 100%;" wx:if="{{books.length > 0 || readArr.length > 0}}">
@@ -36,5 +36,5 @@
     </swiper-item>
   </swiper>
 </view>
-  <blank-page wx:if="{{isLoadData && (books.length == 0 && currentData == 0) ||(readArr.length == 0 && currentData == 1)}}"></blank-page>
+  <blank-page wx:if="{{(isLoadData && (books.length == 0 && currentData == 0)) ||(isLoadDataChange && (readArr.length == 0 && currentData == 1))}}"></blank-page>
 

@@ -4,8 +4,9 @@ import { http, callbackQueue} from "./util/http.js";
 
 App({
   onLaunch: function (resa) {
-    // this.getUserInfo()
-    this.openSettingFn();
+    this.getSystemInfo(res => {
+      this.openSettingFn();
+    });
     wx.showLoading({
       title: '加载中',
       mask: true
@@ -101,9 +102,23 @@ App({
         }
       })
   },
+  getSystemInfo(callback) {
+    const _this = this;
+    wx.getSystemInfo({
+      success: function (res) {
+        _this.globalData.systemInfo = res;
+        _this.globalData.isAndroid = res.platform == 'android';
+      },
+      complete(res) {
+        callback && callback(res);
+      }
+    })
+  },
   globalData: {
     userInfo: null,
-    defaultImg:'/images/u69.png'
+    defaultImg:'/images/u69.png',
+    systemInfo: {},
+    isAndroid: true,
   },
   routerUploadToken() {
     //没有登陆token就要去登陆
@@ -113,5 +128,20 @@ App({
         url: '/pages/impower/impower'
       })
     }
+  },
+  getShareInfo(params, callback) {
+    http.request({
+      url: "shares_info",
+      data: {
+        alias: params.alias || 'home',
+      },
+      success(res) {
+        const shareConfig = res.data;
+        callback && callback(shareConfig);
+        // _this.setData({
+        //   shareConfig,
+        // })
+      },
+    })
   }
 })

@@ -1,14 +1,14 @@
 {
 	"miniprogramRoot": "miniprogram/",
 	"setting": {
-		"urlCheck": false,
+		"urlCheck": true,
 		"es6": true,
 		"postcss": true,
 		"minified": true,
 		"newFeature": true
 	},
 	"appid": "wx7378ece601cb58d6",
-	"projectname": "smallbooka",
+	"projectname": "满满读书",
 	"libVersion": "2.2.5",
 	"condition": {
 		"search": {

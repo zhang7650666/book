@@ -10,9 +10,11 @@
       </view>
     </view>
     <!-- 热词列表 -->
-    <view wx:if="{{!searchBooks.length && isShowSearch && index < 10}}" class="search-list" wx:for="{{sercherStorage}}" wx:key="item.keyword" data-keyword="{{item.keyword}}" bindtap="handleSearch">
-      <icon class="icon-search" type="search" size="14"></icon>
-      <text class="display: inline-block;padding-left: 10rpx;">{{item.keyword}}</text>
+    <view class="search-list-block">
+      <view wx:if="{{!searchBooks.length && isShowSearch && index < 10}}" class="search-list" wx:for="{{sercherStorage}}" wx:key="item.keyword" data-keyword="{{item.keyword}}" bindtap="handleSearch">
+        <icon class="icon-search" type="search" size="14"></icon>
+        <text class="display: inline-block;padding-left: 10rpx;">{{item.keyword}}</text>
+      </view>
     </view>
     <!-- 搜索到的书籍展示 -->
     <view class="search-show" wx:if="{{searchBooks.length > 0}}">

@@ -8,7 +8,6 @@
     "pages/my/my",
     "pages/recharge/recharge",
     "pages/reading/reading",
-    "pages/home/home",
     "pages/detail/detail",
     "pages/directory/directory",
     "components/homebook/homebook",

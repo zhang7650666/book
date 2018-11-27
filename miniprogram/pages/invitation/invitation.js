@@ -16,10 +16,8 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    let objInfo = JSON.parse(options.objInfo);
     let activityMap = JSON.parse(wx.getStorageSync('activityMap') || '{}')
     this.setData({
-      objInfo,
       activityMap,
       score: activityMap['invite'] ? activityMap['invite']['score'] : '',
       count: activityMap['invite'] ? activityMap['invite']['count'] : ''
@@ -78,7 +76,7 @@ Page({
         alias:'invite',
       },
       success(res){
-        // const score = _this.data.activityMap['invite'].score
+        const score = _this.data.activityMap['invite'].score
         wx.showToast({
           title: `获得${_this.data.score}积分`,
           icon: 'success',
@@ -92,13 +90,18 @@ Page({
    */
   onShareAppMessage: function () {
     let _this = this;
-    const { shareInfo } = this.data;
+    let { shareInfo = {} } = this.data;
     return {
       title: shareInfo.title,
       path: shareInfo.path,
       desc: shareInfo.desc,
       imageUrl: shareInfo.img,
       success: function (res) {
+        // wx.showToast({
+        //   title: `获得${_this.data.score}积分`,
+        //   icon: 'success',
+        //   duration: 2000
+        // })
         _this.postActivityBackoff();
       },
       fail: function (res) {
@@ -120,7 +123,7 @@ Page({
       },
       success(res) {
         _this.setData({
-          shareInfo: res
+          shareInfo: res.data
         })
       },
     }) 

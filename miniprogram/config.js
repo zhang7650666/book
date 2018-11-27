@@ -1,3 +1,3 @@
 export const config = {
-  baseUrl: 'http://book.qiyunet.top/api/',
+  baseUrl: 'https://book.qiyunet.top/api/',
 }

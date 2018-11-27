@@ -1,5 +1,5 @@
 // miniprogram/pages/detail/detail.js
-const APP = getApp();
+const app = getApp();
 import {http} from "../../util/http.js";
 let WxParse = require('../../wxParse/wxParse.js');
 Page({
@@ -31,6 +31,7 @@ Page({
     })
     // 小说详情
     this.getBookIntro();
+    this.getShareInfo();
   },
   // 继续阅读
   handleKeep(){
@@ -57,7 +58,8 @@ Page({
         _this.setData({
           bookDetails: {
             ..._this.data.bookDetails,
-            ...{ fiction_collection: 1 }
+            fiction_collection: 1,
+            collection_id: res.data.controller_id
           }
         })
         wx.showToast({
@@ -74,7 +76,8 @@ Page({
     http.request({
       url: "del_controller",
       data:{
-        controller_id: ev.currentTarget.dataset.collection_id,
+        // controller_id: ev.currentTarget.dataset.collection_id,
+        controller_id: _this.data.bookDetails.collection_id,
       },
       success(res) {
         _this.setData({
@@ -127,7 +130,7 @@ Page({
         WxParse.wxParse('article', 'html', desc, _this, 5);
         _this.setData({
           bookDetails: res.data || {},
-          isFirst: res.data.fiction_last_chapter_id && res.data.fiction_last_chapter_id == 1
+          isFirst: !res.data.fiction_last_chapter_id || res.data.fiction_last_chapter_id == 1
         });
         // 调用同类小说接口
         _this.postSimilarList()
@@ -154,7 +157,7 @@ Page({
   },
   // 处理错误默认图片
   errImg() {
-    this.data.fictionDetails.fiction_img = APP.globalData.defaultImg
+    this.data.fictionDetails.fiction_img = app.globalData.defaultImg
     this.setData({
       fictionDetails:this.data.fictionDetails
     })
@@ -170,7 +173,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    APP.routerUploadToken();
+    app.routerUploadToken();
   },
 
   /**
@@ -202,77 +205,64 @@ Page({
   },
 
   // 邀请成功之后的回调函数
-  postActivityBackoff(obj) {
-    http.request({
-      url: "activity_backoff",
-      data: {
-        alias: obj.alias,
-      },
-      success(res) {
-        wx.showToast({
-          title: obj.status == 1 ? '已转发' : `获得${obj.score}积分`,
-          icon: 'success',
-          duration: 2000
-        })
-      },
-    })
-  },
+  // postActivityBackoff(obj) {
+  //   http.request({
+  //     url: "activity_backoff",
+  //     data: {
+  //       alias:'',
+  //     },
+  //     success(res) {
+  //       wx.showToast({
+  //         title: obj.status == 1 ? '已转发' : `获得${obj.score}积分`,
+  //         icon: 'success',
+  //         duration: 2000
+  //       })
+  //     },
+  //   })
+  // },
   /**
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
     let _this = this;
-    // const { shareConfig } = this.data;
-    // if (shareConfig && shareConfig.path) {
-      return {
-        title: shareConfig.title,
-        path: shareConfig.path,
-        desc: shareConfig.desc,
-        imageUrl: shareConfig.img,
-        success: function (res) {
-          _this.postActivityBackoff({ alias: 'fiction' });
-        },
-        fail: function (res) {
-          // 转发失败
-          wx.showToast({
-            title: `邀请失败`,
-            image: '/images/u1565.png',
-            duration: 2000
-          })
-        }
+    const { shareConfig = {} } = this.data;
+    return {
+      title: shareConfig.title,
+      path: shareConfig.path,
+      desc: shareConfig.desc,
+      imageUrl: shareConfig.img,
+      success: function (res) {
+        // _this.postActivityBackoff({ alias: 'fiction' });
+        wx.showToast({
+          title: `分享成功`,
+          icon: 'success',
+          duration: 2000
+        })
+      },
+      fail: function (res) {
+        // 转发失败
+        wx.showToast({
+          title: `邀请失败`,
+          image: '/images/u1565.png',
+          duration: 2000
+        })
       }
-    // }
-    // else {
-      // http.request({
-      //   url: "shares_info",
-      //   data: {
-      //     alias: 'fiction',
-      //   },
-      //   success(res) {
-      //     const shareConfig = res.data;
-      //     _this.setData({
-      //       shareConfig,
-      //     })
-      //     return {
-      //       title: shareConfig.title,
-      //       path: shareConfig.path,
-      //       desc: shareConfig.desc,
-      //       imageUrl: shareConfig.img,
-      //       success: function (res) {
-      //         _this.postActivityBackoff({ alias: 'fiction' });
-      //       },
-      //       fail: function (res) {
-      //         // 转发失败
-      //         wx.showToast({
-      //           title: `邀请失败`,
-      //           image: '/images/u1565.png',
-      //           duration: 2000
-      //         })
-      //       }
-      //     }
-      //   },
-      // })
-    // }
-    
+    }
+  },
+  getShareInfo() {
+    const _this = this;
+    http.request({
+      url: "shares_info",
+      data: {
+        alias: 'fiction',
+        fiction_id: _this.data.fiction_id || '',
+      },
+      success(res) {
+        const shareConfig = res.data;
+        _this.setData({
+          shareConfig,
+        })
+      },
+    })
   }
 })

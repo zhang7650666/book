@@ -17,6 +17,7 @@ Page({
     readArr:[], // 最近阅读数组
     books: [], // 数据列表
     isLoadData: false, //已经有loading了，接口返回空时才显示空白屏，
+    isLoadDataChange: false,
   },
   /**
    * 生命周期函数--监听页面加载
@@ -45,8 +46,9 @@ Page({
       this.setData({
         currentData: e.target.dataset.current,
         isLoadData: false,
-        readArr: [],
-        books: []
+        isLoadDataChange: false,
+        // readArr: [],
+        // books: []
       })
       if (this.data.currentData == 1) {
         this.getRecentlyBookList({
@@ -155,11 +157,11 @@ Page({
         };
         _this.setData({
           readArr: res.data.list || [],
-          isLoadData: true,
+          isLoadDataChange: true,
         });
         _this.calcSwiperHeight();
         wx.hideLoading();
-      }
+      },
     })
   },
   //从书架删除
@@ -335,10 +337,4 @@ Page({
    
   },
 
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  },
 })
