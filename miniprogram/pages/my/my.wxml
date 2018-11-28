@@ -13,11 +13,13 @@
 </view>
 <!-- 列表 -->
 <view class="b-user-list-block">
-   <view class="list-item" wx:for="{{userList}}" wx:if="item.flag == 'desktop' && isAndroid" wx:key="index" catchtap="handleJump" data-item="{{item}}">
+   <view class="list-item" wx:for="{{userList}}" wx:key="index" catchtap="handleJump" data-item="{{item}}">
+    <view class="item-parent" >
       <image class="list-icon" mode="widthFix" style="width: 40rpx; " src="{{item.icon}}"></image>
       <text class="list-item-name">{{item.alias}}</text>
-     <view class="list-right-box"> 
+      <view class="list-right-box"> 
         <text class="list-desc" wx:if="{{item.score}}">可获得{{item.score}}积分</text>
+      </view>
      </view>
    </view>
 </view>

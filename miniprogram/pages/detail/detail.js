@@ -225,12 +225,12 @@ Page({
    */
   onShareAppMessage: function () {
     let _this = this;
-    const { shareConfig = {} } = this.data;
+    const { shareConfig = {}, bookDetails } = this.data;
     return {
-      title: shareConfig.title,
-      path: shareConfig.path,
-      desc: shareConfig.desc,
-      imageUrl: shareConfig.img,
+      title: shareConfig.title || bookDetails.fiction_name,
+      path: shareConfig.path || `pages/detail/detail?fiction_id=${_this.data.fiction_id}`,
+      desc: shareConfig.desc || bookDetails.fiction_desc,
+      imageUrl: shareConfig.img || bookDetails.fiction_img ,
       success: function (res) {
         // _this.postActivityBackoff({ alias: 'fiction' });
         wx.showToast({

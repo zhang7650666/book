@@ -29,6 +29,7 @@ Page({
         icon: '/images/my1.png',
         alias: '积分充值',
         url:"/pages/recharge/recharge",
+        flag: 'recharge'
       },
       {
         icon: '/images/my2.png',
@@ -48,7 +49,8 @@ Page({
     ],
     systemInfo: {},
     activityMap: {},
-    isAndroid: ''
+    isAndroid: false,
+    isHasSwitch: false,
   },
 
   /**
@@ -62,6 +64,7 @@ Page({
       userList: [..._this.data.list],
       isAndroid: app.globalData.isAndroid,
     });
+    // 调用用户信息接口
     this.postUserInfo();
   },
   // 用户信息接口请求
@@ -143,8 +146,7 @@ Page({
    */
   onShow: function () {
     app.routerUploadToken();
-    // 调用用户信息接口
-    this.postUserInfo();
+    this.paySwitch();
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -186,6 +188,19 @@ Page({
   confirmSignInDialog(value) {
     this.setData({
       signInShowModel: false,
+    })
+  },
+  paySwitch() {
+    let _this = this;
+    http.request({
+      url: 'pay_switch',
+      data: {},
+      success(res) {
+        const isHasSwitch = res.data.switch && res.data.switch != 1;
+        _this.setData({
+          list: !isHasSwitch ? _this.data.list.filter( v => v.flag != 'recharge') : _this.data.list
+        });
+      },
     })
   }
 })

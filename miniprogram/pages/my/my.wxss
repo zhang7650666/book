@@ -42,13 +42,7 @@
 .list-item {
   overflow: hidden;
   border-bottom: 2rpx solid #fafafa;
-  display: flex;
-  align-items: center;
-  font-size: 30rpx;
-  padding: 0 40rpx;
   position: relative;
-  height:100rpx;
-  
 }
 .list-item::after {
   content: "";
@@ -63,6 +57,13 @@
 }
 .list-item.color-red {
   color:#EA5149;
+}
+.item-parent {
+  display: flex;
+  align-items: center;
+  font-size: 30rpx;
+  padding: 0 40rpx;
+  height:100rpx;
 }
 .list-item .list-item-name {
   flex: 1;

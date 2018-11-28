@@ -1,6 +1,6 @@
 <!--pages/impower/impower.wxml-->
 <view class="impower-block">
-  <image></image>
+  <image src="/images/icona.jpg" mode="widthFix"></image>
   <text>还未登陆，请点击登陆</text>
   <button type="default" size="default" open-type="getUserInfo" hover-class='none' bindgetuserinfo="bindgetuserinfo">点此登陆</button>
 </view>

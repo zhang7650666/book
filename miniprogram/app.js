@@ -55,13 +55,15 @@ App({
     }
   },
   fefrechToken(res_login) {
+    const _this = this;
     http.request({
       isNotToken: true,
       url: "token",
       data: {
         login_code: res_login.login_code,
         encrypted_data: res_login.encrypted_data,
-        iv: res_login.iv
+        iv: res_login.iv,
+        channel: _this.globalData.systemInfo.platform == 'ios' ? 'ios' : 'android'
       },
       success(data) {
         wx.setStorageSync('token', JSON.stringify(data.data));
@@ -86,7 +88,7 @@ App({
                 _this.getToken({
                   login_code: userToken.token,
                   encrypted_data: res_user.encryptedData,
-                  iv: res_user.iv
+                  iv: res_user.iv,
                 })
               }, 
               fail() {

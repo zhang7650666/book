@@ -34,6 +34,7 @@ Page({
     fictionShareConfig: {},
     is_pay: 0, //是否购买小说
     score: '',
+    title: '',
   },
    /**
    * 生命周期函数--监听页面加载
@@ -51,8 +52,9 @@ Page({
         fiction_id: chapter_info.fiction_id, 
         chapter_id: chapter_info.chapter_id,
         activityMap,
-        fiction_name: options.fiction_name,
+        fiction_name: options.fiction_name || '',
         score: activityMap['invite'] ? activityMap['invite']['score'] : '',
+        title: options.fiction_name || ''　
       });
     }else{
       // 从其他页面到阅读页
@@ -60,11 +62,12 @@ Page({
         fiction_id: options.fiction_id, 
         chapter_id: options.chapter_id || 0,
         activityMap,
-        fiction_name: options.fiction_name
+        fiction_name: options.fiction_name || '',
+        title: options.fiction_name || ''
       });
     }
     wx.setNavigationBarTitle({
-      title: options.fiction_name
+      title: this.data.title
     });
     // 小说内容初始化展示
     this.handleChapter();
@@ -192,11 +195,15 @@ Page({
             chapter_id: res.data.chapter_id,
             isMask: _this.data.isMask ? _this.data.isMask : false,
             is_pay: res.data.auto_pay == 0 ? 0 : 1,
+            title: res.data.title || '',
           })
           wx.pageScrollTo({
             scrollTop: 2,
             duration: 0
           })
+          wx.setNavigationBarTitle({
+            title: _this.data.title
+          });
           wx.hideLoading();
         }
       },
@@ -320,11 +327,12 @@ Page({
       //当前小说的信息
       shareConfig = this.data.fictionShareConfig || {};
     }
+    const { fictionRead = {}} = this.data;
     return {
-      title: shareConfig.title,
-      path: shareConfig.path,
+      title: shareConfig.title || fictionRead.title,
+      path: shareConfig.path || `pages/reading/reading?fiction_id=${fictionRead.fiction_id}&is_pay=0&is_auto_pay=''`,
       desc: shareConfig.desc,
-      imageUrl: shareConfig.img,
+      imageUrl: shareConfig.img || fictionRead.fiction_img,
       success: function (res) {
         if (chareFrom != 'button') {
           wx.showToast({
@@ -335,11 +343,6 @@ Page({
         }
         else {
           _this.postActivityBackoff({ alias: 'fiction' });
-          // wx.showToast({
-          //   title: `获得${_this.data.score}积分`,
-          //   icon: 'success',
-          //   duration: 2000
-          // })
         }
       },
       fail: function (res) {
