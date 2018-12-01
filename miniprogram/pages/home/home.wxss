@@ -1,0 +1,78 @@
+/**index.wxss**/
+
+page {
+  font-family: -apple-system-font, "Helvetica Neue", sans-serif;
+  background: #f6f6f6;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+/* 搜索样式 */
+.search-wrap{
+  position:relative;
+  width:100%;
+  padding:20rpx;
+  box-sizing: border-box;
+}
+.hide-con{
+  text-align:center;
+  display:block;
+  width:710rpx;
+  height:56rpx;
+  background:#efeff4;
+  border-radius:12rpx;
+}
+ .icon-search{
+  position: relative;
+  top:2rpx;
+}
+.insert{
+  display:inline-block ;
+  height:56rpx;
+  border-radius:12rpx;
+  font-size:28rpx;
+  color:#bababa;
+  line-height:56rpx;
+  margin-left:12rpx;
+}
+.ipt-search{
+  display:block;
+  width:680rpx;
+  height:56rpx;
+  background:#efeff4;
+  margin-left:20rpx;
+  border-radius:12rpx;
+  font-size:28rpx;
+  color:#999;
+  line-height:56rpx;
+  padding-left:30rpx;
+}
+/* 图书*/
+
+.main-title .book-more{
+  flex:0 0 68rpx;
+  font-size:30rpx;
+  color:#999;
+  position: relative;
+  padding-right: 60rpx;
+}
+.main-title .book-more::before{
+  content: "";
+  position: absolute;
+  top: 12rpx;
+  right: 45rpx;
+  width: 16rpx;
+  height: 16rpx;
+  border: 2rpx solid #999;
+  border-color: #999 #999 transparent transparent;
+  transform: rotate(45deg)
+}
+.main-title .book-more::before {
+  right: 42rpx;
+}
+.home-main-book {
+  border-bottom: 12rpx solid #f2f2f2;
+}
+swiper {
+  height: 280rpx;
+}

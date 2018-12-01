@@ -26,12 +26,6 @@ Page({
     userList: [],
     list: [
       {
-        icon: '/images/my1.png',
-        alias: '积分充值',
-        url:"/pages/recharge/recharge",
-        flag: 'recharge'
-      },
-      {
         icon: '/images/my2.png',
         alias: '积分记录',
         url: "/pages/record/record",
@@ -196,9 +190,18 @@ Page({
       url: 'pay_switch',
       data: {},
       success(res) {
-        const isHasSwitch = res.data.switch && res.data.switch != 1;
+        const isHasSwitch = res.data.switch && res.data.switch == 1;
+        const updateList = !isHasSwitch ? _this.data.list.filter(v => v.flag != 'recharge') : [
+          {
+            icon: '/images/my1.png',
+            alias: '积分充值',
+            url: "/pages/recharge/recharge",
+            flag: 'recharge'
+          },
+          ..._this.data.list.filter(v => v.flag != 'recharge')
+        ]
         _this.setData({
-          list: !isHasSwitch ? _this.data.list.filter( v => v.flag != 'recharge') : _this.data.list
+          list: updateList
         });
       },
     })

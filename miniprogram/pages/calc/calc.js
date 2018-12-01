@@ -1,22 +1,18 @@
-// miniprogram/pages/home/home.js
-const app = getApp();
-import {http} from "../../util/http.js";
+// pages/calc/calc.js
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-   
+    url: 'https://book.qiyunet.top/html/calc.html'
   },
+
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    wx.showLoading({
-      title: '加载中',
-      mask: true
-    })
+    
   },
 
   /**
@@ -26,22 +22,11 @@ Page({
 
   },
 
-  /**S
+  /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    const versionSwith = wx.getStorageSync('version_switch');
-    wx.hideLoading();
-    if (versionSwith && versionSwith != 1) {
-      wx.switchTab({
-        url: `/pages/home/home`,
-      })
-    }
-    else {
-      wx.navigateTo({
-        url: `/pages/calc/calc`,
-      })
-    }
+
   },
 
   /**
@@ -62,11 +47,20 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
+
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
+
   },
+
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function () {
+
+  }
 })

@@ -1,6 +1,3 @@
 {
-    "usingComponents":{
-      "home-book":"/components/homebook/homebook",
-      "search-book": "/components/searchbook/searchbook"
-    }
+  "navigationBarTitleText": "满满大全"  
 }

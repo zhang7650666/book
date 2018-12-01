@@ -24,7 +24,7 @@ let userToken = JSON.parse(wx.getStorageSync('token') || '{}')
 let callbackQueue = [];
 class HTTP{
   init(callback) {
-    let userToken = wx.getStorageSync('isInit') || false;
+    let userToken = wx.getStorageSync('token') || false;
     if (!userToken) {
       callbackQueue.push(callback)
     }
@@ -51,8 +51,8 @@ class HTTP{
       wx.request({
         url: config.baseUrl + params.url,
         data: params.data,
-        header: {
-          'content-Type': 'application/json;charset=utf-8',
+        headers: {
+          'Content-Type': 'application/json;charset=utf-8',
           'token': userToken.token || '',
         },
         method: params.method,
@@ -66,7 +66,6 @@ class HTTP{
               let errCode = res.data.code;
               _this._err_code(errCode);
             }
-
           }
         },
         fail: (res) => {

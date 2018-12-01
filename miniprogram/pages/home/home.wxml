@@ -1,0 +1,40 @@
+<!--index.wxml-->
+<view class="container">
+  <!-- 搜素 -->
+  <view class="search-wrap">
+    <view class="hide-con" bindtap='handleShow'>
+       <icon class="icon-search" type="search" size="12"></icon>
+       <text class="insert">搜索书名或作者</text>
+    </view>
+  </view>
+  <!-- 轮播图 -->
+  <swiper indicator-dots="{{indicatorDots}}"
+    autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" circular="{{circular}}">
+    <block wx:for="{{imgUrls}}" wx:key="item">
+      <swiper-item>
+        <image src="{{item.banner_img}}" binderror="errImg" class="slide-image" style='width:100%; overflow:show;height: 280rpx;' mode="scaleToFill" data-index="{{index}}" data-fiction_id="{{item.fiction_id}}" bindtap="swipclick"/>
+      </swiper-item>
+    </block>
+  </swiper>
+  <!-- 热门推荐 -->
+  <view class="home-main-book" wx:for="{{booksList}}" wx:key="{{index}}" wx:for-item="outItem" wx:for-index="outIndex">
+      <view class="main-title">
+        <text class="red"></text>
+        <text class="title-text">{{outItem.title}}</text>
+        <text class="book-more" data-title="{{outItem.title}}" data-typeid="{{outItem.album_id}}" bindtap="handleMore">更多</text>
+      </view>
+      <view class="books-wrap">
+        <view class="books-main" wx:for="{{outItem.list}}" wx:for-item="innerItem" wx:key="{{innerIndex}}" wx:for-index="innerIndex">
+          <home-book books="{{innerItem}}" outIndex="{{outIndex}}" innerIndex="{{innerIndex}}" bind:handleImg="handleImg"></home-book>
+        </view>
+      </view>
+  </view>
+  <!--大家都在看-->
+  <view class="main-title">
+      <text class="red"></text>
+      <text class="title-text">大家都在看</text>
+    </view>
+    <view  wx:for="{{indexLooks}}" wx:key="item.fiction_id" wx:if="{{index <30}}">
+      <search-book books="{{item}}" outIndex="{{index}}" bind:lookImg="lookImg"></search-book>
+    </view>
+</view>

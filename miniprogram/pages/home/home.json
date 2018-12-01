@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "满满小说",
+  "usingComponents": {
+    "home-book": "/components/homebook/homebook",
+    "search-book": "/components/searchbook/searchbook"
+  }
+}

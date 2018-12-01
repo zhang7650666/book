@@ -2,6 +2,7 @@
   "cloud": true,
   "pages": [
     "pages/index/index",
+    "pages/calc/calc",
     "pages/impower/impower",
     "pages/search/search",
     "pages/store/store",
@@ -16,13 +17,13 @@
     "pages/wxPay/wxPay",
     "pages/record/record", 
     "pages/service/service",
-    "pages/invitation/invitation"
+    "pages/home/home"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#e94241",
-    "navigationBarTitleText": "满满小说",
+    "navigationBarTitleText": "满满大全",
     "navigationBarTextStyle": "white"
   },
   "tabBar": {
@@ -35,7 +36,7 @@
         "selectedIconPath": "/images/u747.png"
       },
       {
-        "pagePath": "pages/index/index",
+        "pagePath": "pages/home/home",
         "text": "书城",
         "iconPath": "/images/u752.png",
         "selectedIconPath": "/images/u224.png"
@@ -49,5 +50,6 @@
     ]
   },
   "enablePullDownRefresh": true,
-  "onReachBottomDistance": 50
+  "onReachBottomDistance": 50,
+  "request": 20000
 }

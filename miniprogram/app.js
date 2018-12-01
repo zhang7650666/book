@@ -7,6 +7,9 @@ App({
     this.getSystemInfo(res => {
       this.openSettingFn();
     });
+    // this.getSystemInfo().then( data => {
+    //   this.openSettingFn();
+    // })
     wx.showLoading({
       title: '加载中',
       mask: true
@@ -31,11 +34,7 @@ App({
         }
         else {
           _this.getUserInfo()
-          // wx.hideLoading();
         }
-      },
-      complete() {
-        // wx.hideLoading();
       }
     })
   },
@@ -63,11 +62,13 @@ App({
         login_code: res_login.login_code,
         encrypted_data: res_login.encrypted_data,
         iv: res_login.iv,
-        channel: _this.globalData.systemInfo.platform == 'ios' ? 'ios' : 'android'
+        channel: _this.globalData.systemInfo.platform == 'ios' ? 'ios' : 'android',
+        version: 1,
       },
       success(data) {
         wx.setStorageSync('token', JSON.stringify(data.data));
-        wx.setStorageSync('isInit', true);
+        wx.setStorageSync('token', JSON.stringify(data.data));
+        wx.setStorageSync('version_switch', data.data.version_switch);
         http.performCallbackQueue();
       },
     })
@@ -115,6 +116,15 @@ App({
         callback && callback(res);
       }
     })
+    // return new Promise((resolve, reject) => {
+    //   wx.getSystemInfo({
+    //     success: function (res) {
+    //       _this.globalData.systemInfo = res;
+    //       _this.globalData.isAndroid = res.platform == 'android';
+    //       resolve(res);
+    //     }
+    //   });
+    // });
   },
   globalData: {
     userInfo: null,

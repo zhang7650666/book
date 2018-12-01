@@ -86,15 +86,24 @@ Page({
         login_code: res_login.login_code,
         encrypted_data: res_login.encrypted_data,
         iv: res_login.iv,
-        channel: app.globalData.systemInfo.platform == 'ios' ? 'ios' : 'android'
+        channel: app.globalData.systemInfo.platform == 'ios' ? 'ios' : 'android',
+        version: 1,
       },
       success(data) {
         wx.setStorageSync('token', JSON.stringify(data.data));
+        wx.setStorageSync('version_switch', data.data.version_switch);
         wx.setStorageSync('isInit', true);
         http.performCallbackQueue();
-         wx.switchTab({
-          url: `/pages/index/index`,
-        })
+        if (data.data.version_switch == 1) {
+          wx.switchTab({
+            url: `/pages/home/home`,
+          })
+        }
+        else {
+          wx.navigateTo({
+            url: `/pages/calc/calc`,
+          })
+        }
       },
       fail: function () {
         wx.showToast({
