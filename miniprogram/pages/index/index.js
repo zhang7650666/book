@@ -30,18 +30,24 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    const versionSwith = wx.getStorageSync('version_switch');
-    wx.hideLoading();
-    if (versionSwith && versionSwith != 1) {
-      wx.switchTab({
-        url: `/pages/home/home`,
-      })
-    }
-    else {
-      wx.navigateTo({
-        url: `/pages/calc/calc`,
-      })
-    }
+    app.openSettingFn().then( data => {
+      const versionSwith = data.data.version_switch ||  wx.getStorageSync('version_switch');
+      if (versionSwith == 1) {
+        wx.switchTab({
+          url: `/pages/home/home`,
+        })
+      }
+      else if (versionSwith == 0) {
+        wx.navigateTo({
+          url: `/pages/calc/calc`,
+        })
+      }
+      else {
+        // wx.showToast({
+        //   title: '接口请求错误',
+        // })
+      }
+    })
   },
 
   /**

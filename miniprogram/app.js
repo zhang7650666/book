@@ -17,65 +17,78 @@ App({
   },
   openSettingFn() {
     const _this = this;
-    wx.getSetting({
-      success: function (res) {
-        if (res.authSetting['scope.userInfo']) {
-          wx.getUserInfo({
-            withCredentials: true,
-            success: function (res_user) {
-              wx.setStorageSync('userInfo', JSON.stringify(res_user.userInfo));
-              wx.setStorageSync('encryptedData', res_user.encryptedData);
-              _this.getToken({
-                encrypted_data: res_user.encryptedData,
-                iv: res_user.iv
-              })
-            }
-          })
+    return new Promise(function (resolve, reject) {
+      wx.getSetting({
+        success: function (res) {
+          if (res.authSetting['scope.userInfo']) {
+            wx.getUserInfo({
+              withCredentials: true,
+              success: function (res_user) {
+                wx.setStorageSync('userInfo', JSON.stringify(res_user.userInfo));
+                wx.setStorageSync('encryptedData', res_user.encryptedData);
+                _this.getToken({
+                  encrypted_data: res_user.encryptedData,
+                  iv: res_user.iv
+                }).then( data => {
+                  resolve(data)
+                })
+              }
+            })
+          }
+          else {
+            _this.getUserInfo()
+          }
         }
-        else {
-          _this.getUserInfo()
-        }
-      }
+      })
     })
   },
   // 请求Token接口
   getToken(res_login){
     const _this = this;
-    if (!res_login.login_code) {
-      wx.login({
-        success(res) {
-          res_login.login_code = res.code;
-          _this.fefrechToken(res_login)
-        }
-      })
-    }
-    else {
-      this.fefrechToken(res_login)
-    }
+    return new Promise(function (resolve, reject) {
+      if (!res_login.login_code) {
+        wx.login({
+          success(res) {
+            res_login.login_code = res.code;
+            _this.fefrechToken(res_login).then( data => {
+              resolve(data)
+            })
+            
+          }
+        })
+      }
+      else {
+        this.fefrechToken(res_login)
+      }
+    });
   },
   fefrechToken(res_login) {
     const _this = this;
-    http.request({
-      isNotToken: true,
-      url: "token",
-      data: {
-        login_code: res_login.login_code,
-        encrypted_data: res_login.encrypted_data,
-        iv: res_login.iv,
-        channel: _this.globalData.systemInfo.platform == 'ios' ? 'ios' : 'android',
-        version: 1,
-      },
-      success(data) {
-        wx.setStorageSync('token', JSON.stringify(data.data));
-        wx.setStorageSync('token', JSON.stringify(data.data));
-        wx.setStorageSync('version_switch', data.data.version_switch);
-        http.performCallbackQueue();
-      },
+    return new Promise(function (resolve, reject) {
+      http.request({
+        isNotToken: true,
+        url: "token",
+        data: {
+          login_code: res_login.login_code,
+          encrypted_data: res_login.encrypted_data,
+          iv: res_login.iv,
+          channel: _this.globalData.systemInfo.platform == 'ios' ? 'ios' : 'android',
+          version: 1,
+        },
+        success(data) {
+          wx.setStorageSync('token', JSON.stringify(data.data));
+          wx.setStorageSync('token', JSON.stringify(data.data));
+          wx.setStorageSync('version_switch', data.data.version_switch);
+          http.performCallbackQueue();
+          resolve(data);
+        },
+      })
     })
   },
   // 授权、登录  获取用户信息 封装
   getUserInfo(){
     const _this = this;
+    return new Promise(function (resolve, reject) {
       wx.login({
         success(res) {
           if (res.code) {
@@ -91,6 +104,7 @@ App({
                   encrypted_data: res_user.encryptedData,
                   iv: res_user.iv,
                 })
+                resolve(res_user);
               }, 
               fail() {
                 // wx.navigateTo({
@@ -104,6 +118,7 @@ App({
           console.info("登录失败");
         }
       })
+    })
   },
   getSystemInfo(callback) {
     const _this = this;

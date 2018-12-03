@@ -5,7 +5,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    url: 'https://book.qiyunet.top/html/calc.html'
+    url: 'https://book.qiyunet.top/calc.html'
   },
 
   /**
