@@ -127,7 +127,6 @@ Page({
         fiction_id: ev.currentTarget.dataset.fiction_id,
       },
       success(res) {
-        
         _this.setData({
           'fictionRead.collection_id': res.data.controller_id || 0,
         });
@@ -190,7 +189,6 @@ Page({
         // 小程序解析html
         // 小说内容res.data.data.fiction_title
         if(res.code == 200){
-          console.log(res.data)
           WxParse.wxParse('article', 'html', res.data.content, _this, 5);
           _this.setData({
             fictionRead: res.data,
@@ -208,7 +206,7 @@ Page({
             duration: 0
           })
           wx.setNavigationBarTitle({
-            title: _this.data.fiction_name
+            title: res.data.fiction_name
           });
           wx.hideLoading();
         }

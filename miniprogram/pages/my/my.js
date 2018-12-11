@@ -51,6 +51,10 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    wx.showLoading({
+      title: '加载中',
+      mask: true
+    });
     const _this = this;
     let userInfo = JSON.parse(wx.getStorageSync('userInfo') || '{}');
     this.setData({
@@ -58,7 +62,9 @@ Page({
       userList: [..._this.data.list],
       isAndroid: app.globalData.isAndroid,
     });
-   
+    if (!Object.keys(userInfo).length) {
+      app.getUserInfo();
+    }
   },
   // 用户信息接口请求
   postUserInfo() {

@@ -23,10 +23,6 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    wx.showLoading({
-      title: '加载中',
-      mask: true
-    })
     this.getBooksList({
       pullDown:false,
       pullUp:false,
@@ -139,6 +135,10 @@ Page({
   },
   //获取最近阅读列表
   getRecentlyBookList(obj) {
+    wx.showLoading({
+      title: '加载中',
+      mask: true
+    })
     const _this = this;
     http.request({
       url: "recent_list",
@@ -205,6 +205,10 @@ Page({
   },
   //获取书架列表
   getBooksList(obj) {
+    wx.showLoading({
+      title: '加载中',
+      mask: true
+    })
     const _this = this;
     http.request({
       url: "controller_list",
@@ -223,7 +227,6 @@ Page({
           // 隐藏加载框
           wx.hideLoading();
         };
-
         _this.setData({
           books: _this.data.bookPage == 1 ? (res.data.list || []) : [..._this.data.books, ...res.data.list],
           isLoadData: true,
