@@ -21,7 +21,7 @@ Component({
     //去书城
     handleStore(){
       wx.switchTab({
-        url: "/pages/index/index",
+        url: `/pages/home/home`,
       })
     }
   }

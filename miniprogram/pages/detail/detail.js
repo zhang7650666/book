@@ -16,6 +16,7 @@ Page({
     bookDetails:{},
     bookList:[], // 数据列表
     shareConfig: {}, //分享配置
+    isshare: 0,
   },
 
   /**
@@ -28,10 +29,10 @@ Page({
     });
     this.setData({
       fiction_id: options.fiction_id,
+      isshare: options.isshare || 0,
     })
     // 小说详情
     this.getBookIntro();
-    this.getShareInfo();
   },
   // 继续阅读
   handleKeep(){
@@ -174,6 +175,7 @@ Page({
    */
   onShow: function () {
     app.routerUploadToken();
+    this.getShareInfo();
   },
 
   /**
@@ -228,7 +230,7 @@ Page({
     const { shareConfig = {}, bookDetails } = this.data;
     return {
       title: shareConfig.title || bookDetails.fiction_name,
-      path: shareConfig.path || `pages/detail/detail?fiction_id=${_this.data.fiction_id}`,
+      path: shareConfig.path || `pages/detail/detail?fiction_id=${_this.data.fiction_id}&isshare=1`,
       desc: shareConfig.desc || bookDetails.fiction_desc,
       imageUrl: shareConfig.img || bookDetails.fiction_img ,
       success: function (res) {
@@ -263,6 +265,11 @@ Page({
           shareConfig,
         })
       },
+    })
+  },
+  toHome() {
+    wx.navigateTo({
+      url: '/pages/index/index',
     })
   }
 })

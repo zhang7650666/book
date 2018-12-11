@@ -21,7 +21,7 @@
       <view class="main-title">
         <text class="red"></text>
         <text class="title-text">{{outItem.title}}</text>
-        <text class="book-more" data-title="{{outItem.title}}" data-typeid="{{outItem.album_id}}" bindtap="handleMore">更多</text>
+        <!-- <text class="book-more" data-title="{{outItem.title}}" data-typeid="{{outItem.album_id}}" bindtap="handleMore">更多</text> -->
       </view>
       <view class="books-wrap">
         <view class="books-main" wx:for="{{outItem.list}}" wx:for-item="innerItem" wx:key="{{innerIndex}}" wx:for-index="innerIndex">

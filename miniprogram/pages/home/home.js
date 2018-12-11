@@ -1,6 +1,7 @@
 // miniprogram/pages/home/home.js
 const app = getApp();
 import { http } from "../../util/http.js";
+import { removeHtmlTag } from '../../util/base.js';
 Page({
 
   /**
@@ -41,7 +42,6 @@ Page({
       pullDown: false,
       pullUp: false,
     });
-    this.getShareInfo();
   },
   // banner图接口请求
   postAddList(obj) {
@@ -158,7 +158,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    this.getShareInfo();
   },
 
   /**
@@ -238,9 +238,9 @@ Page({
     const _this = this;
     const { shareConfig = {} } = this.data;
     return {
-      title: shareConfig.title,
+      title: removeHtmlTag(shareConfig.title),
       path: shareConfig.path,
-      desc: shareConfig.desc,
+      desc: removeHtmlTag(shareConfig.desc),
       imageUrl: shareConfig.img,
       success: function (res) {
         // _this.postActivityBackoff({ alias: 'home' });

@@ -100,7 +100,7 @@ text{
     width: 100%;
     display:flex;
     flex-wrap:wrap;
-    padding: 40rpx;
+    padding: 20rpx 40rpx;
     justify-content: space-around;
     border-top:1rpx solid #f2f2f2;
     box-sizing: border-box;
@@ -111,8 +111,8 @@ text{
     flex:0 0 260rpx;
     text-align:center;
     width:260rpx;
-    height:70rpx;
-    line-height:70rpx;
+    height:60rpx;
+    line-height:60rpx;
     border-radius:14rpx;
     font-size: 26rpx;
 }
@@ -138,4 +138,17 @@ text{
 
 .main-title .red {
   margin-top:3rpx;
+}
+
+.btn-to-home {
+  position: fixed;
+  bottom: 140rpx;
+  right: 40rpx;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 40rpx;
+}
+.btn-to-home image {
+  width:80rpx;
+  height: 80rpx;
+  display: block;
 }

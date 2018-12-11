@@ -5,7 +5,7 @@ const tips = {
   1002:'is json',
   1003:'参数不能为空',
   1004:'openid获取失败',
-  1005:"无效的用户",
+  1005: "无效的用户", 
   2001:'无效的TOKEN',
   3000: "错误代码3000",
   3001:'小说不存在已下架',
@@ -44,6 +44,7 @@ class HTTP{
   }
   request(params){
     const _this = this;
+    userToken = JSON.parse(wx.getStorageSync('token') || '{}');
     if (!params.method) {
       params.method = "POST";
     }
@@ -101,6 +102,9 @@ class HTTP{
                     delta: 1
                   })
                 }, 2000)
+              }
+              if (res.data.code == 2001) {
+                wx.removeStorageSync('token');
               }
             }
           },

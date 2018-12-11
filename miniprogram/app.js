@@ -1,15 +1,16 @@
 //app.js
 // 注意上线之后 （login_code: 'test' || res_login.code）去掉test
 import { http, callbackQueue} from "./util/http.js";
+import mtiwxsdk from './util/mtj-wx-sdk.js'
 
 App({
   onLaunch: function (resa) {
-    this.getSystemInfo(res => {
-      this.openSettingFn();
-    });
-    // this.getSystemInfo().then( data => {
+    // this.getSystemInfo(res => {
     //   this.openSettingFn();
-    // })
+    // });
+    this.getSystemInfo().then( data => {
+      this.openSettingFn();
+    })
     wx.showLoading({
       title: '加载中',
       mask: true
@@ -43,7 +44,7 @@ App({
     })
   },
   // 请求Token接口
-  getToken(res_login){
+  getToken(res_login = {}){
     const _this = this;
     return new Promise(function (resolve, reject) {
       if (!res_login.login_code) {
@@ -70,16 +71,14 @@ App({
         url: "token",
         data: {
           login_code: res_login.login_code,
-          encrypted_data: res_login.encrypted_data,
-          iv: res_login.iv,
+          // encrypted_data: res_login.encrypted_data,
+          // iv: res_login.iv,
           channel: _this.globalData.systemInfo.platform == 'ios' ? 'ios' : 'android',
-          version: 1,
+          version: 1.1,
         },
         success(data) {
-          wx.setStorageSync('token', JSON.stringify(data.data));
-          wx.setStorageSync('token', JSON.stringify(data.data));
+          // wx.setStorageSync('token', JSON.stringify(data.data));
           wx.setStorageSync('version_switch', data.data.version_switch);
-          http.performCallbackQueue();
           resolve(data);
         },
       })
@@ -101,12 +100,13 @@ App({
                 wx.setStorageSync('encryptedData', res_user.encryptedData);
                 _this.getToken({
                   login_code: userToken.token,
-                  encrypted_data: res_user.encryptedData,
-                  iv: res_user.iv,
+                  // encrypted_data: res_user.encryptedData,
+                  // iv: res_user.iv,
+                }).then( data => {
+                  resolve(data);
                 })
-                resolve(res_user);
               }, 
-              fail() {
+              fail(err) {
                 // wx.navigateTo({
                 //   url: '/pages/impower/impower'
                 // })
@@ -122,24 +122,24 @@ App({
   },
   getSystemInfo(callback) {
     const _this = this;
-    wx.getSystemInfo({
-      success: function (res) {
-        _this.globalData.systemInfo = res;
-        _this.globalData.isAndroid = res.platform == 'android';
-      },
-      complete(res) {
-        callback && callback(res);
-      }
-    })
-    // return new Promise((resolve, reject) => {
-    //   wx.getSystemInfo({
-    //     success: function (res) {
-    //       _this.globalData.systemInfo = res;
-    //       _this.globalData.isAndroid = res.platform == 'android';
-    //       resolve(res);
-    //     }
-    //   });
-    // });
+    // wx.getSystemInfo({
+    //   success: function (res) {
+    //     _this.globalData.systemInfo = res;
+    //     _this.globalData.isAndroid = res.platform == 'android';
+    //   },
+    //   complete(res) {
+    //     callback && callback(res);
+    //   }
+    // })
+    return new Promise((resolve, reject) => {
+      wx.getSystemInfo({
+        success: function (res) {
+          _this.globalData.systemInfo = res;
+          _this.globalData.isAndroid = res.platform == 'android';
+          resolve(res);
+        }
+      });
+    });
   },
   globalData: {
     userInfo: null,
@@ -165,9 +165,6 @@ App({
       success(res) {
         const shareConfig = res.data;
         callback && callback(shareConfig);
-        // _this.setData({
-        //   shareConfig,
-        // })
       },
     })
   }

@@ -87,7 +87,7 @@ Page({
         encrypted_data: res_login.encrypted_data,
         iv: res_login.iv,
         channel: app.globalData.systemInfo.platform == 'ios' ? 'ios' : 'android',
-        version: 1,
+        version: 1.1,
       },
       success(data) {
         wx.setStorageSync('token', JSON.stringify(data.data));

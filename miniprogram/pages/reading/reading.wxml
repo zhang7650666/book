@@ -46,7 +46,7 @@
         </view>
     </view>
     <!-- 设置弹框 -->
-    <view class="mask-wrap" wx:if="{{isMask && !(fictionRead.is_pay == 1 || fictionRead.is_pay == 3)}}">
+    <view class="mask-wrap" wx:if="{{isMask && !(fictionRead.is_pay == 1 || fictionRead.is_pay == 3)}}" style="overflow:visible">
       <view class="go-book-store arrow-pub" catchtap="handleStore">
         <text>去书城</text>
       </view>

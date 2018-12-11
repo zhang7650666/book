@@ -58,8 +58,7 @@ Page({
       userList: [..._this.data.list],
       isAndroid: app.globalData.isAndroid,
     });
-    // 调用用户信息接口
-    this.postUserInfo();
+   
   },
   // 用户信息接口请求
   postUserInfo() {
@@ -124,6 +123,9 @@ Page({
           icon: 'success',
           duration: 2000,
         })
+        wx.switchTab({
+          url: `/pages/home/home`,
+        })
       } catch (e) {
         // Do something when catch error
       }
@@ -139,6 +141,14 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    if (!Object.keys(this.data.userInfo).length) {
+      let userInfo = JSON.parse(wx.getStorageSync('userInfo') || '{}');
+      this.setData({
+        userInfo: userInfo
+      });
+    }
+    // 调用用户信息接口
+    this.postUserInfo();
     app.routerUploadToken();
     this.paySwitch();
   },
@@ -190,7 +200,7 @@ Page({
       url: 'pay_switch',
       data: {},
       success(res) {
-        const isHasSwitch = res.data.switch && res.data.switch == 1;
+        const isHasSwitch = res.data.switch && res.data.switch != 1;
         const updateList = !isHasSwitch ? _this.data.list.filter(v => v.flag != 'recharge') : [
           {
             icon: '/images/my1.png',

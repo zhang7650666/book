@@ -1,6 +1,7 @@
 // miniprogram/pages/reading/reading.js
 import {http} from "../../util/http.js";
 let WxParse = require('../../wxParse/wxParse.js');
+import { removeHtmlTag } from '../../util/base.js';
 Page({
 
   /**
@@ -67,7 +68,7 @@ Page({
       });
     }
     wx.setNavigationBarTitle({
-      title: this.data.title
+      title: this.data.fiction_name
     });
     // 小说内容初始化展示
     this.handleChapter();
@@ -126,6 +127,10 @@ Page({
         fiction_id: ev.currentTarget.dataset.fiction_id,
       },
       success(res) {
+        
+        _this.setData({
+          'fictionRead.collection_id': res.data.controller_id || 0,
+        });
         wx.showToast({
           title: "已添加到书架",
           icon: 'success',
@@ -143,7 +148,7 @@ Page({
   // 去书城
   handleStore(){
     wx.switchTab({
-      url: "/pages/index/index",
+      url: `/pages/home/home`,
     })
   },
   // 小说当前章节内容
@@ -185,6 +190,7 @@ Page({
         // 小程序解析html
         // 小说内容res.data.data.fiction_title
         if(res.code == 200){
+          console.log(res.data)
           WxParse.wxParse('article', 'html', res.data.content, _this, 5);
           _this.setData({
             fictionRead: res.data,
@@ -202,7 +208,7 @@ Page({
             duration: 0
           })
           wx.setNavigationBarTitle({
-            title: _this.data.title
+            title: _this.data.fiction_name
           });
           wx.hideLoading();
         }
@@ -329,9 +335,9 @@ Page({
     }
     const { fictionRead = {}} = this.data;
     return {
-      title: shareConfig.title || fictionRead.title,
+      title: removeHtmlTag(shareConfig.title || fictionRead.title),
       path: shareConfig.path || `pages/reading/reading?fiction_id=${fictionRead.fiction_id}&is_pay=0&is_auto_pay=''`,
-      desc: shareConfig.desc,
+      desc: removeHtmlTag(shareConfig.desc),
       imageUrl: shareConfig.img || fictionRead.fiction_img,
       success: function (res) {
         if (chareFrom != 'button') {

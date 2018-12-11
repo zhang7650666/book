@@ -1,5 +1,6 @@
 // miniprogram/pages/invitation/invitation.js
 import {http} from "../../util/http.js";
+import { removeHtmlTag } from '../../util/base.js'
 Page({
 
   /**
@@ -92,16 +93,11 @@ Page({
     let _this = this;
     let { shareInfo = {} } = this.data;
     return {
-      title: shareInfo.title,
+      title: removeHtmlTag(shareInfo.title),
       path: shareInfo.path,
-      desc: shareInfo.desc,
+      desc: removeHtmlTag(shareInfo.desc),
       imageUrl: shareInfo.img,
       success: function (res) {
-        // wx.showToast({
-        //   title: `获得${_this.data.score}积分`,
-        //   icon: 'success',
-        //   duration: 2000
-        // })
         _this.postActivityBackoff();
       },
       fail: function (res) {

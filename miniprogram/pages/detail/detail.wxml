@@ -38,11 +38,15 @@
     <view class="main-title">
         <text class="red"></text>
         <text class="title-text">同类小说还有</text>
+        <!-- <text class="book-more" data-typeid="{{outItem.album_id}}" bindtap="handleMore">更多</text> -->
     </view>
     <view class="books-wrap">
         <view class="books-main" wx:for="{{bookList}}" wx:key="item.name" wx:if="{{index < 3}}">
             <home-book books="{{item}}"></home-book>
         </view>
+    </view>
+    <view wx:if="{{isshare == 1}}" class="btn-to-home">
+      <image src="../../images/home.png" bindtap="toHome" mode="scaleToFill"></image>
     </view>
     <view class="btn-wrap">
         <text class="add" data-collection_id="{{bookDetails.collection_id}}" catchtap="fictionSet">{{bookDetails.fiction_collection == 0 ? '加入书架':'移出书架'}}</text>

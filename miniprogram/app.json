@@ -17,7 +17,8 @@
     "pages/wxPay/wxPay",
     "pages/record/record", 
     "pages/service/service",
-    "pages/home/home"
+    "pages/home/home",
+    "pages/invitation/invitation"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",

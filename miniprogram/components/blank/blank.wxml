@@ -3,5 +3,5 @@
     <view class="img-wrap">
       <image src="/images/u1530.png" mode="widthFix"></image>
     </view>
-    <text class="blank-btn" catchtap="handleStore">去书城看看</text>
+    <text class="blank-btn" bindtap="handleStore">去书城看看</text>
 </view>
