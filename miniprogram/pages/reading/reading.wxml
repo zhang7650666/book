@@ -19,13 +19,14 @@
                 <text>我的积分 : {{fictionRead.user_score}}积分</text> 
             </view>
             <view class="deduction" catchtap="checkboxChange">
-                <checkbox-group bindchange="checkboxChange" wx:if="{{fictionRead.is_pay != 3}}">
+                <checkbox-group bindchange="checkboxChange" wx:if="{{(isSupportRecharge && fictionRead.is_pay != 3) || !isSupportRecharge &&( fictionRead.is_pay ==1 && fictionRead.user_score > fictionRead.chapter_cost)}}">
                     <label class="checkbox" wx:for="{{deduction}}" wx:key="item.name">
                         <checkbox value="{{item.name}}" checked="{{item.checked}}"/>{{item.value}}
                     </label>
                 </checkbox-group>
                 <view class="go-btn">
-                    <text class="keep-btn" catchtap="handleRead">{{fictionRead.is_pay == 3 || (fictionRead.is_pay == 1 && fictionRead.auto_pay == 0 && fictionRead.user_score <= 0) ? '积分充值' :'继续阅读'}}</text>
+                    <text wx:if="{{isSupportRecharge}}" class="keep-btn" catchtap="handleRead">{{fictionRead.is_pay == 3 || (fictionRead.is_pay == 1 && fictionRead.auto_pay == 0 && fictionRead.user_score <= 0) ? '积分充值' :'继续阅读'}}</text>
+                    <text wx:if="{{!isSupportRecharge &&( fictionRead.is_pay ==1 && fictionRead.user_score > fictionRead.chapter_cost)}}" class="keep-btn" catchtap="keepUpRead">继续阅读</text>
                   <button class="share-btn" open-type="share">分享好友获取积分免费看</button>
                 </view>
             </view>

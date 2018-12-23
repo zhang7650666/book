@@ -1,5 +1,6 @@
 // miniprogram/pages/reading/reading.js
 import {http} from "../../util/http.js";
+const app = getApp();
 let WxParse = require('../../wxParse/wxParse.js');
 import { removeHtmlTag } from '../../util/base.js';
 Page({
@@ -36,16 +37,22 @@ Page({
     is_pay: 0, //是否购买小说
     score: '',
     title: '',
+    isSupportRecharge: false,
+    isshare: 0,
   },
    /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    const _this = this;
     let activityMap = JSON.parse(wx.getStorageSync('activityMap') || '{}')
-    // wx.showLoading({
-    //   title: '加载中',
-    //   mask: true
-    // });
+    const extendParams = {
+      spread_source: options.spread_source,
+      spread_source_second: options.spread_source_second,
+      puid: options.puid,
+    }
+    wx.setStorageSync('extendParams', JSON.stringify(extendParams));
+    
     // 从目录页面到阅读页
     if (options.chapter_info){
       let chapter_info = JSON.parse(options.chapter_info);
@@ -64,16 +71,28 @@ Page({
         chapter_id: options.chapter_id || 0,
         activityMap,
         fiction_name: options.fiction_name || '',
-        title: options.fiction_name || ''
+        title: options.fiction_name || '',
+        isshare: options.isshare || 0,
       });
     }
     wx.setNavigationBarTitle({
       title: this.data.fiction_name
     });
-    // 小说内容初始化展示
-    this.handleChapter();
-    this.getShareInfo(); 
-    this.getFictionShareInfo();
+    if (this.data.isshare == 1) {
+      app.getToken().then(data => {
+        // 小说内容初始化展示
+        _this.handleChapter();
+        _this.getShareInfo();
+        _this.getFictionShareInfo();
+      })
+    }
+    else {
+      // 小说内容初始化展示
+      this.handleChapter();
+      this.getShareInfo(); 
+      this.getFictionShareInfo();
+    }
+   
   },
   // 点击呼出设置弹框
   handleSet() {
@@ -225,6 +244,11 @@ Page({
     }
    
   },
+  //继续阅读
+  keepUpRead() {
+    const _this = this;
+    this.handleChapter()
+  },
   // 继续阅读
   handleRead(){
     const _this = this;
@@ -250,7 +274,12 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-
+    const _this = this;
+    app.paySwitch().then(res => {
+      _this.setData({
+        isSupportRecharge: res.data.switch && res.data.switch == 0,
+      })
+    })
   },
 
   /**
@@ -288,7 +317,7 @@ Page({
   },
 
   // 邀请成功之后的回调函数
-  postActivityBackoff(obj) {
+  postActivityBackoff() {
     const _this = this;
     http.request({
       url: "activity_backoff",
@@ -296,7 +325,7 @@ Page({
         alias: 'invite',
       },
       success(res) {
-        const score = _this.data.activityMap['invite'].score
+        const score = _this.data.activityMap['invite'].score;
         wx.showToast({
           title: `获得${score}积分`,
           icon: 'success',
@@ -334,7 +363,7 @@ Page({
     const { fictionRead = {}} = this.data;
     return {
       title: removeHtmlTag(shareConfig.title || fictionRead.title),
-      path: shareConfig.path || `pages/reading/reading?fiction_id=${fictionRead.fiction_id}&is_pay=0&is_auto_pay=''`,
+      path: app.getSharePathParams(shareConfig.path || `pages/reading/reading?fiction_id=${fictionRead.fiction_id}&is_pay=0&is_auto_pay=''&isshare=1`),
       desc: removeHtmlTag(shareConfig.desc),
       imageUrl: shareConfig.img || fictionRead.fiction_img,
       success: function (res) {
@@ -346,7 +375,7 @@ Page({
           })
         }
         else {
-          _this.postActivityBackoff({ alias: 'fiction' });
+          _this.postActivityBackoff();
         }
       },
       fail: function (res) {

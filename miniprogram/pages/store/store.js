@@ -23,10 +23,10 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.getBooksList({
-      pullDown:false,
-      pullUp:false,
-    });
+    // this.getBooksList({
+    //   pullDown:false,
+    //   pullUp:false,
+    // });
   },
   //获取当前滑块的index
   bindchange(e) {
@@ -257,6 +257,17 @@ Page({
    */
   onShow: function () {
     APP.routerUploadToken();
+    if (this.data.currentData == 1) {
+      this.getRecentlyBookList({
+        pullDown: false,
+        pullUp: false,
+      })
+    } else if (this.data.currentData == 0) {
+      this.getBooksList({
+        pullDown: false,
+        pullUp: false,
+      });
+    }
   },
 
   /**

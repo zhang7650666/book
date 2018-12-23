@@ -1,6 +1,7 @@
 // miniprogram/pages/invitation/invitation.js
 import {http} from "../../util/http.js";
-import { removeHtmlTag } from '../../util/base.js'
+import { removeHtmlTag } from '../../util/base.js';
+const app = getApp();
 Page({
 
   /**
@@ -69,7 +70,7 @@ Page({
 
   },
    // 邀请成功之后的回调函数
-   postActivityBackoff(){
+   postActivityBackoff(boolean){
      const _this = this;
     http.request({
       url:"activity_backoff",
@@ -77,13 +78,16 @@ Page({
         alias:'invite',
       },
       success(res){
-        const score = _this.data.activityMap['invite'].score
-        wx.showToast({
-          title: `获得${_this.data.score}积分`,
-          icon: 'success',
-          duration: 3000
-        })
-      },
+        console.log(res);
+        if (!boolean) {
+          const score = _this.data.activityMap['invite'].score
+          wx.showToast({
+            title: `获得${_this.data.score}积分`,
+            icon: 'success',
+            duration: 3000
+          })
+        }
+      }
     })
    },
   /**
@@ -92,12 +96,26 @@ Page({
   onShareAppMessage: function () {
     let _this = this;
     let { shareInfo = {} } = this.data;
+    const version = app.globalData.isCanShareVersion;
+    if (version) {
+      _this.postActivityBackoff(true);
+      return {
+        title: removeHtmlTag(shareInfo.title),
+        path: shareInfo.path,
+        desc: removeHtmlTag(shareInfo.desc),
+        imageUrl: shareInfo.img,
+        success: function (res) {
+          //此版本分享回调异常，时有时无，所以不做处理
+        },
+      }
+    }
     return {
       title: removeHtmlTag(shareInfo.title),
       path: shareInfo.path,
       desc: removeHtmlTag(shareInfo.desc),
       imageUrl: shareInfo.img,
       success: function (res) {
+        console.log('end');
         _this.postActivityBackoff();
       },
       fail: function (res) {

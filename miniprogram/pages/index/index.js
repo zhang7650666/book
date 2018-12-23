@@ -13,6 +13,12 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    const extendParams = {
+      spread_source: options.spread_source,
+      spread_source_second: options.spread_source_second,
+      puid: options.puid,
+    }
+    wx.setStorageSync('extendParams', JSON.stringify(extendParams));
     wx.showLoading({
       title: '加载中',
       mask: true
@@ -31,17 +37,17 @@ Page({
    */
   onShow: function () {
     const _this = this;
-    const isHasToken = wx.getStorageSync('token');
-    if (isHasToken) {
-      const versionSwitch =  wx.getStorageSync('version_switch')
-      _this.updateToken(versionSwitch);
-    }
-    else {
+    // const isHasToken = wx.getStorageSync('token');
+    // if (isHasToken) {
+    //   const versionSwitch =  wx.getStorageSync('version_switch')
+    //   _this.updateToken(versionSwitch);
+    // }
+    // else {
       app.getToken().then(data => {
         const versionSwitch = data.data.version_switch || wx.getStorageSync('version_switch');
         _this.updateToken(versionSwitch);
       })
-    }
+    // }
   },
   updateToken(versionSwith = 0) {
     if (versionSwith == 1) {

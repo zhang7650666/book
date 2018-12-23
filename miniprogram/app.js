@@ -28,14 +28,17 @@ App({
   },
   fefrechToken(res_login) {
     const _this = this;
+    const extendParams = JSON.parse(wx.getStorageSync('extendParams') || '{}');
     return new Promise(function (resolve, reject) {
+      console.log('请求token');
       http.request({
         isNotToken: true,
         url: "token",
         data: {
           login_code: res_login.login_code,
           channel: _this.globalData.systemInfo.platform == 'ios' ? 'ios' : 'android',
-          version: 1.1,
+          version: 1.2,
+          ...extendParams,
         },
         success(data) {
           wx.setStorageSync('token', JSON.stringify(data.data));
@@ -57,8 +60,11 @@ App({
             withCredentials: isLoginStatus,
             success(res_user) {
               wx.setStorageSync('userInfo', JSON.stringify(res_user.userInfo));
-              wx.setStorageSync('encryptedData', res_user.encryptedData);
-              // resolve(res_user);
+              // wx.setStorageSync('encryptedData', res_user.encryptedData);
+              _this.setUserInfo({
+                nike_name: res_user.userInfo.nickName,
+                head_img: res_user.userInfo.avatarUrl
+              })
             },
             fail(code) {
               wx.redirectTo({
@@ -77,6 +83,9 @@ App({
         success: function (res) {
           _this.globalData.systemInfo = res;
           _this.globalData.isAndroid = res.platform == 'android';
+          const baseSDKVersion = res.SDKVersion.split('.').join('');
+          const wxVersion = res.version.split('.').join('');
+          _this.globalData.isCanShareVersion = baseSDKVersion >= 230 && wxVersion >= 672;
           resolve(res);
         }
       });
@@ -87,6 +96,7 @@ App({
     defaultImg: '/images/u69.png',
     systemInfo: {},
     isAndroid: true,
+    isCanShareVersion: false,
   },
   routerUploadToken() {
     //没有登陆token就要去登陆
@@ -108,5 +118,36 @@ App({
         callback && callback(shareConfig);
       },
     })
+  },
+  setUserInfo(params = {}) {
+    if (!params.nike_name || !params.head_img) {
+      return ;
+    }
+    http.request({
+      url: "set_user_info",
+      data: {
+        ...params
+      },
+      success(res) {
+      },
+    })
+  },
+  paySwitch() {
+    let _this = this;
+    return new Promise((resolve, reject) => {
+      http.request({
+        url: 'pay_switch',
+        data: {},
+        success(res) {
+          resolve(res);
+        },
+      })
+    })
+  },
+  getSharePathParams(path) {
+    let userToken = JSON.parse(wx.getStorageSync('token') || '{}');
+    console.log(userToken);
+    const pathSpliter = path.indexOf('?') > -1 ? '&' : '?';
+    return `${path}${pathSpliter}puid=${userToken.puid}&spread_source=${userToken.spread_source}&spread_source_second=${userToken.spread_source_second}`;
   }
 })

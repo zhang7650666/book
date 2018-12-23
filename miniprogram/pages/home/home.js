@@ -19,29 +19,49 @@ Page({
     page: 1,
     size: 10,
     shareConfig: {}, //分享的配置
-    activityMap: {}
+    activityMap: {},
+    userToken: {},
+    isshare: 0,
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    const _this = this;
     let activityMap = JSON.parse(wx.getStorageSync('activityMap') || '{}')
     this.setData({
       activityMap,
+      isshare: options.isshare || 0,
     })
     wx.showLoading({
       title: '加载中',
       mask: true
     })
-    // banner接口调用
-    this.postAddList({ alias: 'Index_banner', size: 5 })
-    // hot(热门推荐)，boy（男生推荐），girls（女生推荐）
-    this.postIndexHot();
-    // 大家都在看
-    this.postIndexLook({
-      pullDown: false,
-      pullUp: false,
-    });
+    if (this.data.isshare == 1) {
+      app.getToken().then(data => {
+        // banner接口调用
+        _this.postAddList({ alias: 'Index_banner', size: 5 })
+        // hot(热门推荐)，boy（男生推荐），girls（女生推荐）
+        _this.postIndexHot();
+        // 大家都在看
+        _this.postIndexLook({
+          pullDown: false,
+          pullUp: false,
+        });
+      })
+    }
+    else {
+      // banner接口调用
+      this.postAddList({ alias: 'Index_banner', size: 5 })
+      // hot(热门推荐)，boy（男生推荐），girls（女生推荐）
+      this.postIndexHot();
+      // 大家都在看
+      this.postIndexLook({
+        pullDown: false,
+        pullUp: false,
+      });
+    }
+    
   },
   // banner图接口请求
   postAddList(obj) {
@@ -159,6 +179,9 @@ Page({
    */
   onShow: function () {
     this.getShareInfo();
+    this.setData({
+      userToken: JSON.parse(wx.getStorageSync('token') || '{}')
+    })
   },
 
   /**
@@ -213,24 +236,6 @@ Page({
       pullUp: true,
     })
   },
-
-  // 邀请成功之后的回调函数
-  // postActivityBackoff(obj) {
-  //   http.request({
-  //     url: "activity_backoff",
-  //     data: {
-  //       alias: 'home',
-  //     },
-  //     success(res) {
-  //       const score = _this.data.activityMap['invite'].score
-  //       wx.showToast({
-  //         title:`恭喜你，获得${score}积分`,
-  //         icon: 'success',
-  //         duration: 2000
-  //       })
-  //     },
-  //   })
-  // },
   /**
    * 用户点击右上角分享
    */
@@ -239,7 +244,7 @@ Page({
     const { shareConfig = {} } = this.data;
     return {
       title: removeHtmlTag(shareConfig.title),
-      path: shareConfig.path,
+      path: app.getSharePathParams(shareConfig.path) + '&isshare=1',
       desc: removeHtmlTag(shareConfig.desc),
       imageUrl: shareConfig.img,
       success: function (res) {

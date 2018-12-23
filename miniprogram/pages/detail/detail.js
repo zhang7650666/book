@@ -23,6 +23,13 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    const _this = this;
+    const extendParams = {
+      spread_source: options.spread_source,
+      spread_source_second: options.spread_source_second,
+      puid: options.puid,
+    }
+    wx.setStorageSync('extendParams', JSON.stringify(extendParams));
     wx.showLoading({
       title: '加载中',
       mask: true
@@ -31,8 +38,16 @@ Page({
       fiction_id: options.fiction_id,
       isshare: options.isshare || 0,
     })
-    // 小说详情
-    this.getBookIntro();
+    if (this.data.isshare == 1) {
+      app.getToken().then(data => {
+        // 小说详情
+        _this.getBookIntro();
+      })
+    }
+    else {
+      // 小说详情
+      this.getBookIntro();
+    }
   },
   // 继续阅读
   handleKeep(){
@@ -228,9 +243,10 @@ Page({
   onShareAppMessage: function () {
     let _this = this;
     const { shareConfig = {}, bookDetails } = this.data;
+    // app.getSharePathParams(shareConfig.path)
     return {
       title: shareConfig.title || bookDetails.fiction_name,
-      path: shareConfig.path || `pages/detail/detail?fiction_id=${_this.data.fiction_id}&isshare=1`,
+      path: app.getSharePathParams(shareConfig.path || `pages/detail/detail?fiction_id=${_this.data.fiction_id}&isshare=1`),
       desc: shareConfig.desc || bookDetails.fiction_desc,
       imageUrl: shareConfig.img || bookDetails.fiction_img ,
       success: function (res) {

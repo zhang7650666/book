@@ -66,6 +66,10 @@ Page({
     if (details.errMsg == 'getUserInfo:ok') {
       wx.setStorageSync('userInfo', JSON.stringify(details.userInfo));
       wx.setStorageSync('encryptedData', details.encryptedData);
+      app.setUserInfo({
+        nike_name: details.userInfo.nickName,
+        head_img: details.userInfo.avatarUrl
+      });
       app.getToken().then( data => {
         wx.switchTab({
           url: `/pages/home/home`,

@@ -14,7 +14,7 @@ Page({
       //是否只显示确认
       isComfrim: true,
       //描述
-      desc: '签到成功，获得10积分！',
+      desc: '签到成功',
       //icon
       icon: '',
       // title: '标题'
@@ -57,6 +57,12 @@ Page({
     });
     const _this = this;
     let userInfo = JSON.parse(wx.getStorageSync('userInfo') || '{}');
+    const extendParams = {
+      spread_source: options.spread_source,
+      spread_source_second: options.spread_source_second,
+      puid: options.puid,
+    }
+    wx.setStorageSync('extendParams', JSON.stringify(extendParams));
     this.setData({
       userInfo: userInfo,
       userList: [..._this.data.list],
@@ -72,7 +78,7 @@ Page({
     http.request({
       url:"user_info",
       data:{},
-      success(res){ 
+      success(res){
         wx.setStorageSync('activityMap', JSON.stringify(res.data.activity || {}))
         let invite = {
           icon:'/images/my5.png',
@@ -104,7 +110,10 @@ Page({
           }),
           activityMap: res.data.activity,
           isShowSignInButton: res.data && res.data.activity && res.data.activity.sign && res.data.activity.sign.status == 1 || false,
+          'dialogData.desc': `签到成功，${res.data.activity && res.data.activity.sign ? '获得' + res.data.activity.sign.score 　+ '积分' : ''}`
         })
+
+        wx.hideLoading()
       },
     })
   },
@@ -147,6 +156,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    const _this = this;
     if (!Object.keys(this.data.userInfo).length) {
       let userInfo = JSON.parse(wx.getStorageSync('userInfo') || '{}');
       this.setData({
@@ -156,7 +166,21 @@ Page({
     // 调用用户信息接口
     this.postUserInfo();
     app.routerUploadToken();
-    this.paySwitch();
+    app.paySwitch().then(res => {
+      const isHasSwitch = res.data.switch && res.data.switch != 1;
+        const updateList = !isHasSwitch ? _this.data.list.filter(v => v.flag != 'recharge') : [
+          {
+            icon: '/images/my1.png',
+            alias: '积分充值',
+            url: "/pages/recharge/recharge",
+            flag: 'recharge'
+          },
+          ..._this.data.list.filter(v => v.flag != 'recharge')
+        ]
+        _this.setData({
+          list: updateList
+        });
+    });
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -200,26 +224,4 @@ Page({
       signInShowModel: false,
     })
   },
-  paySwitch() {
-    let _this = this;
-    http.request({
-      url: 'pay_switch',
-      data: {},
-      success(res) {
-        const isHasSwitch = res.data.switch && res.data.switch != 1;
-        const updateList = !isHasSwitch ? _this.data.list.filter(v => v.flag != 'recharge') : [
-          {
-            icon: '/images/my1.png',
-            alias: '积分充值',
-            url: "/pages/recharge/recharge",
-            flag: 'recharge'
-          },
-          ..._this.data.list.filter(v => v.flag != 'recharge')
-        ]
-        _this.setData({
-          list: updateList
-        });
-      },
-    })
-  }
 })

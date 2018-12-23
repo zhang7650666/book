@@ -22,6 +22,7 @@ const tips = {
 }
 let userToken = JSON.parse(wx.getStorageSync('token') || '{}')
 let callbackQueue = [];
+let isTokenValid = true;
 class HTTP{
   init(callback) {
     let userToken = wx.getStorageSync('token') || false;
@@ -45,16 +46,24 @@ class HTTP{
   request(params){
     const _this = this;
     userToken = JSON.parse(wx.getStorageSync('token') || '{}');
+    if (!userToken.token && isTokenValid) {
+      isTokenValid = false;
+      wx.navigateTo({
+        url: '/pages/impower/impower'
+      })
+    }
     if (!params.method) {
       params.method = "POST";
     }
     if (params.isNotToken) {
       wx.request({
         url: config.baseUrl + params.url,
-        data: params.data,
+        data: {
+          ...(params.data || {}),
+        },
         headers: {
           'Content-Type': 'application/json;charset=utf-8',
-          'token': userToken.token || '',
+          'token': userToken.token || ''
         },
         method: params.method,
         success: (res) => {
@@ -79,7 +88,9 @@ class HTTP{
       this.init(function () {
         wx.request({
           url: config.baseUrl + params.url,
-          data: params.data,
+          data: {
+            ...(params.data || {}),
+          },
           header: {
             'content-Type': 'application/json;charset=utf-8',
             'token': userToken.token ? userToken.token : JSON.parse(wx.getStorageSync('token') || '{}').token || '',
@@ -109,7 +120,8 @@ class HTTP{
             }
           },
           fail: (res) => {
-            this._err_code(1);
+            let errCode = res.data.code || 1;
+            _this._err_code(errCode);
           },
           complete: (res) => {
             setTimeout(() => {
