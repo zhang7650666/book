@@ -79,7 +79,10 @@ class HTTP{
           }
         },
         fail: (res) => {
-          this._err_code(1);
+          console.log(1111111111111);
+          console.log(res);
+          console.log(2222222222222);
+          this._err_code(res.data.code);
         },
         complete: (res) => { },
       })
@@ -120,8 +123,10 @@ class HTTP{
             }
           },
           fail: (res) => {
-            let errCode = res.data.code || 1;
-            _this._err_code(errCode);
+            console.log(1111111111111);
+            console.log(res);
+            console.log(2222222222222);
+            this._err_code(res.data.code);
           },
           complete: (res) => {
             setTimeout(() => {

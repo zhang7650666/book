@@ -217,7 +217,7 @@ Page({
             isHasNext: !!res.data.next_chapter_id,
             chapter_id: res.data.chapter_id,
             isMask: _this.data.isMask ? _this.data.isMask : false,
-            is_pay: res.data.auto_pay == 0 ? 0 : 1,
+            is_pay: res.data.auto_pay == 0 && res.data.is_pay == 1 ? 1 : 0,
             title: res.data.title || '',
           })
           wx.pageScrollTo({
