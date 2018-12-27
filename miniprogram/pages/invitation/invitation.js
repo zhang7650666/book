@@ -115,7 +115,6 @@ Page({
       desc: removeHtmlTag(shareInfo.desc),
       imageUrl: shareInfo.img,
       success: function (res) {
-        console.log('end');
         _this.postActivityBackoff();
       },
       fail: function (res) {

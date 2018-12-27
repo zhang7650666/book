@@ -240,30 +240,45 @@ Page({
   /**
    * 用户点击右上角分享
    */
+
   onShareAppMessage: function () {
     let _this = this;
     const { shareConfig = {}, bookDetails } = this.data;
-    // app.getSharePathParams(shareConfig.path)
-    return {
-      title: shareConfig.title || bookDetails.fiction_name,
-      path: app.getSharePathParams(shareConfig.path || `pages/detail/detail?fiction_id=${_this.data.fiction_id}&isshare=1`),
-      desc: shareConfig.desc || bookDetails.fiction_desc,
-      imageUrl: shareConfig.img || bookDetails.fiction_img ,
-      success: function (res) {
-        // _this.postActivityBackoff({ alias: 'fiction' });
-        wx.showToast({
-          title: `分享成功`,
-          icon: 'success',
-          duration: 2000
-        })
-      },
-      fail: function (res) {
-        // 转发失败
-        wx.showToast({
-          title: `邀请失败`,
-          image: '/images/u1565.png',
-          duration: 2000
-        })
+    const version = app.globalData.isCanShareVersion;
+    if (version) {
+      _this.postActivityBackoff(true);
+      return {
+        title: shareConfig.title || bookDetails.fiction_name,
+        path: app.getSharePathParams(shareConfig.path || `pages/detail/detail?fiction_id=${_this.data.fiction_id}&isshare=1`),
+        desc: shareConfig.desc || bookDetails.fiction_desc,
+        imageUrl: shareConfig.img || bookDetails.fiction_img,
+        success: function (res) {
+          //此版本分享回调异常，时有时无，所以不做处理
+        },
+      }
+    }
+    else {
+      return {
+        title: shareConfig.title || bookDetails.fiction_name,
+        path: app.getSharePathParams(shareConfig.path || `pages/detail/detail?fiction_id=${_this.data.fiction_id}&isshare=1`),
+        desc: shareConfig.desc || bookDetails.fiction_desc,
+        imageUrl: shareConfig.img || bookDetails.fiction_img ,
+        success: function (res) {
+          _this.postActivityBackoff({ alias: 'fiction' });
+          wx.showToast({
+            title: `分享成功`,
+            icon: 'success',
+            duration: 2000
+          })
+        },
+        fail: function (res) {
+          // 转发失败
+          wx.showToast({
+            title: `邀请失败`,
+            image: '/images/u1565.png',
+            duration: 2000
+          })
+        }
       }
     }
   },

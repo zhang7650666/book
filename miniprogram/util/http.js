@@ -79,9 +79,7 @@ class HTTP{
           }
         },
         fail: (res) => {
-          console.log(1111111111111);
           console.log(res);
-          console.log(2222222222222);
           this._err_code(res.data.code);
         },
         complete: (res) => { },
@@ -123,9 +121,7 @@ class HTTP{
             }
           },
           fail: (res) => {
-            console.log(1111111111111);
             console.log(res);
-            console.log(2222222222222);
             this._err_code(res.data.code);
           },
           complete: (res) => {

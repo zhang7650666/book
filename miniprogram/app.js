@@ -37,7 +37,7 @@ App({
         data: {
           login_code: res_login.login_code,
           channel: _this.globalData.systemInfo.platform == 'ios' ? 'ios' : 'android',
-          version: 1.2,
+          version: 1.4,
           ...extendParams,
         },
         success(data) {

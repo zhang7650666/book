@@ -7,7 +7,7 @@ module.exports = {
      * 从百度移动统计获取的AppKey
      * @type {string}
      */
-  appKey: 'a9f2c45a6c',
+  appKey: 'fa33a895bc',
 
     /**
      * 是否获取当前的地理位置、速度
