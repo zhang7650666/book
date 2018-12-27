@@ -37,7 +37,7 @@ Page({
       title: '加载中',
       mask: true
     })
-    if (this.data.isshare == 1) {
+    if (options.spread_source || options.spread_source_second || options.puid || this.data.isShare == 1) {
       app.getToken().then(data => {
         // banner接口调用
         _this.postAddList({ alias: 'Index_banner', size: 5 })

@@ -78,7 +78,6 @@ Page({
         alias:'invite',
       },
       success(res){
-        console.log(res);
         if (!boolean) {
           const score = _this.data.activityMap['invite'].score
           wx.showToast({

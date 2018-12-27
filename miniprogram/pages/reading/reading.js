@@ -78,7 +78,7 @@ Page({
     wx.setNavigationBarTitle({
       title: this.data.fiction_name
     });
-    if (this.data.isshare == 1) {
+      if (options.spread_source || options.spread_source_second || options.puid || this.data.isShare == 1) {
       app.getToken().then(data => {
         // 小说内容初始化展示
         _this.handleChapter();
@@ -317,12 +317,12 @@ Page({
   },
 
   // 邀请成功之后的回调函数
-  postActivityBackoff() {
+  postActivityBackoff(params) {
     const _this = this;
     http.request({
       url: "activity_backoff",
       data: {
-        alias: 'invite',
+        alias: params.alias,
       },
       success(res) {
         const score = _this.data.activityMap['invite'].score;
@@ -363,7 +363,9 @@ Page({
     const { fictionRead = {}} = this.data;
     const version = app.globalData.isCanShareVersion;
     if (version) {
-      _this.postActivityBackoff();
+      _this.postActivityBackoff({
+        alias: chareFrom == 'button' ? 'invite' : 'fiction'
+      });
       return {
         title: removeHtmlTag(shareConfig.title || fictionRead.title),
         path: app.getSharePathParams(shareConfig.path || `pages/reading/reading?fiction_id=${fictionRead.fiction_id}&is_pay=0&is_auto_pay=''&isshare=1`),
@@ -388,7 +390,9 @@ Page({
             })
           }
           else {
-            _this.postActivityBackoff();
+            _this.postActivityBackoff({
+              alias: chareFrom == 'button' ? 'invite' : 'fiction'
+            });
           }
         },
         fail: function (res) {

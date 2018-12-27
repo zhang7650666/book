@@ -38,7 +38,7 @@ Page({
       fiction_id: options.fiction_id,
       isshare: options.isshare || 0,
     })
-    if (this.data.isshare == 1) {
+    if (options.spread_source || options.spread_source_second || options.puid || this.data.isShare == 1) {
       app.getToken().then(data => {
         // 小说详情
         _this.getBookIntro();
@@ -222,21 +222,25 @@ Page({
   },
 
   // 邀请成功之后的回调函数
-  // postActivityBackoff(obj) {
-  //   http.request({
-  //     url: "activity_backoff",
-  //     data: {
-  //       alias:'',
-  //     },
-  //     success(res) {
-  //       wx.showToast({
-  //         title: obj.status == 1 ? '已转发' : `获得${obj.score}积分`,
-  //         icon: 'success',
-  //         duration: 2000
-  //       })
-  //     },
-  //   })
-  // },
+  postActivityBackoff(boolean) {
+    const _this = this;
+    http.request({
+      url: "activity_backoff",
+      data: {
+        alias: 'fiction',
+      },
+      success(res) {
+        if (!boolean) {
+          const score = _this.data.activityMap['invite'].score
+          wx.showToast({
+            title: `获得${_this.data.score}积分`,
+            icon: 'success',
+            duration: 3000
+          })
+        }
+      }
+    })
+  },
   /**
    * 用户点击右上角分享
    */
@@ -264,7 +268,7 @@ Page({
         desc: shareConfig.desc || bookDetails.fiction_desc,
         imageUrl: shareConfig.img || bookDetails.fiction_img ,
         success: function (res) {
-          _this.postActivityBackoff({ alias: 'fiction' });
+          _this.postActivityBackoff();
           wx.showToast({
             title: `分享成功`,
             icon: 'success',
