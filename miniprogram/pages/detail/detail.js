@@ -39,9 +39,8 @@ Page({
       isshare: options.isshare || 0,
     })
     if (options.spread_source || options.spread_source_second || options.puid || this.data.isShare == 1) {
-      app.getToken().then(data => {
-        // 小说详情
-        _this.getBookIntro();
+      Promise.all([app.getToken(), app.getUserInfo()]).then( result => {
+        this.getBookIntro()
       })
     }
     else {
@@ -189,7 +188,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    app.routerUploadToken();
+    app.routerUploadToken(); 
     this.getShareInfo();
   },
 

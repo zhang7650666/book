@@ -29,7 +29,6 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-
   },
 
   /**S
@@ -37,17 +36,10 @@ Page({
    */
   onShow: function () {
     const _this = this;
-    // const isHasToken = wx.getStorageSync('token');
-    // if (isHasToken) {
-    //   const versionSwitch =  wx.getStorageSync('version_switch')
-    //   _this.updateToken(versionSwitch);
-    // }
-    // else {
       app.getToken().then(data => {
         const versionSwitch = data.data.version_switch || wx.getStorageSync('version_switch');
         _this.updateToken(versionSwitch);
       })
-    // }
   },
   updateToken(versionSwith = 0) {
     if (versionSwith == 1) {

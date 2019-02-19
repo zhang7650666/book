@@ -1,5 +1,4 @@
 /**index.wxss**/
-
 page {
   font-family: -apple-system-font, "Helvetica Neue", sans-serif;
   background: #f6f6f6;

@@ -38,8 +38,19 @@ Page({
       mask: true
     })
     if (options.spread_source || options.spread_source_second || options.puid || this.data.isShare == 1) {
+      // Promise.all([app.getToken(), app.getUserInfo()]).then(result => {
+      //   // banner接口调用
+      //   _this.postAddList({ alias: 'Index_banner', size: 5 })
+      //   // hot(热门推荐)，boy（男生推荐），girls（女生推荐）
+      //   _this.postIndexHot();
+      //   // 大家都在看
+      //   _this.postIndexLook({
+      //     pullDown: false,
+      //     pullUp: false,
+      //   });
+      // })
       app.getToken().then(data => {
-        // banner接口调用
+         // banner接口调用
         _this.postAddList({ alias: 'Index_banner', size: 5 })
         // hot(热门推荐)，boy（男生推荐），girls（女生推荐）
         _this.postIndexHot();
@@ -170,18 +181,19 @@ Page({
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function () {
-
-  },
+  onReady: function () {},
 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    this.getShareInfo();
+    const userToken = JSON.parse(wx.getStorageSync('token') || '{}');
     this.setData({
-      userToken: JSON.parse(wx.getStorageSync('token') || '{}')
+      userToken,
     })
+    if (userToken.token) {
+      this.getShareInfo();
+    }
   },
 
   /**

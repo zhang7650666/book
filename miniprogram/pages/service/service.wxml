@@ -4,11 +4,11 @@
       <image src="/images/code.jpeg"></image>
     </view>
     <view class="code-title">
-     <text>满满小说</text>
+     <text>满满小说部落</text>
     </view>
     <view class="title-info">
       <text class="way">关注方式</text>
-      <text>1. 添加公众号，搜索“满满小说”，关注后联系客服。</text>
+      <text>1. 添加公众号，搜索“满满小说部落”，关注后联系客服。</text>
       <text>2. 截屏保存二维码，打开微信扫一扫-选择相册，关注官方公众号，联系客服。</text>
     </view>
 </view>

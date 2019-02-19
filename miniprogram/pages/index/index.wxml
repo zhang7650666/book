@@ -1,2 +1,4 @@
 <!--index.wxml-->
-<view></view>
+<view class="container-index-block">
+<!-- 数据加载中…… -->
+</view>

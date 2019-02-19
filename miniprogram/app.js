@@ -4,12 +4,12 @@ import mtiwxsdk from './util/mtj-wx-sdk.js'
 
 App({
   onLaunch: function (resa) {
-    this.getSystemInfo().then(data => {
-      this.getUserInfo();
-    })
     wx.showLoading({
       title: '加载中',
       mask: true
+    })
+    this.getSystemInfo().then(data => {
+      this.getUserInfo();
     })
   },
   // 请求Token接口
@@ -30,17 +30,17 @@ App({
     const _this = this;
     const extendParams = JSON.parse(wx.getStorageSync('extendParams') || '{}');
     return new Promise(function (resolve, reject) {
-      console.log('请求token');
       http.request({
         isNotToken: true,
         url: "token",
         data: {
           login_code: res_login.login_code,
           channel: _this.globalData.systemInfo.platform == 'ios' ? 'ios' : 'android',
-          version: 1.4,
+          version: 1.5,
           ...extendParams,
         },
         success(data) {
+          wx.hideLoading()
           wx.setStorageSync('token', JSON.stringify(data.data));
           wx.setStorageSync('version_switch', data.data.version_switch);
           http.performCallbackQueue();
@@ -65,8 +65,11 @@ App({
                 nike_name: res_user.userInfo.nickName,
                 head_img: res_user.userInfo.avatarUrl
               })
+              wx.hideLoading();
+              resolve(res_user)
             },
             fail(code) {
+              wx.hideLoading();
               wx.redirectTo({
                 url: '/pages/impower/impower',
               })
@@ -99,11 +102,13 @@ App({
     isCanShareVersion: false,
   },
   routerUploadToken() {
+    const _this = this;
     //没有登陆token就要去登陆
     let userToken = JSON.parse(wx.getStorageSync('token') || '{}')
-    if (!userToken.token) {
-      wx.navigateTo({
-        url: '/pages/impower/impower'
+    const userInfo = JSON.parse(wx.getStorageSync('userInfo') || '{}');
+    if (!userToken.token || !userInfo.nickName) {
+      Promise.all([_this.getToken(), _this.getUserInfo()]).then(result => {
+        console.log();
       })
     }
   },

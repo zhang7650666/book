@@ -79,12 +79,12 @@ Page({
       title: this.data.fiction_name
     });
       if (options.spread_source || options.spread_source_second || options.puid || this.data.isShare == 1) {
-      app.getToken().then(data => {
-        // 小说内容初始化展示
-        _this.handleChapter();
-        _this.getShareInfo();
-        _this.getFictionShareInfo();
-      })
+        Promise.all([app.getToken(), app.getUserInfo()]).then(result => {
+          // 小说内容初始化展示
+          _this.handleChapter();
+          _this.getShareInfo();
+          _this.getFictionShareInfo();
+        })
     }
     else {
       // 小说内容初始化展示
